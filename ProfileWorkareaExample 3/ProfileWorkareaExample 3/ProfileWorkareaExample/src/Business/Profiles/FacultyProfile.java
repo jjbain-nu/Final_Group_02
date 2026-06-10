@@ -1,28 +1,21 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package Business.Profiles;
-
 import Business.Person.Person;
-
 /**
  *
- * @author kal bugrara
+ * @author Nakka
  */
-public class EmployeeProfile extends Profile {
-    
+public class FacultyProfile extends Profile{
     private String department;   // faculty-specific data
     private String title;
 
-    public EmployeeProfile(Person p) {
-        super(p); 
-    }
+    public FacultyProfile(Person p) { super(p); }
+
     @Override
-    public String getRole(){
-        return  "Admin";
-    }
+    public String getRole() { return "Faculty"; }   // <- the only behavioral difference
 
     public String getDepartment() {
         return department;
@@ -39,7 +32,7 @@ public class EmployeeProfile extends Profile {
     public void setTitle(String title) {
         this.title = title;
     }
-    
-    
 
+    
+    
 }

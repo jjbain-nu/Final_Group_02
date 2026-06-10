@@ -44,4 +44,12 @@ public class EmployeeDirectory {
             return null; //not found after going through the whole list
          }
     
+    public void removeEmployee(EmployeeProfile sp) { 
+        employeelist.remove(sp); 
+    }
+
+    public ArrayList<EmployeeProfile> getEmployeeList() { 
+        return employeelist; 
+    }
+    
 }

@@ -42,4 +42,19 @@ public class StudentDirectory {
             return null; //not found after going through the whole list
          }
     
+    public StudentProfile findStudentByNuid(String nuid) {
+        for (StudentProfile sp : studentlist) {
+            if (sp.isNuidMatch(nuid)) return sp;
+        }
+        return null;
+    }
+
+    public void removeStudent(StudentProfile sp) { 
+        studentlist.remove(sp); 
+    }
+    
+    public ArrayList<StudentProfile> getStudentList() { 
+        return studentlist; 
+    }
+    
 }
