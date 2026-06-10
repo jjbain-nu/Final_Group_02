@@ -6,7 +6,6 @@
 package Business.UserAccounts;
 
 import Business.Profiles.Profile;
-
 import java.util.ArrayList;
 
 /**
@@ -18,9 +17,7 @@ public class UserAccountDirectory {
       ArrayList<UserAccount> useraccountlist ;
     
       public UserAccountDirectory (){
-          
        useraccountlist = new ArrayList();
-
     }
 
     public UserAccount newUserAccount(Profile p, String un, String pw) {
@@ -31,27 +28,35 @@ public class UserAccountDirectory {
     }
 
     public UserAccount findUserAccount(String id) {
-
         for (UserAccount ua : useraccountlist) {
-
             if (ua.isMatch(id)) {
                 return ua;
             }
         }
             return null; //not found after going through the whole list
-         }
-     public UserAccount AuthenticateUser(String un, String pw) {
-
+    }
+    
+    public UserAccount findByUsername(String un) {        // used to reject duplicates
         for (UserAccount ua : useraccountlist) {
-
+            if (ua.isUsernameMatch(un)) return ua;
+        }
+        return null;
+    }
+    
+    public UserAccount AuthenticateUser(String un, String pw) {
+        for (UserAccount ua : useraccountlist) {
             if (ua.IsValidUser(un, pw)) {
                 return ua;
             }
         }
             return null; //not found after going through the whole list
-         }   
-     public ArrayList<UserAccount> getUserAccountList()
-     {
+    }
+    
+    public void removeUserAccount(UserAccount ua) { 
+        useraccountlist.remove(ua); 
+    }
+    
+    public ArrayList<UserAccount> getUserAccountList() {
          return useraccountlist;
-     }
+    }
 }
