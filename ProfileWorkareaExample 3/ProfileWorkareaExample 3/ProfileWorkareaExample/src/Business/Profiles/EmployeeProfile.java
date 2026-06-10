@@ -13,7 +13,7 @@ import Business.Person.Person;
  */
 public class EmployeeProfile extends Profile {
     
-    private String department;   //
+    private String department;
     private String title;
 
     public EmployeeProfile(Person p) {
