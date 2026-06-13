@@ -4,10 +4,7 @@
  */
 package Business.Profiles;
 import Business.Person.Person;
-/**
- *
- * @author Nakka
- */
+
 public class FacultyProfile extends Profile{
     private String department;   // faculty-specific data
     private String title;
@@ -31,8 +28,5 @@ public class FacultyProfile extends Profile{
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    
-    
+    } 
 }

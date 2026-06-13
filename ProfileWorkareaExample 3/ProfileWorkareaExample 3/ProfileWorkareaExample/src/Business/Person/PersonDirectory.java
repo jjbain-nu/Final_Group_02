@@ -7,18 +7,11 @@ package Business.Person;
 
 import java.util.ArrayList;
 
-/**
- *
- * @author kal bugrara
- */
 public class PersonDirectory {
     
       ArrayList<Person> personlist ;
-    
-      public PersonDirectory (){
-          
-       personlist = new ArrayList();
-
+      public PersonDirectory (){   
+      personlist = new ArrayList();
     }
 
     public Person newPerson(String id) {
@@ -40,18 +33,14 @@ public class PersonDirectory {
     public Person findPerson(String id) {
 
         for (Person p : personlist) {
-
             if (p.isMatch(id)) {
                 return p;
             }
         }
             return null; //not found after going through the whole list
-         }
+        }
 
     public ArrayList<Person> getPersonlist() {
         return personlist;
-    }
-    
-    
-    
+    }   
 }

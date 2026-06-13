@@ -7,10 +7,6 @@ package Business.Profiles;
 
 import Business.Person.Person;
 
-/**
- *
- * @author kal bugrara
- */
 public class EmployeeProfile extends Profile {
     
     private String department;
@@ -38,8 +34,5 @@ public class EmployeeProfile extends Profile {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-    
-    
-
+    }        
 }

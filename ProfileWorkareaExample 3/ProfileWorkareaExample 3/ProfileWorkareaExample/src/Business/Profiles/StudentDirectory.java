@@ -9,19 +9,11 @@ import Business.Person.Person;
 
 import java.util.ArrayList;
 
-/**
- *
- * @author kal bugrara
- */
 public class StudentDirectory {
 
-
     ArrayList<StudentProfile> studentlist;
-
     public StudentDirectory() {
-
-     studentlist = new ArrayList();
-
+    studentlist = new ArrayList();
     }
 
     public StudentProfile newStudentProfile(Person p) {
@@ -34,13 +26,12 @@ public class StudentDirectory {
     public StudentProfile findStudent(String id) {
 
         for (StudentProfile sp : studentlist) {
-
             if (sp.isMatch(id)) {
                 return sp;
             }
         }
             return null; //not found after going through the whole list
-         }
+        }
     
     public StudentProfile findStudentByNuid(String nuid) {
         for (StudentProfile sp : studentlist) {

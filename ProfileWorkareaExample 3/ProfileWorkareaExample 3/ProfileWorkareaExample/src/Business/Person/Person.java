@@ -5,10 +5,6 @@
  */
 package Business.Person;
 
-/**
- *
- * @author kal bugrara
- */
 public class Person {
     //fields
     String id;
@@ -46,8 +42,6 @@ public class Person {
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
-    
-    
 
     public boolean isMatch(String id) {
         if (getPersonId().equals(id)) {

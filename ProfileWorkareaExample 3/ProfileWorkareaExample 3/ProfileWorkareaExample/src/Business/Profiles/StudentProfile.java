@@ -7,22 +7,12 @@ package Business.Profiles;
 
 import Business.Person.Person;
 
-/**
- *
- * @author kal bugrara
- */
 public class StudentProfile extends Profile {
 
-    Person person; //check later
     private String nuid;
-//    Transcript transcript;
-    //   EmploymentHistroy employmenthistory;
 
     public StudentProfile(Person p) {
         super(p);
-
-//        transcript = new Transcript(this);
-//        employmenthistory = new EmploymentHistroy();
     }
 
     @Override
@@ -44,9 +34,4 @@ public class StudentProfile extends Profile {
         }
         return nuid.equals(n);
     }
-
-    public boolean isMatch(String id) {
-        return person.getPersonId().equals(id);
-    }
-
 }

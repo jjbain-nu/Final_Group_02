@@ -5,10 +5,7 @@
 package Business.Profiles;
 import Business.Person.Person;
 import java.util.ArrayList;
-/**
- *
- * @author Nakka
- */
+
 public class FacultyDirectory {
     
     ArrayList<FacultyProfile> facultylist;

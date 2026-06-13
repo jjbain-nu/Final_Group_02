@@ -8,10 +8,6 @@ package Business.UserAccounts;
 import Business.Profiles.Profile;
 import java.util.ArrayList;
 
-/**
- *
- * @author kal bugrara
- */
 public class UserAccountDirectory {
     
       ArrayList<UserAccount> useraccountlist ;
@@ -46,6 +42,7 @@ public class UserAccountDirectory {
     public UserAccount AuthenticateUser(String un, String pw) {
         for (UserAccount ua : useraccountlist) {
             if (ua.IsValidUser(un, pw)) {
+                ua.markLogin();
                 return ua;
             }
         }

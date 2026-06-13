@@ -10,10 +10,6 @@ import Business.Person.Person;
 
 import java.util.ArrayList;
 
-/**
- *
- * @author kal bugrara
- */
 public class EmployeeDirectory {
 
     Business business;
@@ -36,13 +32,12 @@ public class EmployeeDirectory {
     public EmployeeProfile findEmployee(String id) {
 
         for (EmployeeProfile sp : employeelist) {
-
             if (sp.isMatch(id)) {
                 return sp;
             }
         }
             return null; //not found after going through the whole list
-         }
+        }
     
     public void removeEmployee(EmployeeProfile sp) { 
         employeelist.remove(sp); 

@@ -9,12 +9,6 @@ import Business.Profiles.Profile;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-
-
-/**
- *
- * @author kal bugrara
- */
 public class UserAccount {
     
     Profile profile; //should fit in one of three roles
@@ -29,7 +23,6 @@ public class UserAccount {
         password = pw;
         this.profile = profile;
         this.lastUpdated = new Date();
-
     }
 
     public String getPersonId(){

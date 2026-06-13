@@ -11,10 +11,6 @@ import Business.Profiles.StudentDirectory;
 import Business.Profiles.FacultyDirectory;
 import Business.UserAccounts.UserAccountDirectory;
 
-/**
- *
- * @author kal bugrara
- */
 public class Business {
 
     String name;
