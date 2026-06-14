@@ -250,22 +250,22 @@
     </Component>
     <Component class="javax.swing.JLabel" name="lblPersonID">
       <Properties>
-        <Property name="text" type="java.lang.String" value="jLabel2"/>
+        <Property name="text" type="java.lang.String" value="PersonID"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblRole">
       <Properties>
-        <Property name="text" type="java.lang.String" value="jLabel3"/>
+        <Property name="text" type="java.lang.String" value="Role"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblLastlogin">
       <Properties>
-        <Property name="text" type="java.lang.String" value="jLabel4"/>
+        <Property name="text" type="java.lang.String" value="Last"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblLastUpdate">
       <Properties>
-        <Property name="text" type="java.lang.String" value="jLabel5"/>
+        <Property name="text" type="java.lang.String" value="Last"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txtName">

@@ -114,13 +114,13 @@ public class AdminMyProfileJPanel extends javax.swing.JPanel {
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
         jLabel10.setText("Title");
 
-        lblPersonID.setText("jLabel2");
+        lblPersonID.setText("PersonID");
 
-        lblRole.setText("jLabel3");
+        lblRole.setText("Role");
 
-        lblLastlogin.setText("jLabel4");
+        lblLastlogin.setText("Last");
 
-        lblLastUpdate.setText("jLabel5");
+        lblLastUpdate.setText("Last");
 
         btnBack.setText("<<<Back");
         btnBack.addActionListener(new java.awt.event.ActionListener() {

@@ -95,11 +95,11 @@ public class StudentMyProfileJPanel extends javax.swing.JPanel {
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setText("Phone");
 
-        lblNUID.setText("jLabel2");
+        lblNUID.setText("nuid");
 
-        lblLastlogin.setText("jLabel4");
+        lblLastlogin.setText("login");
 
-        lblLastUpdate.setText("jLabel5");
+        lblLastUpdate.setText("update");
 
         btnBack.setText("<<<Back");
         btnBack.addActionListener(new java.awt.event.ActionListener() {
