@@ -51,7 +51,7 @@ public class FacultyWorkAreaJPanel extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         btnLogout = new javax.swing.JButton();
 
-        setBackground(new java.awt.Color(204, 204, 204));
+        setBackground(new java.awt.Color(0, 204, 204));
         setForeground(new java.awt.Color(204, 204, 204));
 
         jButton4.setBackground(new java.awt.Color(102, 153, 255));
