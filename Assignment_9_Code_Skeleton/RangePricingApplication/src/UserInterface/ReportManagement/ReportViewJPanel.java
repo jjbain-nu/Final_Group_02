@@ -4,16 +4,34 @@
  */
 package UserInterface.ReportManagement;
 
+import java.text.DecimalFormat;
+import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
+import TheBusiness.Business.Business;
+import TheBusiness.CustomerManagement.CustomerSummary;
+import TheBusiness.CustomerManagement.CustomersReport;
+import TheBusiness.ProductManagement.ExpensiveProductsReport;
+import TheBusiness.ProductManagement.ProductPriceSummary;
+import TheBusiness.Supplier.SupplierReport;
+import TheBusiness.Supplier.SupplierSummary;
+
 /**
  *
  * @author Nakka
  */
 public class ReportViewJPanel extends javax.swing.JPanel {
+    
+    private final JPanel CardSequencePanel;
+    private final Business business;
+    private final DecimalFormat money = new DecimalFormat("#,##0");
+    private final DecimalFormat ratio = new DecimalFormat("0.0000");
 
     /**
      * Creates new form ReportViewJPanel
      */
-    public ReportViewJPanel() {
+    public ReportViewJPanel(Business business, JPanel cardSequencePanel) {
+        this.business = business;
+        this.CardSequencePanel = cardSequencePanel;
         initComponents();
     }
 
@@ -26,19 +44,146 @@ public class ReportViewJPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        titleLabel = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        reportComboBox = new javax.swing.JComboBox<>();
+        runButton = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        reportTable = new javax.swing.JTable();
+        backButton = new javax.swing.JButton();
+
+        titleLabel.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        titleLabel.setText("Performance Reports");
+
+        jLabel2.setText("Select Report");
+
+        reportComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Report #1: Most Expensive Products", "Report #2: Most Valuable Customers", "Report #3: Supplier Report", " " }));
+
+        runButton.setText("Run Report");
+        runButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                runButtonActionPerformed(evt);
+            }
+        });
+
+        reportTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
+            },
+            new String [] {
+                "Product", "Supplier", "Price"
+            }
+        ));
+        jScrollPane1.setViewportView(reportTable);
+
+        backButton.setText("<<Back");
+        backButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(23, 23, 23)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(titleLabel)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(22, 22, 22)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 608, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(reportComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(46, 46, 46)
+                                .addComponent(runButton))
+                            .addComponent(backButton))))
+                .addContainerGap(70, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(26, 26, 26)
+                .addComponent(titleLabel)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(reportComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(runButton))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(54, 54, 54)
+                .addComponent(backButton)
+                .addContainerGap(84, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void runButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_runButtonActionPerformed
+        // TODO add your handling code here:
+        switch (reportComboBox.getSelectedIndex()) {
+            case 0: showMostExpensiveProducts(); break;
+            case 1: showMostValuableCustomers(); break;
+            case 2: showSupplierReport(); break;
+            default: break;
+        }
+    }//GEN-LAST:event_runButtonActionPerformed
+
+    private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
+        // TODO add your handling code here:
+        CardSequencePanel.remove(this);
+        ((java.awt.CardLayout) CardSequencePanel.getLayout()).previous(CardSequencePanel);
+    }//GEN-LAST:event_backButtonActionPerformed
+
+    private void showMostExpensiveProducts() {
+        ExpensiveProductsReport report = business.getMostExpensiveProductsReport();
+        DefaultTableModel model = new DefaultTableModel(
+                new Object[][] {}, new String[] { "Product Name", "Supplier Name", "Price" });
+        for (ProductPriceSummary row : report.getSummaryList()) {
+            model.addRow(new Object[] { row.getProductName(), row.getSupplierName(), money.format(row.getPrice()) });
+        }
+        reportTable.setModel(model);
+    }
+
+    private void showMostValuableCustomers() {
+        CustomersReport report = business.getMostValuableCustomersReport();
+        DefaultTableModel model = new DefaultTableModel(
+                new Object[][] {}, new String[] { "Customer Name", "Total Sales" });
+        for (CustomerSummary row : report.getSortedByTotalSales()) {
+            model.addRow(new Object[] { row.getCustomerName(), money.format(row.getTotalSales()) });
+        }
+        reportTable.setModel(model);
+    }
+
+    private void showSupplierReport() {
+        SupplierReport report = business.getSupplierReport();
+        DefaultTableModel model = new DefaultTableModel(new Object[][] {}, new String[] {
+            "Supplier Name", "Total Sales", "Loyalty Score", "Avg Spending / Customer", "Top 5 Sales Score" });
+        for (SupplierSummary row : report.getSummaryList()) {
+            model.addRow(new Object[] {
+                row.getSupplierName(), money.format(row.getTotalSales()),
+                ratio.format(row.getLoyaltyScore()), money.format(row.getAverageSpendingPerCustomer()),
+                ratio.format(row.getTop5SalesScore())
+            });
+        }
+        reportTable.setModel(model);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton backButton;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JComboBox<String> reportComboBox;
+    private javax.swing.JTable reportTable;
+    private javax.swing.JButton runButton;
+    private javax.swing.JLabel titleLabel;
     // End of variables declaration//GEN-END:variables
 }

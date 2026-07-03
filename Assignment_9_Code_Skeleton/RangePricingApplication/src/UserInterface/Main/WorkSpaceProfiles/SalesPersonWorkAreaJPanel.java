@@ -16,6 +16,7 @@ import TheBusiness.SalesManagement.SalesPersonProfile;
 import UserInterface.Main.WorkSpaceProfiles.OrderManagement.ManageSalesPersonOrders;
 import UserInterface.Main.WorkSpaceProfiles.OrderManagement.ProcessOrder;
 import javax.swing.JPanel;
+import UserInterface.ReportManagement.ReportViewJPanel;
 
 /**
  *
@@ -223,11 +224,8 @@ public class SalesPersonWorkAreaJPanel extends javax.swing.JPanel {
 
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
         // TODO add your handling code here:
-
-        CardSequencePanel.removeAll();
-//        ManageIncidents aos = new  ManageIncidents(businessunit, CardSequencePanel);
-        // aos.setAgenda(businessunit.getRiskManagementAgenda());
-//        CardSequencePanel.add("RiskAgendaObjectives", aos);
+        ReportViewJPanel reportView = new ReportViewJPanel(business, CardSequencePanel);
+        CardSequencePanel.add("ReportView", reportView);
         ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
 }//GEN-LAST:event_jButton11ActionPerformed
 
