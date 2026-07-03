@@ -9,14 +9,18 @@ import TheBusiness.OrderManagement.Order;
 
 /**
  *
- * @author kal bugrara
+ * @author Anish
  */
+
 public class CustomerSummary {
     CustomerProfile customer;
     int ordertotal;
-    public CustomerSummary(CustomerProfile cp){
-        
+
+    public CustomerSummary(CustomerProfile cp) {
+        customer = cp;
+        ordertotal = cp.getTotalSales(); // total sales to this customer
     }
-    
-    
+    public CustomerProfile getCustomer() { return customer; }
+    public String getCustomerName() { return customer.getCustomerName(); }
+    public int getTotalSales() { return ordertotal; }
 }
