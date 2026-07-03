@@ -9,6 +9,7 @@ import MarketingManagement.MarketingPersonDirectory;
 import TheBusiness.MarketModel.ChannelCatalog;
 import java.util.ArrayList;
 import TheBusiness.CustomerManagement.CustomerDirectory;
+import TheBusiness.CustomerManagement.CustomersReport;
 import TheBusiness.MarketModel.MarketCatalog;
 import TheBusiness.MarketModel.MarketChannelComboCatalog;
 import TheBusiness.OrderManagement.MasterOrderList;
@@ -16,10 +17,12 @@ import TheBusiness.Personnel.PersonDirectory;
 import TheBusiness.ProductManagement.ProductSummary;
 import TheBusiness.ProductManagement.ProductsReport;
 import TheBusiness.MarketModel.SolutionOfferCatalog;
+import TheBusiness.ProductManagement.ExpensiveProductsReport;
 import TheBusiness.SolutionOrders.MasterSolutionOrderList;
 import TheBusiness.SalesManagement.SalesPersonDirectory;
 import TheBusiness.Supplier.Supplier;
 import TheBusiness.Supplier.SupplierDirectory;
+import TheBusiness.Supplier.SupplierReport;
 import TheBusiness.UserAccountManagement.UserAccountDirectory;
 
 /**
@@ -148,4 +151,16 @@ public class Business {
     //      return employeedirectory;
     //  }
 
+    // Report #1: Most Expensive Products
+    public ExpensiveProductsReport getMostExpensiveProductsReport() {
+        return new ExpensiveProductsReport(suppliers);
+    }
+    // Report #2: Most Valuable Customers
+    public CustomersReport getMostValuableCustomersReport() {
+        return customerdirectory.generatCustomerPerformanceReport();
+    }
+    // Report #3: Supplier Report
+    public SupplierReport getSupplierReport() {
+        return new SupplierReport(suppliers, customerdirectory);
+    }
 }
