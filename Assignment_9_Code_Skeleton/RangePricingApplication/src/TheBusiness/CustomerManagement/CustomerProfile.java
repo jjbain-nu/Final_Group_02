@@ -87,5 +87,20 @@ public class CustomerProfile extends Profile {
     public Person getPerson() {
         return person;
     }
+    
+    // Total sales to this customer = sum of all of this customer's order totals.
+    public int getTotalSales() {
+        int sum = 0;
+        for (Order o : orders) {
+            sum = sum + o.getOrderTotal();
+        }
+        return sum;
+    }
+    public ArrayList<Order> getOrders() {
+        return orders;
+    }
+    public String getCustomerName() {
+        return person.getPersonId();
+    }
 
 }

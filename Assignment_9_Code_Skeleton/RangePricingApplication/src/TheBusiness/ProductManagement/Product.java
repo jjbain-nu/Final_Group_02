@@ -98,5 +98,15 @@ public class Product {
     public int getCeilingPrice(){
         return ceilingPrice;
     }
+    
+    // Returns the product name (used by the Most Expensive Products report).
+    public String getName() {
+    return name;
+    }
+
+    // The "list price" we report for a product (the target price).
+    public int getPrice() {
+    return targetPrice;
+    }
 
 }
