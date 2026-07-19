@@ -8,6 +8,7 @@ import Business.Role.DoctorRole;
 import Business.Role.MaterialShippingRole;
 import Business.Role.Role;
 import Business.Role.SupplierAdminRole;
+import Business.Supplier.MaterialInventoryDirectory;
 import java.util.ArrayList;
 
 /**
@@ -16,10 +17,23 @@ import java.util.ArrayList;
  */
 public class SupplierOrganization extends Organization {
         
+    private MaterialInventoryDirectory materialInventoryDirectory;
+    
      public SupplierOrganization() {
         super(Organization.Type.Supplier.getValue());
+        materialInventoryDirectory = new MaterialInventoryDirectory();
+    }
+
+    public MaterialInventoryDirectory getMaterialInventoryDirectory() {
+        return materialInventoryDirectory;
+    }
+
+    public void setMaterialInventoryDirectory(MaterialInventoryDirectory materialInventoryDirectory) {
+        this.materialInventoryDirectory = materialInventoryDirectory;
     }
     
+    
+     
     @Override
     public ArrayList<Role> getSupportedRole() {
         ArrayList<Role> roles = new ArrayList();

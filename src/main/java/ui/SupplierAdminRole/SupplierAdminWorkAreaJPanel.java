@@ -178,7 +178,7 @@ public class SupplierAdminWorkAreaJPanel extends javax.swing.JPanel {
 
     private void btnCreatePickingOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreatePickingOrderActionPerformed
         // TODO add your handling code here:
-        ManageMaterialRequest mmr = new ManageMaterialRequest(userProcessContainer, ecosystem);
+        ManageMaterialRequest mmr = new ManageMaterialRequest(userProcessContainer, userAccount,organization,enterprise);
         userProcessContainer.add("manageMaterialRequest",mmr);
         CardLayout layout=(CardLayout)userProcessContainer.getLayout();
         layout.next(userProcessContainer);
