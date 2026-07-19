@@ -3,7 +3,9 @@ package Business;
 import Business.Employee.Employee;
 import Business.Enterprise.SupplierEnterprise;
 import Business.Network.Network;
+import static Business.Organization.Organization.Type.Admin;
 import Business.Organization.SupplierOrganization;
+import Business.Role.AdminRole;
 import Business.Role.LabManagerRole;
 import Business.Role.MaterialShippingRole;
 import Business.Role.SupplierAdminRole;
@@ -33,13 +35,21 @@ public class ConfigureASystem {
         network.getEnterpriseDirectory().getEnterpriseList().add(supplierEnterprise);
         
         //have some employees 
+        Employee enterpriseAdminEmp = supplierEnterprise.getEmployeeDirectory().createEmployee("supplierEnterpriseAdmin");
+        supplierEnterprise.getUserAccountDirectory().createUserAccount(
+                "supplierEnterpriseAdmin",
+                "1111",
+                enterpriseAdminEmp,
+                new AdminRole());
+        
         Employee supplierAdminEmp01 = supplierOrg.getEmployeeDirectory().createEmployee("SupplierAdmin01");
         Employee MaterialShipping01 = supplierOrg.getEmployeeDirectory().createEmployee("MaterialShipping01");
         
         //create user account
-        supplierOrg.getUserAccountDirectory().createUserAccount("supplierAdmin","****",supplierAdminEmp01, new SupplierAdminRole());
-        supplierOrg.getUserAccountDirectory().createUserAccount("MaterialShipping","****",MaterialShipping01, new MaterialShippingRole());        
+        supplierOrg.getUserAccountDirectory().createUserAccount("supplierAdmin","supplierAdmin",supplierAdminEmp01, new SupplierAdminRole());
+        supplierOrg.getUserAccountDirectory().createUserAccount("materialShipping","materialShipping",MaterialShipping01, new MaterialShippingRole());        
 
+        System.out.println("Supplier Admin Created");
         
         Employee employee = system.getEmployeeDirectory().createEmployee("sysadmin");
         
