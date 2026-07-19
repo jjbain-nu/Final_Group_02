@@ -12,8 +12,12 @@ import Business.Role.SupplierAdminRole;
 import Business.Role.SystemAdminRole;
 import Business.Supplier.Material;
 import Business.Supplier.MaterialCatalog;
+import Business.Supplier.MaterialRequest;
 import Business.UserAccount.UserAccount;
 import com.github.javafaker.Faker;
+import java.util.Date;
+import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 /**
  *
@@ -49,8 +53,8 @@ public class ConfigureASystem {
         Employee MaterialShipping01 = supplierOrg.getEmployeeDirectory().createEmployee("MaterialShipping01");
         
         //create user account
-        supplierOrg.getUserAccountDirectory().createUserAccount("supplierAdmin","supplierAdmin",supplierAdminEmp01, new SupplierAdminRole());
-        supplierOrg.getUserAccountDirectory().createUserAccount("materialShipping","materialShipping",MaterialShipping01, new MaterialShippingRole());        
+        UserAccount sa01 = supplierOrg.getUserAccountDirectory().createUserAccount("supplierAdmin","supplierAdmin",supplierAdminEmp01, new SupplierAdminRole());
+        UserAccount ms01 = supplierOrg.getUserAccountDirectory().createUserAccount("materialShipping","materialShipping",MaterialShipping01, new MaterialShippingRole());        
 
         System.out.println("Supplier Admin Created");
         
@@ -60,7 +64,7 @@ public class ConfigureASystem {
         UserAccount labManager = system.getUserAccountDirectory().createUserAccount("labManager", "sysadmin", employee, new LabManagerRole());
         
         
-        //Create sample material and material inventory
+        //Create 100 sample material and material inventory
         MaterialCatalog catalog = supplierEnterprise.getMaterialCatalog();
         Faker faker = new Faker();
         
@@ -74,6 +78,27 @@ public class ConfigureASystem {
             
             supplierOrg.getMaterialInventoryDirectory().addInventory(material, qty);
             
+        }
+        
+        //Create 10 sample material requests from manufacturer
+        Random rand = new Random();
+        
+        for (int i = 0; i<10 ; i++){
+            Material randomMaterial = catalog.getMaterialList().get(rand.nextInt(catalog.getMaterialList().size()));
+            int qty = faker.number().numberBetween(1,10);
+            Date requestDate = faker.date().past(5, TimeUnit.DAYS);
+            Date resolveDate = faker.date().future(5, TimeUnit.DAYS);
+            
+            MaterialRequest mr = new MaterialRequest(randomMaterial,qty);
+            mr.setMessage("Request: "+ randomMaterial.getMaterialName());
+            mr.setSender(ua);
+            mr.setReceiver(sa01);  
+            mr.setStatus("Sent");
+            mr.setRequestDate(requestDate);
+            mr.setResolveDate(resolveDate);
+            
+                   
+            supplierOrg.getWorkQueue().getWorkRequestList().add(mr);
         }
         
         return system;
