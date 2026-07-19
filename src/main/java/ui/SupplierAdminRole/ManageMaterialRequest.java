@@ -20,7 +20,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author raunak
  */
-public class SupplierAdminWorkAreaJPanel_Copy extends javax.swing.JPanel {
+public class ManageMaterialRequest extends javax.swing.JPanel {
 
     private JPanel userProcessContainer;
     private SupplierOrganization organization;
@@ -29,7 +29,7 @@ public class SupplierAdminWorkAreaJPanel_Copy extends javax.swing.JPanel {
     /**
      * Creates new form DoctorWorkAreaJPanel
      */
-    public SupplierAdminWorkAreaJPanel_Copy(JPanel userProcessContainer, UserAccount account, SupplierOrganization organization, Enterprise enterprise) {
+    public ManageMaterialRequest(JPanel userProcessContainer, UserAccount account, SupplierOrganization organization, Enterprise enterprise) {
         initComponents();
         
         this.userProcessContainer = userProcessContainer;

@@ -4,10 +4,8 @@
  */
 package ui.SupplierAdminRole;
 
-import ui.DoctorRole.*;
 import Business.EcoSystem;
 import Business.Enterprise.Enterprise;
-import Business.Organization.DoctorOrganization;
 import Business.Organization.SupplierOrganization;
 import Business.UserAccount.UserAccount;
 import Business.WorkQueue.LabTestWorkRequest;
@@ -15,6 +13,7 @@ import Business.WorkQueue.WorkRequest;
 import java.awt.CardLayout;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
+import ui.SystemAdminWorkArea.ManageEnterpriseJPanel;
 
 /**
  *
@@ -55,14 +54,11 @@ public class SupplierAdminWorkAreaJPanel extends javax.swing.JPanel {
         enterpriseLabel = new javax.swing.JLabel();
         valueLabel = new javax.swing.JLabel();
         lblTitle = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
-        jButton8 = new javax.swing.JButton();
+        btnCheckInventory = new javax.swing.JButton();
+        btnManageMaterialRequest = new javax.swing.JButton();
+        btnCreatePickingOrder = new javax.swing.JButton();
+        btnViewOrder = new javax.swing.JButton();
+        btnManageUserAccount = new javax.swing.JButton();
 
         enterpriseLabel.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         enterpriseLabel.setText("EnterPrise :");
@@ -73,83 +69,53 @@ public class SupplierAdminWorkAreaJPanel extends javax.swing.JPanel {
         lblTitle.setFont(new java.awt.Font("Yu Gothic UI", 1, 18)); // NOI18N
         lblTitle.setText("Supplier Admin Portal");
 
-        jButton1.setBackground(new java.awt.Color(0, 51, 102));
-        jButton1.setFont(new java.awt.Font("Yu Gothic UI", 1, 14)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Check Inventory");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnCheckInventory.setBackground(new java.awt.Color(0, 51, 102));
+        btnCheckInventory.setFont(new java.awt.Font("Yu Gothic UI", 1, 14)); // NOI18N
+        btnCheckInventory.setForeground(new java.awt.Color(255, 255, 255));
+        btnCheckInventory.setText("Check Inventory");
+        btnCheckInventory.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnCheckInventoryActionPerformed(evt);
             }
         });
 
-        jButton2.setBackground(new java.awt.Color(0, 51, 102));
-        jButton2.setFont(new java.awt.Font("Yu Gothic UI", 1, 14)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setText("Receive Material Request");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnManageMaterialRequest.setBackground(new java.awt.Color(0, 51, 102));
+        btnManageMaterialRequest.setFont(new java.awt.Font("Yu Gothic UI", 1, 14)); // NOI18N
+        btnManageMaterialRequest.setForeground(new java.awt.Color(255, 255, 255));
+        btnManageMaterialRequest.setText("Manage Material Request");
+        btnManageMaterialRequest.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnManageMaterialRequestActionPerformed(evt);
             }
         });
 
-        jButton3.setBackground(new java.awt.Color(0, 51, 102));
-        jButton3.setFont(new java.awt.Font("Yu Gothic UI", 1, 14)); // NOI18N
-        jButton3.setForeground(new java.awt.Color(255, 255, 255));
-        jButton3.setText("Issue Shipping Request");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        btnCreatePickingOrder.setBackground(new java.awt.Color(0, 51, 102));
+        btnCreatePickingOrder.setFont(new java.awt.Font("Yu Gothic UI", 1, 14)); // NOI18N
+        btnCreatePickingOrder.setForeground(new java.awt.Color(255, 255, 255));
+        btnCreatePickingOrder.setText("Manage Picking / Shipping Order");
+        btnCreatePickingOrder.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                btnCreatePickingOrderActionPerformed(evt);
             }
         });
 
-        jButton4.setBackground(new java.awt.Color(0, 51, 102));
-        jButton4.setFont(new java.awt.Font("Yu Gothic UI", 1, 14)); // NOI18N
-        jButton4.setForeground(new java.awt.Color(255, 255, 255));
-        jButton4.setText("Manage Admin Account");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        btnViewOrder.setBackground(new java.awt.Color(0, 51, 102));
+        btnViewOrder.setFont(new java.awt.Font("Yu Gothic UI", 1, 14)); // NOI18N
+        btnViewOrder.setForeground(new java.awt.Color(255, 255, 255));
+        btnViewOrder.setText("View Order Status");
+        btnViewOrder.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                btnViewOrderActionPerformed(evt);
             }
         });
 
-        jButton5.setBackground(new java.awt.Color(0, 51, 102));
-        jButton5.setFont(new java.awt.Font("Yu Gothic UI", 1, 14)); // NOI18N
-        jButton5.setForeground(new java.awt.Color(255, 255, 255));
-        jButton5.setText("Create Picking Order");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        btnManageUserAccount.setBackground(new java.awt.Color(0, 51, 102));
+        btnManageUserAccount.setFont(new java.awt.Font("Yu Gothic UI", 1, 14)); // NOI18N
+        btnManageUserAccount.setForeground(new java.awt.Color(255, 255, 255));
+        btnManageUserAccount.setText("Manage User Account");
+        btnManageUserAccount.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
-            }
-        });
-
-        jButton6.setBackground(new java.awt.Color(0, 51, 102));
-        jButton6.setFont(new java.awt.Font("Yu Gothic UI", 1, 14)); // NOI18N
-        jButton6.setForeground(new java.awt.Color(255, 255, 255));
-        jButton6.setText("Approve Material Request");
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
-            }
-        });
-
-        jButton7.setBackground(new java.awt.Color(0, 51, 102));
-        jButton7.setFont(new java.awt.Font("Yu Gothic UI", 1, 14)); // NOI18N
-        jButton7.setForeground(new java.awt.Color(255, 255, 255));
-        jButton7.setText("View Order Status");
-        jButton7.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton7ActionPerformed(evt);
-            }
-        });
-
-        jButton8.setBackground(new java.awt.Color(0, 51, 102));
-        jButton8.setFont(new java.awt.Font("Yu Gothic UI", 1, 14)); // NOI18N
-        jButton8.setForeground(new java.awt.Color(255, 255, 255));
-        jButton8.setText("Manage Operator Account");
-        jButton8.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton8ActionPerformed(evt);
+                btnManageUserAccountActionPerformed(evt);
             }
         });
 
@@ -170,16 +136,13 @@ public class SupplierAdminWorkAreaJPanel extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(73, 73, 73)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnManageMaterialRequest, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnCreatePickingOrder, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnManageUserAccount, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(35, 35, 35)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(btnCheckInventory, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnViewOrder, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(127, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -193,68 +156,51 @@ public class SupplierAdminWorkAreaJPanel extends javax.swing.JPanel {
                 .addComponent(lblTitle)
                 .addGap(33, 33, 33)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+                    .addComponent(btnManageMaterialRequest, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnCheckInventory, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(36, 36, 36)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnCreatePickingOrder, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnViewOrder, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(29, 29, 29)
+                .addComponent(btnManageUserAccount, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(59, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnCheckInventoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCheckInventoryActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnCheckInventoryActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btnManageMaterialRequestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManageMaterialRequestActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btnManageMaterialRequestActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void btnCreatePickingOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreatePickingOrderActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+        ManageMaterialRequest mmr = new ManageMaterialRequest(userProcessContainer, ecosystem);
+        userProcessContainer.add("manageMaterialRequest",mmr);
+        CardLayout layout=(CardLayout)userProcessContainer.getLayout();
+        layout.next(userProcessContainer);
+        
+        
+    }//GEN-LAST:event_btnCreatePickingOrderActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void btnViewOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewOrderActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_btnViewOrderActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    private void btnManageUserAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManageUserAccountActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton5ActionPerformed
-
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton6ActionPerformed
-
-    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton7ActionPerformed
-
-    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton8ActionPerformed
+    }//GEN-LAST:event_btnManageUserAccountActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCheckInventory;
+    private javax.swing.JButton btnCreatePickingOrder;
+    private javax.swing.JButton btnManageMaterialRequest;
+    private javax.swing.JButton btnManageUserAccount;
+    private javax.swing.JButton btnViewOrder;
     private javax.swing.JLabel enterpriseLabel;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
     private javax.swing.JLabel lblTitle;
     private javax.swing.JLabel valueLabel;
     // End of variables declaration//GEN-END:variables
