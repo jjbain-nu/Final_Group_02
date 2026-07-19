@@ -10,7 +10,10 @@ import Business.Role.LabManagerRole;
 import Business.Role.MaterialShippingRole;
 import Business.Role.SupplierAdminRole;
 import Business.Role.SystemAdminRole;
+import Business.Supplier.Material;
+import Business.Supplier.MaterialCatalog;
 import Business.UserAccount.UserAccount;
+import com.github.javafaker.Faker;
 
 /**
  *
@@ -55,6 +58,23 @@ public class ConfigureASystem {
         
         UserAccount ua = system.getUserAccountDirectory().createUserAccount("sysadmin", "sysadmin", employee, new SystemAdminRole());
         UserAccount labManager = system.getUserAccountDirectory().createUserAccount("labManager", "sysadmin", employee, new LabManagerRole());
+        
+        
+        //Create sample material and material inventory
+        MaterialCatalog catalog = supplierEnterprise.getMaterialCatalog();
+        Faker faker = new Faker();
+        
+        for(int i = 0 ; i<100;i++ ){
+            String materialId = faker.regexify("[A-Z]{3}[0-9]{4}");
+            String materialName = faker.commerce().productName();
+            int materialWeight = faker.number().numberBetween(1,100);
+            
+            Material material = catalog.addMaterial(materialId, materialName, materialWeight);
+            int qty = faker.number().numberBetween(0,1000);
+            
+            supplierOrg.getMaterialInventoryDirectory().addInventory(material, qty);
+            
+        }
         
         return system;
     }

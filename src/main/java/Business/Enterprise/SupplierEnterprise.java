@@ -7,6 +7,7 @@ package Business.Enterprise;
 import Business.Role.MaterialShippingRole;
 import Business.Role.Role;
 import Business.Role.SupplierAdminRole;
+import Business.Supplier.MaterialCatalog;
 import java.util.ArrayList;
 
 /**
@@ -15,9 +16,23 @@ import java.util.ArrayList;
  */
 public class SupplierEnterprise extends Enterprise{
     
+    private MaterialCatalog materialCatalog;
+    
     public SupplierEnterprise(String name){
         super(name,EnterpriseType.Supplier);
+        materialCatalog = new MaterialCatalog();
+        
     }
+
+    public MaterialCatalog getMaterialCatalog() {
+        return materialCatalog;
+    }
+
+    public void setMaterialCatalog(MaterialCatalog materialCatalog) {
+        this.materialCatalog = materialCatalog;
+    }
+    
+    
     @Override
     public ArrayList<Role> getSupportedRole() {
         ArrayList<Role> roles = new ArrayList<>();
