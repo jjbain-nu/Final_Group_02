@@ -44,4 +44,5 @@ public class MaterialRequest extends WorkRequest {
         return material.getMaterialName() + "(" + qty +")";
     }
     
+   
 }

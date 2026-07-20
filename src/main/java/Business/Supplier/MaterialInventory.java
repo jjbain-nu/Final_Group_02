@@ -11,11 +11,14 @@ package Business.Supplier;
 public class MaterialInventory {
     
     private Material material;
-    private int qty;
+    private int availableQty;
+    private int pickingQty;
+    
     
     public MaterialInventory(Material material, int qty){
         this.material = material;
-        this.qty = qty;
+        this.availableQty = qty;
+        this.pickingQty = 0;
     } 
 
     public Material getMaterial() {
@@ -26,13 +29,23 @@ public class MaterialInventory {
         this.material = material;
     }
 
-    public int getQty() {
-        return qty;
+    public int getAvailableQty() {
+        return availableQty;
     }
 
-    public void setQty(int qty) {
-        this.qty = qty;
+    public void setAvailableQty(int qty) {
+        this.availableQty = qty;
     }
+
+    public int getPickingQty() {
+        return pickingQty;
+    }
+
+    public void setPickingQty(int pickingQty) {
+        this.pickingQty = pickingQty;
+    }
+    
+    
     
     public String toString(){
         return this.material.getMaterialName();

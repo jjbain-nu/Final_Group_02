@@ -44,7 +44,7 @@ public class ConfigureASystem {
         //have some employees 
         Employee enterpriseAdminEmp = supplierEnterprise.getEmployeeDirectory().createEmployee("supplierEnterpriseAdmin");
         supplierEnterprise.getUserAccountDirectory().createUserAccount(
-                "supplierEnterpriseAdmin",
+                "SEA",
                 "1111",
                 enterpriseAdminEmp,
                 new AdminRole());
@@ -53,8 +53,8 @@ public class ConfigureASystem {
         Employee MaterialShipping01 = supplierOrg.getEmployeeDirectory().createEmployee("MaterialShipping01");
         
         //create user account
-        UserAccount sa01 = supplierOrg.getUserAccountDirectory().createUserAccount("supplierAdmin","supplierAdmin",supplierAdminEmp01, new SupplierAdminRole());
-        UserAccount ms01 = supplierOrg.getUserAccountDirectory().createUserAccount("materialShipping","materialShipping",MaterialShipping01, new MaterialShippingRole());        
+        UserAccount sa01 = supplierOrg.getUserAccountDirectory().createUserAccount("SA","1111",supplierAdminEmp01, new SupplierAdminRole());
+        UserAccount ms01 = supplierOrg.getUserAccountDirectory().createUserAccount("MS","1111",MaterialShipping01, new MaterialShippingRole());        
 
         System.out.println("Supplier Admin Created");
         
@@ -68,13 +68,26 @@ public class ConfigureASystem {
         MaterialCatalog catalog = supplierEnterprise.getMaterialCatalog();
         Faker faker = new Faker();
         
+        String[] materials = {
+          "Paracetamol API",
+          "Ibuprofen API",
+          "Amoxicillin API",
+          "Metformin API",
+          "Atorvastatin API",
+          "Losartan API",
+          "Lactose",
+          "Povidone",
+          "Magnesium Stearate",
+          "Microcrystalline Cellulose"
+};
+        
         for(int i = 0 ; i<100;i++ ){
             String materialId = faker.regexify("[A-Z]{3}[0-9]{4}");
-            String materialName = faker.commerce().productName();
+            String materialName = faker.options().option(materials) + " - " + faker.regexify("[A-Z]{1}[0-9]{2}");
             int materialWeight = faker.number().numberBetween(1,100);
             
             Material material = catalog.addMaterial(materialId, materialName, materialWeight);
-            int qty = faker.number().numberBetween(0,1000);
+            int qty = faker.number().numberBetween(0,100);
             
             supplierOrg.getMaterialInventoryDirectory().addInventory(material, qty);
             
@@ -87,7 +100,6 @@ public class ConfigureASystem {
             Material randomMaterial = catalog.getMaterialList().get(rand.nextInt(catalog.getMaterialList().size()));
             int qty = faker.number().numberBetween(1,10);
             Date requestDate = faker.date().past(5, TimeUnit.DAYS);
-            Date resolveDate = faker.date().future(5, TimeUnit.DAYS);
             
             MaterialRequest mr = new MaterialRequest(randomMaterial,qty);
             mr.setMessage("Request: "+ randomMaterial.getMaterialName());
@@ -95,7 +107,6 @@ public class ConfigureASystem {
             mr.setReceiver(sa01);  
             mr.setStatus("Sent");
             mr.setRequestDate(requestDate);
-            mr.setResolveDate(resolveDate);
             
                    
             supplierOrg.getWorkQueue().getWorkRequestList().add(mr);
