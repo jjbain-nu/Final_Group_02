@@ -41,7 +41,7 @@ public class MaterialRequest extends WorkRequest {
     
     @Override
     public String toString(){
-        return material.getMaterialName() + "(" + qty +")";
+        return material.getMaterialId();
     }
     
    

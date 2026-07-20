@@ -52,6 +52,9 @@ public class PickingOrder extends WorkRequest {
         this.organization = organization;
     }
     
-    
+    @Override
+    public String toString(){
+        return pickingOrderId;
+    }
     
 }

@@ -9,6 +9,7 @@ import Business.Role.MaterialShippingRole;
 import Business.Role.Role;
 import Business.Role.SupplierAdminRole;
 import Business.Supplier.MaterialInventoryDirectory;
+import Business.Supplier.PickingOrderDirectory;
 import java.util.ArrayList;
 
 /**
@@ -18,18 +19,29 @@ import java.util.ArrayList;
 public class SupplierOrganization extends Organization {
         
     private MaterialInventoryDirectory materialInventoryDirectory;
+    private PickingOrderDirectory pickingOrderDirectory;
     
      public SupplierOrganization() {
         super(Organization.Type.Supplier.getValue());
         materialInventoryDirectory = new MaterialInventoryDirectory();
+        pickingOrderDirectory = new PickingOrderDirectory();
     }
 
+     
     public MaterialInventoryDirectory getMaterialInventoryDirectory() {
         return materialInventoryDirectory;
     }
 
     public void setMaterialInventoryDirectory(MaterialInventoryDirectory materialInventoryDirectory) {
         this.materialInventoryDirectory = materialInventoryDirectory;
+    }
+
+    public PickingOrderDirectory getPickingOrderDirectory() {
+        return pickingOrderDirectory;
+    }
+
+    public void setPickingOrderDirectory(PickingOrderDirectory pickingOrderDirectory) {
+        this.pickingOrderDirectory = pickingOrderDirectory;
     }
     
     

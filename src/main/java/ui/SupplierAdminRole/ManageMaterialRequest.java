@@ -11,11 +11,13 @@ import Business.Organization.DoctorOrganization;
 import Business.Organization.SupplierOrganization;
 import Business.Supplier.MaterialInventory;
 import Business.Supplier.MaterialRequest;
+import Business.Supplier.PickingOrder;
 import Business.UserAccount.UserAccount;
 import Business.WorkQueue.LabTestWorkRequest;
 import Business.WorkQueue.WorkRequest;
 import java.awt.CardLayout;
 import java.text.SimpleDateFormat;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -45,15 +47,16 @@ public class ManageMaterialRequest extends javax.swing.JPanel {
         DefaultTableCellRenderer rightRenderer = new DefaultTableCellRenderer();
         rightRenderer.setHorizontalAlignment(SwingConstants.RIGHT);
         
-        workRequestJTable.getColumnModel().getColumn(2).setCellRenderer(rightRenderer);
-        workRequestJTable.getColumnModel().getColumn(3).setCellRenderer(rightRenderer);
+        tblMaterialRequest.getColumnModel().getColumn(2).setCellRenderer(rightRenderer);
+        tblMaterialRequest.getColumnModel().getColumn(3).setCellRenderer(rightRenderer);
         
         
-        populateRequestTable();
+        populateMaterialRequestTable();
+        populatePickingOrderTable();
     }
     
-    public void populateRequestTable(){
-        DefaultTableModel model = (DefaultTableModel) workRequestJTable.getModel();
+    public void populateMaterialRequestTable(){
+        DefaultTableModel model = (DefaultTableModel) tblMaterialRequest.getModel();
         
         model.setRowCount(0);
         for (WorkRequest wr : organization.getWorkQueue().getWorkRequestList()){
@@ -65,8 +68,8 @@ public class ManageMaterialRequest extends javax.swing.JPanel {
             MaterialInventory mi = organization.getMaterialInventoryDirectory()
                     .findInventoryByMaterial(mr.getMaterial()); mi.getAvailableQty();
                     
-            Object[] row = new Object[6];
-            row[0] = mr.getMaterial();
+            Object[] row = new Object[7];
+            row[0] = mr;
             row[1] = mr.getMaterial().getMaterialName();
             row[2] = mr.getQty();
             row[3] = mi.getAvailableQty();
@@ -90,13 +93,17 @@ public class ManageMaterialRequest extends javax.swing.JPanel {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        workRequestJTable = new javax.swing.JTable();
+        tblMaterialRequest = new javax.swing.JTable();
         btnCreatePickOrder = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         enterpriseLabel = new javax.swing.JLabel();
         btnBack = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tblPickingOrder = new javax.swing.JTable();
+        lblMaterialRequest = new javax.swing.JLabel();
+        lblPickingOrder = new javax.swing.JLabel();
 
-        workRequestJTable.setModel(new javax.swing.table.DefaultTableModel(
+        tblMaterialRequest.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -119,15 +126,17 @@ public class ManageMaterialRequest extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(workRequestJTable);
-        if (workRequestJTable.getColumnModel().getColumnCount() > 0) {
-            workRequestJTable.getColumnModel().getColumn(0).setResizable(false);
-            workRequestJTable.getColumnModel().getColumn(1).setResizable(false);
-            workRequestJTable.getColumnModel().getColumn(2).setResizable(false);
-            workRequestJTable.getColumnModel().getColumn(3).setResizable(false);
-            workRequestJTable.getColumnModel().getColumn(4).setResizable(false);
-            workRequestJTable.getColumnModel().getColumn(5).setResizable(false);
-            workRequestJTable.getColumnModel().getColumn(6).setResizable(false);
+        jScrollPane1.setViewportView(tblMaterialRequest);
+        if (tblMaterialRequest.getColumnModel().getColumnCount() > 0) {
+            tblMaterialRequest.getColumnModel().getColumn(0).setResizable(false);
+            tblMaterialRequest.getColumnModel().getColumn(1).setResizable(false);
+            tblMaterialRequest.getColumnModel().getColumn(2).setResizable(false);
+            tblMaterialRequest.getColumnModel().getColumn(2).setHeaderValue("Request Qty");
+            tblMaterialRequest.getColumnModel().getColumn(3).setResizable(false);
+            tblMaterialRequest.getColumnModel().getColumn(3).setHeaderValue("Available Qty");
+            tblMaterialRequest.getColumnModel().getColumn(4).setResizable(false);
+            tblMaterialRequest.getColumnModel().getColumn(5).setResizable(false);
+            tblMaterialRequest.getColumnModel().getColumn(6).setResizable(false);
         }
 
         btnCreatePickOrder.setText("Create Picking Order");
@@ -167,6 +176,44 @@ public class ManageMaterialRequest extends javax.swing.JPanel {
             }
         });
 
+        tblPickingOrder.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Picking Order ID", "Material ID", "Material", "Request Qty", "Picking Qty", "Request Date", "Status"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane2.setViewportView(tblPickingOrder);
+        if (tblPickingOrder.getColumnModel().getColumnCount() > 0) {
+            tblPickingOrder.getColumnModel().getColumn(0).setResizable(false);
+            tblPickingOrder.getColumnModel().getColumn(1).setResizable(false);
+            tblPickingOrder.getColumnModel().getColumn(2).setResizable(false);
+            tblPickingOrder.getColumnModel().getColumn(3).setResizable(false);
+            tblPickingOrder.getColumnModel().getColumn(4).setResizable(false);
+            tblPickingOrder.getColumnModel().getColumn(5).setResizable(false);
+            tblPickingOrder.getColumnModel().getColumn(6).setResizable(false);
+        }
+
+        lblMaterialRequest.setText("Material Request");
+
+        lblPickingOrder.setText("Picking Order");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -175,33 +222,82 @@ public class ManageMaterialRequest extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 776, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnCreatePickOrder, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnBack)
+                            .addComponent(lblMaterialRequest)
+                            .addComponent(lblPickingOrder))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(btnBack)
-                        .addGap(164, 164, 164)
-                        .addComponent(btnCreatePickOrder, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 776, Short.MAX_VALUE))
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
+                .addComponent(lblMaterialRequest)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnCreatePickOrder)
-                    .addComponent(btnBack))
-                .addContainerGap(255, Short.MAX_VALUE))
+                .addComponent(btnCreatePickOrder)
+                .addGap(29, 29, 29)
+                .addComponent(lblPickingOrder)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(33, 33, 33)
+                .addComponent(btnBack)
+                .addContainerGap(39, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCreatePickOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreatePickOrderActionPerformed
         
-        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
-        userProcessContainer.add("RequestLabTestJPanel", new RequestLabTestJPanel(userProcessContainer, userAccount, enterprise));
-        layout.next(userProcessContainer);
+       int selectedRow = tblMaterialRequest.getSelectedRow();
+        
+        if(selectedRow <0){
+            JOptionPane.showMessageDialog(null,"Please select a request","Warning",
+    JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        MaterialRequest mr = (MaterialRequest) tblMaterialRequest.getValueAt(selectedRow,0);
+       
+        MaterialInventory mi = organization.getMaterialInventoryDirectory()
+                    .findInventoryByMaterial(mr.getMaterial()); 
+        
+        if(mr.getQty()>mi.getAvailableQty()){
+             JOptionPane.showMessageDialog(null,"Available stock is insufficient","Warning",
+    JOptionPane.WARNING_MESSAGE);
+             return;
+        }
+        
+        if(mr.getStatus().equals("Sent")){
+        
+        int currentQty = mi.getAvailableQty();
+        mi.setAvailableQty(currentQty - mr.getQty());
+        mi.setPickingQty(mi.getPickingQty() + mr.getQty());
+        
+        PickingOrder po = this.organization.getPickingOrderDirectory().addPickingOrder(mr, organization);
+
+        mr.setStatus("Allocated");
+        
+        organization.getWorkQueue().getWorkRequestList().add(po);
+        
+        JOptionPane.showMessageDialog(null,"Create Picking Order successfully");
+ 
+        populateMaterialRequestTable();
+        populatePickingOrderTable();
+        
+        } else{
+            JOptionPane.showMessageDialog(null,"This request has already been processed.","Warning",
+    JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         
     }//GEN-LAST:event_btnCreatePickOrderActionPerformed
 
@@ -219,6 +315,36 @@ public class ManageMaterialRequest extends javax.swing.JPanel {
     private javax.swing.JLabel enterpriseLabel;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable workRequestJTable;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel lblMaterialRequest;
+    private javax.swing.JLabel lblPickingOrder;
+    private javax.swing.JTable tblMaterialRequest;
+    private javax.swing.JTable tblPickingOrder;
     // End of variables declaration//GEN-END:variables
+
+    private void populatePickingOrderTable() {
+       DefaultTableModel model = (DefaultTableModel) tblPickingOrder.getModel();
+        
+        model.setRowCount(0);
+        for (WorkRequest wr : organization.getWorkQueue().getWorkRequestList()){
+            
+            if(wr instanceof PickingOrder){
+            
+            SimpleDateFormat sdf = new SimpleDateFormat("MMM dd, yyyy");
+            PickingOrder po = (PickingOrder)wr;
+                     
+            Object[] row = new Object[7];
+            row[0] = po;
+            row[1] = po.getMaterialRequest().getMaterial();
+            row[2] = po.getMaterialRequest().getMaterial().getMaterialName();
+            row[3] = po.getMaterialRequest().getQty();
+            row[4] = po.getMaterialRequest().getQty();
+            row[5] = sdf.format(po.getRequestDate());
+            row[6] = po.getStatus();
+            
+            model.addRow(row);
+        }
+    }
+    
+    }
 }
