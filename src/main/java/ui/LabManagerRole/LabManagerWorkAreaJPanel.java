@@ -12,6 +12,7 @@ import Business.UserAccount.UserAccount;
 import Business.WorkQueue.LabTestWorkRequest;
 import Business.WorkQueue.WorkRequest;
 import java.awt.CardLayout;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 
@@ -133,6 +134,7 @@ public class LabManagerWorkAreaJPanel extends javax.swing.JPanel {
         int selectedRow = workRequestJTable.getSelectedRow();
         
         if (selectedRow < 0){
+            JOptionPane.showMessageDialog(this, "Please select a lab test request first.", "No request selected", JOptionPane.WARNING_MESSAGE);
             return;
         }
         

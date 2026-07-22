@@ -8,6 +8,7 @@ import Business.Organization.Organization;
 import Business.Organization.Organization.Type;
 import Business.Organization.OrganizationDirectory;
 import java.awt.CardLayout;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 
@@ -159,8 +160,13 @@ public class ManageOrganizationJPanel extends javax.swing.JPanel {
     private void addJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addJButtonActionPerformed
 
         Type type = (Type) organizationJComboBox.getSelectedItem();
+        if (type == null) {
+            JOptionPane.showMessageDialog(this, "Please select an organization type.", "Missing organization type", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         directory.createOrganization(type);
         populateTable();
+        JOptionPane.showMessageDialog(this, type.getValue() + " organization created successfully.", "Organization created", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_addJButtonActionPerformed
 
     private void backJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backJButtonActionPerformed

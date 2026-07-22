@@ -8,6 +8,7 @@ import Business.EcoSystem;
 import Business.Network.Network;
 import java.awt.CardLayout;
 import java.awt.Component;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 
@@ -144,12 +145,25 @@ public class ManageNetworkJPanel extends javax.swing.JPanel {
 
     private void btnSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitActionPerformed
 
-        String name = txtNetworkName.getText();
+        String name = txtNetworkName.getText().trim();
+        if (name.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please enter a network name.", "Missing network name", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        for (Network existingNetwork : system.getNetworkList()) {
+            if (name.equalsIgnoreCase(existingNetwork.getName())) {
+                JOptionPane.showMessageDialog(this, "A network with that name already exists.", "Duplicate network", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+        }
 
         Network network = system.createAndAddNetwork();
         network.setName(name);
 
         populateNetworkTable();
+        txtNetworkName.setText("");
+        JOptionPane.showMessageDialog(this, "Network created successfully.", "Network created", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_btnSubmitActionPerformed
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed

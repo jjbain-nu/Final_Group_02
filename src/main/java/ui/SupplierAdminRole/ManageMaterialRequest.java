@@ -269,7 +269,17 @@ public class ManageMaterialRequest extends javax.swing.JPanel {
        
         MaterialInventory mi = organization.getMaterialInventoryDirectory()
                     .findInventoryByMaterial(mr.getMaterial()); 
+        if (mi == null) {
+            JOptionPane.showMessageDialog(this, "No inventory record was found for the selected material.", "Inventory unavailable", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         
+        if(mr.getQty() <= 0){
+             JOptionPane.showMessageDialog(this,"The selected request has an invalid quantity.","Invalid quantity",
+    JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
         if(mr.getQty()>mi.getAvailableQty()){
              JOptionPane.showMessageDialog(null,"Available stock is insufficient","Warning",
     JOptionPane.WARNING_MESSAGE);

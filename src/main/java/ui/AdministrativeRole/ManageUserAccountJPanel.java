@@ -10,6 +10,7 @@ import Business.Organization.Organization;
 import Business.Role.Role;
 import Business.UserAccount.UserAccount;
 import java.awt.CardLayout;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 
@@ -234,15 +235,28 @@ public class ManageUserAccountJPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void createUserJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createUserJButtonActionPerformed
-        String userName = nameJTextField.getText();
+        String userName = nameJTextField.getText().trim();
         String password = passwordJTextField.getText();
         Organization organization = (Organization) organizationJComboBox.getSelectedItem();
         Employee employee = (Employee) employeeJComboBox.getSelectedItem();
         Role role = (Role) roleJComboBox.getSelectedItem();
         
+        if (organization == null || employee == null || role == null || userName.isEmpty() || password.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Select an organization, employee, and role, then enter a username and password.", "Missing information", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        if (!organization.getUserAccountDirectory().checkIfUsernameIsUnique(userName)) {
+            JOptionPane.showMessageDialog(this, "That username is already used in the selected organization.", "Duplicate username", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
         organization.getUserAccountDirectory().createUserAccount(userName, password, employee, role);
         
         popData();
+        nameJTextField.setText("");
+        passwordJTextField.setText("");
+        JOptionPane.showMessageDialog(this, "User account created successfully.", "Account created", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_createUserJButtonActionPerformed
 
     private void backjButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backjButton1ActionPerformed

@@ -12,6 +12,7 @@ import Business.Role.AdminRole;
 import Business.UserAccount.UserAccount;
 import java.awt.CardLayout;
 import java.awt.Component;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 
@@ -234,12 +235,27 @@ public class ManageEnterpriseAdminJPanel extends javax.swing.JPanel {
         
         String username = usernameJTextField.getText();
         String password = String.valueOf(passwordJPasswordField.getPassword());
-        String name = nameJTextField.getText();
+        String name = nameJTextField.getText().trim();
+        username = username.trim();
+
+        if (enterprise == null || username.isEmpty() || password.isEmpty() || name.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Select an enterprise and complete the username, password, and name fields.", "Missing information", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        if (!enterprise.getUserAccountDirectory().checkIfUsernameIsUnique(username)) {
+            JOptionPane.showMessageDialog(this, "That username is already used in the selected enterprise.", "Duplicate username", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         
         Employee employee = enterprise.getEmployeeDirectory().createEmployee(name);
         
         UserAccount account = enterprise.getUserAccountDirectory().createUserAccount(username, password, employee, new AdminRole());
         populateTable();
+        usernameJTextField.setText("");
+        passwordJPasswordField.setText("");
+        nameJTextField.setText("");
+        JOptionPane.showMessageDialog(this, "Enterprise administrator account created successfully.", "Account created", JOptionPane.INFORMATION_MESSAGE);
         
     }//GEN-LAST:event_submitJButtonActionPerformed
 

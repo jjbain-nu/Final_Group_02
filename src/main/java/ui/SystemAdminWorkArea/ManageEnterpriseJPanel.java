@@ -185,15 +185,33 @@ public class ManageEnterpriseJPanel extends javax.swing.JPanel {
         Enterprise.EnterpriseType type = (Enterprise.EnterpriseType) enterpriseTypeJComboBox.getSelectedItem();
 
         if (network == null || type == null) {
-            JOptionPane.showMessageDialog(null, "Invalid Input!");
+            JOptionPane.showMessageDialog(this, "Please select both a network and enterprise type.", "Missing selection", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
-        String name = nameJTextField.getText();
+        String name = nameJTextField.getText().trim();
+        if (name.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please enter an enterprise name.", "Missing enterprise name", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        if (type != Enterprise.EnterpriseType.Hospital) {
+            JOptionPane.showMessageDialog(this, "Only Hospital enterprises are currently implemented.", "Unsupported enterprise type", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        for (Enterprise existingEnterprise : network.getEnterpriseDirectory().getEnterpriseList()) {
+            if (name.equalsIgnoreCase(existingEnterprise.getName())) {
+                JOptionPane.showMessageDialog(this, "An enterprise with that name already exists in this network.", "Duplicate enterprise", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+        }
 
         Enterprise enterprise = network.getEnterpriseDirectory().createAndAddEnterprise(name, type);
 
         populateTable();
+        nameJTextField.setText("");
+        JOptionPane.showMessageDialog(this, "Hospital enterprise created successfully.", "Enterprise created", JOptionPane.INFORMATION_MESSAGE);
 
     }//GEN-LAST:event_submitJButtonActionPerformed
 

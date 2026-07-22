@@ -11,6 +11,7 @@ import Business.UserAccount.UserAccount;
 import Business.WorkQueue.LabTestWorkRequest;
 import Business.WorkQueue.WorkRequest;
 import java.awt.CardLayout;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 
@@ -138,6 +139,7 @@ public class LabAssistantWorkAreaJPanel extends javax.swing.JPanel {
         int selectedRow = workRequestJTable.getSelectedRow();
         
         if (selectedRow < 0){
+            JOptionPane.showMessageDialog(this, "Please select a work request first.", "No request selected", JOptionPane.WARNING_MESSAGE);
             return;
         }
         
@@ -153,10 +155,15 @@ public class LabAssistantWorkAreaJPanel extends javax.swing.JPanel {
         int selectedRow = workRequestJTable.getSelectedRow();
         
         if (selectedRow < 0){
+            JOptionPane.showMessageDialog(this, "Please select a work request first.", "No request selected", JOptionPane.WARNING_MESSAGE);
             return;
         }
         
         LabTestWorkRequest request = (LabTestWorkRequest)workRequestJTable.getValueAt(selectedRow, 0);
+        if (request.getReceiver() != userAccount) {
+            JOptionPane.showMessageDialog(this, "Assign the request to yourself before processing it.", "Request not assigned", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
      
         request.setStatus("Processing");
         
