@@ -67,11 +67,14 @@ public class CreateDeliveryOrderJPanel extends javax.swing.JPanel {
         refreshJButton = new javax.swing.JButton();
         driverLabel = new javax.swing.JLabel();
 
+        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
         driverJComboBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 driverJComboBoxActionPerformed(evt);
             }
         });
+        add(driverJComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(101, 194, 97, -1));
 
         backJButton.setText("<<Back");
         backJButton.addActionListener(new java.awt.event.ActionListener() {
@@ -79,9 +82,11 @@ public class CreateDeliveryOrderJPanel extends javax.swing.JPanel {
                 backJButtonActionPerformed(evt);
             }
         });
+        add(backJButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(382, 271, -1, -1));
 
         titleLabel.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         titleLabel.setText("Create Delivery Order");
+        add(titleLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(39, 27, -1, -1));
 
         requestJTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -104,12 +109,15 @@ public class CreateDeliveryOrderJPanel extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(requestJTable);
 
+        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(39, 71, 538, 105));
+
         dispatchJButton.setText("Dispatch");
         dispatchJButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 dispatchJButtonActionPerformed(evt);
             }
         });
+        add(dispatchJButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(288, 194, -1, -1));
 
         refreshJButton.setText("Refresh");
         refreshJButton.addActionListener(new java.awt.event.ActionListener() {
@@ -117,48 +125,10 @@ public class CreateDeliveryOrderJPanel extends javax.swing.JPanel {
                 refreshJButtonActionPerformed(evt);
             }
         });
+        add(refreshJButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(382, 194, -1, -1));
 
         driverLabel.setText("Driver:");
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(39, 39, 39)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(titleLabel)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 538, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(driverLabel)
-                        .addGap(18, 18, 18)
-                        .addComponent(driverJComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(90, 90, 90)
-                        .addComponent(dispatchJButton)
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(backJButton)
-                            .addComponent(refreshJButton))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addComponent(titleLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(driverJComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(dispatchJButton)
-                    .addComponent(refreshJButton)
-                    .addComponent(driverLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
-                .addComponent(backJButton)
-                .addGap(46, 46, 46))
-        );
+        add(driverLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(49, 197, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void driverJComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_driverJComboBoxActionPerformed

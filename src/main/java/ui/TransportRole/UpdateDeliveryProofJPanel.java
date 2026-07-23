@@ -39,7 +39,10 @@ public class UpdateDeliveryProofJPanel extends javax.swing.JPanel {
         infoLabel = new javax.swing.JLabel();
         proofJTextField = new javax.swing.JTextField();
 
+        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
         proofLabel.setText("Proof Reference (photo url/signature ID):");
+        add(proofLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 105, -1, -1));
 
         backJButton.setText("<<Back");
         backJButton.addActionListener(new java.awt.event.ActionListener() {
@@ -47,9 +50,11 @@ public class UpdateDeliveryProofJPanel extends javax.swing.JPanel {
                 backJButtonActionPerformed(evt);
             }
         });
+        add(backJButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(436, 182, -1, -1));
 
         titleLabel.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         titleLabel.setText("Update Delivery Proof");
+        add(titleLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 21, -1, -1));
 
         submitJButton.setText("Submit");
         submitJButton.addActionListener(new java.awt.event.ActionListener() {
@@ -57,8 +62,10 @@ public class UpdateDeliveryProofJPanel extends javax.swing.JPanel {
                 submitJButtonActionPerformed(evt);
             }
         });
+        add(submitJButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 182, -1, -1));
 
         infoLabel.setText("Deliver to: Wholesaler (current status)");
+        add(infoLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 71, -1, -1));
 
         proofJTextField.setText("https://");
         proofJTextField.addActionListener(new java.awt.event.ActionListener() {
@@ -66,46 +73,7 @@ public class UpdateDeliveryProofJPanel extends javax.swing.JPanel {
                 proofJTextFieldActionPerformed(evt);
             }
         });
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(titleLabel)
-                            .addComponent(proofLabel)
-                            .addComponent(infoLabel))
-                        .addContainerGap(296, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(proofJTextField, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addComponent(submitJButton)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(backJButton)))
-                        .addGap(28, 28, 28))))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addComponent(titleLabel)
-                .addGap(18, 18, 18)
-                .addComponent(infoLabel)
-                .addGap(18, 18, 18)
-                .addComponent(proofLabel)
-                .addGap(18, 18, 18)
-                .addComponent(proofJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(21, 21, 21)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(submitJButton)
-                    .addComponent(backJButton))
-                .addContainerGap(65, Short.MAX_VALUE))
-        );
+        add(proofJTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 139, 502, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void proofJTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_proofJTextFieldActionPerformed

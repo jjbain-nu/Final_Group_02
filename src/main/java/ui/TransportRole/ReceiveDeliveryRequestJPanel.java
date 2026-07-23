@@ -52,8 +52,11 @@ public class ReceiveDeliveryRequestJPanel extends javax.swing.JPanel {
         refreshJButton = new javax.swing.JButton();
         backJButton = new javax.swing.JButton();
 
+        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
         titleLabel.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         titleLabel.setText("Receive Delivery Request");
+        add(titleLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(39, 27, -1, -1));
 
         requestJTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -76,12 +79,15 @@ public class ReceiveDeliveryRequestJPanel extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(requestJTable);
 
+        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(39, 71, 480, 206));
+
         receiveJButton.setText("Receive");
         receiveJButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 receiveJButtonActionPerformed(evt);
             }
         });
+        add(receiveJButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(39, 295, -1, -1));
 
         refreshJButton.setText("Refresh");
         refreshJButton.addActionListener(new java.awt.event.ActionListener() {
@@ -89,6 +95,7 @@ public class ReceiveDeliveryRequestJPanel extends javax.swing.JPanel {
                 refreshJButtonActionPerformed(evt);
             }
         });
+        add(refreshJButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(129, 295, -1, -1));
 
         backJButton.setText("<<Back");
         backJButton.addActionListener(new java.awt.event.ActionListener() {
@@ -96,39 +103,7 @@ public class ReceiveDeliveryRequestJPanel extends javax.swing.JPanel {
                 backJButtonActionPerformed(evt);
             }
         });
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(39, 39, 39)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(titleLabel)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(receiveJButton)
-                            .addGap(18, 18, 18)
-                            .addComponent(refreshJButton)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(backJButton))
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 480, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(35, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addComponent(titleLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 206, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(receiveJButton)
-                    .addComponent(refreshJButton)
-                    .addComponent(backJButton))
-                .addGap(58, 58, 58))
-        );
+        add(backJButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(447, 295, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void receiveJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_receiveJButtonActionPerformed

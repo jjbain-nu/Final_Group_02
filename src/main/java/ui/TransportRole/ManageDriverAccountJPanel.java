@@ -57,8 +57,11 @@ public class ManageDriverAccountJPanel extends javax.swing.JPanel {
         passLabel = new javax.swing.JLabel();
         passJTextField = new javax.swing.JPasswordField();
 
+        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
         titleLabel.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         titleLabel.setText("Manage Driver Account");
+        add(titleLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 27, -1, -1));
 
         driverJTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -81,22 +84,29 @@ public class ManageDriverAccountJPanel extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(driverJTable);
 
+        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 71, 538, 105));
+
         createJButton.setText("Create Driver");
         createJButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 createJButtonActionPerformed(evt);
             }
         });
+        add(createJButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(41, 303, -1, -1));
 
         nameLabel.setText("Employee Name:");
+        add(nameLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(41, 191, -1, -1));
+        add(nameJTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(137, 188, 256, -1));
 
         userLabel.setText("Username:");
+        add(userLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(41, 225, -1, -1));
 
         userJTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 userJTextFieldActionPerformed(evt);
             }
         });
+        add(userJTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(137, 222, 256, -1));
 
         backJButton.setText("<<Back");
         backJButton.addActionListener(new java.awt.event.ActionListener() {
@@ -104,68 +114,11 @@ public class ManageDriverAccountJPanel extends javax.swing.JPanel {
                 backJButtonActionPerformed(evt);
             }
         });
+        add(backJButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(407, 303, -1, -1));
 
         passLabel.setText("Password:");
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 538, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(35, 35, 35)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(createJButton)
-                                .addGap(266, 266, 266)
-                                .addComponent(backJButton))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                    .addComponent(nameLabel)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(nameJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(userLabel)
-                                        .addComponent(passLabel))
-                                    .addGap(41, 41, 41)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(userJTextField)
-                                        .addComponent(passJTextField)))))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(titleLabel)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addComponent(titleLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(nameLabel)
-                    .addComponent(nameJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(userLabel)
-                    .addComponent(userJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(passLabel)
-                    .addComponent(passJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(backJButton)
-                    .addComponent(createJButton))
-                .addGap(58, 58, 58))
-        );
+        add(passLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(41, 259, -1, -1));
+        add(passJTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(137, 256, 256, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void userJTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userJTextFieldActionPerformed

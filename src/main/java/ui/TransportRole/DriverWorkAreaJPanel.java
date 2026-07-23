@@ -65,16 +65,23 @@ public class DriverWorkAreaJPanel extends javax.swing.JPanel {
         proofJButton = new javax.swing.JButton();
         refreshJButton = new javax.swing.JButton();
 
+        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
         titleLabel.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         titleLabel.setText("Driver Portal");
+        add(titleLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(18, 6, -1, -1));
 
         enterpriseLabel.setText("Enterprise:");
+        add(enterpriseLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(18, 70, -1, -1));
 
         userLabel.setText("Driver:");
+        add(userLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(18, 104, -1, -1));
 
         enterpriseValueLabel.setText("FastLane Logistics");
+        add(enterpriseValueLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(91, 70, -1, -1));
 
         userValueLabel.setText("driver");
+        add(userValueLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 104, -1, -1));
 
         deliveryJTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -97,12 +104,15 @@ public class DriverWorkAreaJPanel extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(deliveryJTable);
 
+        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 126, 538, 105));
+
         loadingJButton.setText("Mark Loaded");
         loadingJButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 loadingJButtonActionPerformed(evt);
             }
         });
+        add(loadingJButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(34, 249, 120, 40));
 
         unloadingJButton.setText("Unloading/Inspection");
         unloadingJButton.addActionListener(new java.awt.event.ActionListener() {
@@ -110,6 +120,7 @@ public class DriverWorkAreaJPanel extends javax.swing.JPanel {
                 unloadingJButtonActionPerformed(evt);
             }
         });
+        add(unloadingJButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(166, 249, -1, 40));
 
         proofJButton.setText("Toggle Maintenance");
         proofJButton.addActionListener(new java.awt.event.ActionListener() {
@@ -117,6 +128,7 @@ public class DriverWorkAreaJPanel extends javax.swing.JPanel {
                 proofJButtonActionPerformed(evt);
             }
         });
+        add(proofJButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(322, 249, -1, 40));
 
         refreshJButton.setText("Refresh");
         refreshJButton.addActionListener(new java.awt.event.ActionListener() {
@@ -124,65 +136,7 @@ public class DriverWorkAreaJPanel extends javax.swing.JPanel {
                 refreshJButtonActionPerformed(evt);
             }
         });
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(userLabel)
-                                .addGap(18, 18, 18)
-                                .addComponent(userValueLabel))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(enterpriseLabel)
-                                .addGap(18, 18, 18)
-                                .addComponent(enterpriseValueLabel))
-                            .addComponent(titleLabel)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 538, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(34, 34, 34)
-                        .addComponent(loadingJButton, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(unloadingJButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(proofJButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(refreshJButton, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(12, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(titleLabel)
-                .addGap(32, 32, 32)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(enterpriseLabel)
-                    .addComponent(enterpriseValueLabel))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(userLabel)
-                    .addComponent(userValueLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(proofJButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(refreshJButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(loadingJButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(unloadingJButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(85, 85, 85))
-        );
+        add(refreshJButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(473, 249, 84, 40));
     }// </editor-fold>//GEN-END:initComponents
 
     private void unloadingJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_unloadingJButtonActionPerformed

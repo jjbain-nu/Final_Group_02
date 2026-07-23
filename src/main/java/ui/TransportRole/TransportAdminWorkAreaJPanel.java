@@ -62,16 +62,23 @@ public class TransportAdminWorkAreaJPanel extends javax.swing.JPanel {
         manageFleetJButton = new javax.swing.JButton();
         viewDeliveryStatusJButton = new javax.swing.JButton();
 
+        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
         titleLabel.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         titleLabel.setText("Transport Administrator Portal");
+        add(titleLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(51, 25, -1, -1));
 
         enterpriseLabel.setText("Enterprise:");
+        add(enterpriseLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(18, 89, -1, -1));
 
         userLabel.setText("User:");
+        add(userLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(18, 123, -1, -1));
 
         enterpriseValueLabel.setText("FastLane Logistics");
+        add(enterpriseValueLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(91, 89, -1, -1));
 
         userValueLabel.setText("transadmin");
+        add(userValueLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(62, 123, -1, -1));
 
         receiveDeliveryJButton.setText("Receive Delivery Request");
         receiveDeliveryJButton.addActionListener(new java.awt.event.ActionListener() {
@@ -79,6 +86,7 @@ public class TransportAdminWorkAreaJPanel extends javax.swing.JPanel {
                 receiveDeliveryJButtonActionPerformed(evt);
             }
         });
+        add(receiveDeliveryJButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(81, 180, 203, 35));
 
         schedulingJButton.setText("Scheduling Arrangement");
         schedulingJButton.addActionListener(new java.awt.event.ActionListener() {
@@ -86,6 +94,7 @@ public class TransportAdminWorkAreaJPanel extends javax.swing.JPanel {
                 schedulingJButtonActionPerformed(evt);
             }
         });
+        add(schedulingJButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(344, 180, 184, 35));
 
         createDeliveryJButton.setText("Create Delivery Order");
         createDeliveryJButton.addActionListener(new java.awt.event.ActionListener() {
@@ -93,6 +102,7 @@ public class TransportAdminWorkAreaJPanel extends javax.swing.JPanel {
                 createDeliveryJButtonActionPerformed(evt);
             }
         });
+        add(createDeliveryJButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(81, 233, 203, 32));
 
         reportDeliveryResultJButton.setText("Report Delivery Result");
         reportDeliveryResultJButton.addActionListener(new java.awt.event.ActionListener() {
@@ -100,6 +110,7 @@ public class TransportAdminWorkAreaJPanel extends javax.swing.JPanel {
                 reportDeliveryResultJButtonActionPerformed(evt);
             }
         });
+        add(reportDeliveryResultJButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(344, 233, 184, 32));
 
         manageDriverAccountJButton.setText("Manage Driver Account");
         manageDriverAccountJButton.addActionListener(new java.awt.event.ActionListener() {
@@ -107,6 +118,7 @@ public class TransportAdminWorkAreaJPanel extends javax.swing.JPanel {
                 manageDriverAccountJButtonActionPerformed(evt);
             }
         });
+        add(manageDriverAccountJButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(81, 283, 203, 34));
 
         manageFleetJButton.setText("Manage Fleet");
         manageFleetJButton.addActionListener(new java.awt.event.ActionListener() {
@@ -114,6 +126,7 @@ public class TransportAdminWorkAreaJPanel extends javax.swing.JPanel {
                 manageFleetJButtonActionPerformed(evt);
             }
         });
+        add(manageFleetJButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(344, 283, 184, 34));
 
         viewDeliveryStatusJButton.setText("View Delivery Status");
         viewDeliveryStatusJButton.addActionListener(new java.awt.event.ActionListener() {
@@ -121,75 +134,7 @@ public class TransportAdminWorkAreaJPanel extends javax.swing.JPanel {
                 viewDeliveryStatusJButtonActionPerformed(evt);
             }
         });
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(51, 51, 51)
-                        .addComponent(titleLabel))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(userLabel)
-                                .addGap(18, 18, 18)
-                                .addComponent(userValueLabel))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(enterpriseLabel)
-                                .addGap(18, 18, 18)
-                                .addComponent(enterpriseValueLabel)))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(81, 81, 81)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(viewDeliveryStatusJButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(createDeliveryJButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(manageDriverAccountJButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(receiveDeliveryJButton, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE))
-                        .addGap(60, 60, 60)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(reportDeliveryResultJButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(manageFleetJButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(schedulingJButton, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE)))))
-                .addGap(86, 86, 86))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addComponent(titleLabel)
-                .addGap(32, 32, 32)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(enterpriseLabel)
-                    .addComponent(enterpriseValueLabel))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(userLabel)
-                    .addComponent(userValueLabel))
-                .addGap(41, 41, 41)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(schedulingJButton, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
-                    .addComponent(receiveDeliveryJButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(reportDeliveryResultJButton, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
-                    .addComponent(createDeliveryJButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(manageDriverAccountJButton, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(manageFleetJButton, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(44, 44, 44)
-                .addComponent(viewDeliveryStatusJButton)
-                .addContainerGap(41, Short.MAX_VALUE))
-        );
+        add(viewDeliveryStatusJButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(81, 361, 447, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void createDeliveryJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createDeliveryJButtonActionPerformed

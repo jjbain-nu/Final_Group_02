@@ -55,15 +55,19 @@ public class ManageFleetJPanel extends javax.swing.JPanel {
         capacityLabel = new javax.swing.JLabel();
         capacityJTextField = new javax.swing.JTextField();
 
+        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
         backJButton.setText("<<Back");
         backJButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 backJButtonActionPerformed(evt);
             }
         });
+        add(backJButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(391, 289, -1, -1));
 
         titleLabel.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         titleLabel.setText("Manage Fleet");
+        add(titleLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 27, -1, -1));
 
         fleetJTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -86,12 +90,15 @@ public class ManageFleetJPanel extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(fleetJTable);
 
+        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 71, 538, 105));
+
         addJButton.setText("Add Truck");
         addJButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addJButtonActionPerformed(evt);
             }
         });
+        add(addJButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(41, 289, -1, -1));
 
         removeJButton.setText("Remove");
         removeJButton.addActionListener(new java.awt.event.ActionListener() {
@@ -99,8 +106,13 @@ public class ManageFleetJPanel extends javax.swing.JPanel {
                 removeJButtonActionPerformed(evt);
             }
         });
+        add(removeJButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(143, 289, -1, -1));
 
         plateLabel.setText("Plate:");
+        add(plateLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 210, -1, -1));
+
+        plateJTextField.setMinimumSize(new java.awt.Dimension(120, 40));
+        add(plateJTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(41, 207, 100, -1));
 
         toggleMaintenanceJButton.setText("Toggle Maintenance");
         toggleMaintenanceJButton.addActionListener(new java.awt.event.ActionListener() {
@@ -108,78 +120,21 @@ public class ManageFleetJPanel extends javax.swing.JPanel {
                 toggleMaintenanceJButtonActionPerformed(evt);
             }
         });
+        add(toggleMaintenanceJButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(234, 289, -1, -1));
 
         modelLabel.setText("Model:");
+        add(modelLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(148, 210, -1, -1));
 
         modelJTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 modelJTextFieldActionPerformed(evt);
             }
         });
+        add(modelJTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(191, 207, 110, -1));
 
         capacityLabel.setText("Cap kg:");
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 538, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(plateLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(addJButton)
-                                .addGap(18, 18, 18)
-                                .addComponent(removeJButton)
-                                .addGap(18, 18, 18)
-                                .addComponent(toggleMaintenanceJButton)
-                                .addGap(18, 18, 18)
-                                .addComponent(backJButton))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(plateJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(43, 43, 43)
-                                .addComponent(modelLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(modelJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(56, 56, 56)
-                                .addComponent(capacityLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(capacityJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(titleLabel)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addComponent(titleLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(plateLabel)
-                    .addComponent(plateJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(modelLabel)
-                        .addComponent(modelJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(capacityLabel)
-                            .addComponent(capacityJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(backJButton)
-                    .addComponent(toggleMaintenanceJButton)
-                    .addComponent(addJButton)
-                    .addComponent(removeJButton))
-                .addGap(58, 58, 58))
-        );
+        add(capacityLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(311, 210, -1, -1));
+        add(capacityJTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(356, 207, 110, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void modelJTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modelJTextFieldActionPerformed

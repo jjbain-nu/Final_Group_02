@@ -70,15 +70,19 @@ public class SchedulingJPanel extends javax.swing.JPanel {
         truckLabel = new javax.swing.JLabel();
         truckJComboBox = new javax.swing.JComboBox<>();
 
+        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
         backJButton.setText("<<Back");
         backJButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 backJButtonActionPerformed(evt);
             }
         });
+        add(backJButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(447, 276, -1, -1));
 
         titleLabel.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         titleLabel.setText("Scheduling");
+        add(titleLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(39, 27, -1, -1));
 
         requestJTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -101,12 +105,15 @@ public class SchedulingJPanel extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(requestJTable);
 
+        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(35, 71, 538, 105));
+
         assignJButton.setText("Schedule");
         assignJButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 assignJButtonActionPerformed(evt);
             }
         });
+        add(assignJButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(39, 276, -1, -1));
 
         refreshJButton.setText("Refresh");
         refreshJButton.addActionListener(new java.awt.event.ActionListener() {
@@ -114,66 +121,21 @@ public class SchedulingJPanel extends javax.swing.JPanel {
                 refreshJButtonActionPerformed(evt);
             }
         });
+        add(refreshJButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(135, 276, -1, -1));
 
         dateLabel.setText("Scheduled Date (yyyy-mm-dd):");
+        add(dateLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(35, 210, -1, -1));
+        add(dateJTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(206, 207, 107, -1));
 
         truckLabel.setText("Assign Truck:");
+        add(truckLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(331, 210, -1, -1));
 
         truckJComboBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 truckJComboBoxActionPerformed(evt);
             }
         });
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(39, 39, 39)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(titleLabel)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(assignJButton)
-                        .addGap(18, 18, 18)
-                        .addComponent(refreshJButton)
-                        .addGap(240, 240, 240)
-                        .addComponent(backJButton)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap(35, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(dateLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(dateJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(truckLabel)
-                        .addGap(18, 18, 18)
-                        .addComponent(truckJComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 538, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(36, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addComponent(titleLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(dateLabel)
-                    .addComponent(dateJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(truckLabel)
-                    .addComponent(truckJComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(assignJButton)
-                    .addComponent(refreshJButton)
-                    .addComponent(backJButton))
-                .addGap(58, 58, 58))
-        );
+        add(truckJComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(417, 207, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void truckJComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_truckJComboBoxActionPerformed
