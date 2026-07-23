@@ -6,6 +6,7 @@ Business\WorkQueue\WorkQueue.class
 ui\MaterialShippingWorkAreaJPanel$2.class
 Business\Organization\Organization.class
 Business\Employee\EmployeeDirectory.class
+ui\WholesalerRole\InventoryAdminWorkAreaJPanel.class
 ui\SupplierAdminRole\ManageMaterialRequest.class
 Business\Role\MaterialShippingRole.class
 Business\UserAccount\UserAccount.class
