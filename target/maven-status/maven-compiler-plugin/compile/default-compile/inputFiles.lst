@@ -11,6 +11,7 @@ C:\Users\Joseph\Documents\Garage\SchoolHouse\Northeastern University\INFO5100 Ap
 C:\Users\Joseph\Documents\Garage\SchoolHouse\Northeastern University\INFO5100 AppEngDev\Final_Project\src\main\java\Business\Role\AdminRole.java
 C:\Users\Joseph\Documents\Garage\SchoolHouse\Northeastern University\INFO5100 AppEngDev\Final_Project\src\main\java\Business\Employee\Employee.java
 C:\Users\Joseph\Documents\Garage\SchoolHouse\Northeastern University\INFO5100 AppEngDev\Final_Project\src\main\java\Business\Enterprise\SupplierEnterprise.java
+C:\Users\Joseph\Documents\Garage\SchoolHouse\Northeastern University\INFO5100 AppEngDev\Final_Project\src\main\java\ui\WholesalerRole\ShippingOrderStaffWorkAreaJPanel.java
 C:\Users\Joseph\Documents\Garage\SchoolHouse\Northeastern University\INFO5100 AppEngDev\Final_Project\src\main\java\ui\SystemAdminWorkArea\ManageEnterpriseJPanel.java
 C:\Users\Joseph\Documents\Garage\SchoolHouse\Northeastern University\INFO5100 AppEngDev\Final_Project\src\main\java\Business\Role\Role.java
 C:\Users\Joseph\Documents\Garage\SchoolHouse\Northeastern University\INFO5100 AppEngDev\Final_Project\src\main\java\Business\Role\SupplierAdminRole.java
@@ -25,6 +26,7 @@ C:\Users\Joseph\Documents\Garage\SchoolHouse\Northeastern University\INFO5100 Ap
 C:\Users\Joseph\Documents\Garage\SchoolHouse\Northeastern University\INFO5100 AppEngDev\Final_Project\src\main\java\ui\WholesalerRole\WholesalerWorkAreaJPanel.java
 C:\Users\Joseph\Documents\Garage\SchoolHouse\Northeastern University\INFO5100 AppEngDev\Final_Project\src\main\java\Business\Supplier\MaterialRequest.java
 C:\Users\Joseph\Documents\Garage\SchoolHouse\Northeastern University\INFO5100 AppEngDev\Final_Project\src\main\java\ui\MaterialShippingRole\MaterialShippingWorkAreaJPanel.java
+C:\Users\Joseph\Documents\Garage\SchoolHouse\Northeastern University\INFO5100 AppEngDev\Final_Project\src\main\java\ui\WholesalerRole\ShippingOperatorWorkAreaJPanel.java
 C:\Users\Joseph\Documents\Garage\SchoolHouse\Northeastern University\INFO5100 AppEngDev\Final_Project\src\main\java\ui\SupplierAdminRole\ManageMaterialRequest.java
 C:\Users\Joseph\Documents\Garage\SchoolHouse\Northeastern University\INFO5100 AppEngDev\Final_Project\src\main\java\Business\Enterprise\WholesalerEnterprise.java
 C:\Users\Joseph\Documents\Garage\SchoolHouse\Northeastern University\INFO5100 AppEngDev\Final_Project\src\main\java\Business\Enterprise\Enterprise.java
@@ -45,6 +47,8 @@ C:\Users\Joseph\Documents\Garage\SchoolHouse\Northeastern University\INFO5100 Ap
 C:\Users\Joseph\Documents\Garage\SchoolHouse\Northeastern University\INFO5100 AppEngDev\Final_Project\src\main\java\Business\Organization\AdminOrganization.java
 C:\Users\Joseph\Documents\Garage\SchoolHouse\Northeastern University\INFO5100 AppEngDev\Final_Project\src\main\java\Business\Role\MaterialShippingRole.java
 C:\Users\Joseph\Documents\Garage\SchoolHouse\Northeastern University\INFO5100 AppEngDev\Final_Project\src\main\java\Business\Organization\OrganizationDirectory.java
+C:\Users\Joseph\Documents\Garage\SchoolHouse\Northeastern University\INFO5100 AppEngDev\Final_Project\src\main\java\Business\WorkQueue\WholesaleWorkRequest.java
+C:\Users\Joseph\Documents\Garage\SchoolHouse\Northeastern University\INFO5100 AppEngDev\Final_Project\src\main\java\ui\WholesalerRole\WholesaleWorkflowActionJPanel.java
 C:\Users\Joseph\Documents\Garage\SchoolHouse\Northeastern University\INFO5100 AppEngDev\Final_Project\src\main\java\Business\Role\LabManagerRole.java
 C:\Users\Joseph\Documents\Garage\SchoolHouse\Northeastern University\INFO5100 AppEngDev\Final_Project\src\main\java\Business\Role\DoctorRole.java
 C:\Users\Joseph\Documents\Garage\SchoolHouse\Northeastern University\INFO5100 AppEngDev\Final_Project\src\main\java\Business\Supplier\Material.java
@@ -58,5 +62,6 @@ C:\Users\Joseph\Documents\Garage\SchoolHouse\Northeastern University\INFO5100 Ap
 C:\Users\Joseph\Documents\Garage\SchoolHouse\Northeastern University\INFO5100 AppEngDev\Final_Project\src\main\java\Business\WorkQueue\WorkRequest.java
 C:\Users\Joseph\Documents\Garage\SchoolHouse\Northeastern University\INFO5100 AppEngDev\Final_Project\src\main\java\ui\AdministrativeRole\ManageOrganizationJPanel.java
 C:\Users\Joseph\Documents\Garage\SchoolHouse\Northeastern University\INFO5100 AppEngDev\Final_Project\src\main\java\ui\SystemAdminWorkArea\SystemAdminWorkAreaJPanel.java
+C:\Users\Joseph\Documents\Garage\SchoolHouse\Northeastern University\INFO5100 AppEngDev\Final_Project\src\main\java\ui\WholesalerRole\WholesalerWorkflowJPanel.java
 C:\Users\Joseph\Documents\Garage\SchoolHouse\Northeastern University\INFO5100 AppEngDev\Final_Project\src\main\java\ui\SupplierAdminRole\SupplierAdminWorkAreaJPanel.java
 C:\Users\Joseph\Documents\Garage\SchoolHouse\Northeastern University\INFO5100 AppEngDev\Final_Project\src\main\java\ui\DoctorRole\RequestLabTestJPanel.java

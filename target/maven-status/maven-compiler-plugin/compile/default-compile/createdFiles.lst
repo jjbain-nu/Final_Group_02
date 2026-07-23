@@ -9,6 +9,7 @@ Business\Employee\EmployeeDirectory.class
 ui\WholesalerRole\InventoryAdminWorkAreaJPanel.class
 ui\SupplierAdminRole\ManageMaterialRequest.class
 Business\Role\MaterialShippingRole.class
+ui\WholesalerRole\WholesalerWorkflowJPanel.class
 Business\UserAccount\UserAccount.class
 ui\LabManagerRole\LabManagerWorkAreaJPanel$1.class
 ui\MainJFrame$2.class
@@ -24,6 +25,7 @@ ui\SupplierAdminRole\SupplierAdminWorkAreaJPanel$2.class
 ui\AdministrativeRole\ManageEmployeeJPanel$2.class
 ui\SystemAdminWorkArea\ManageEnterpriseAdminJPanel$2.class
 Business\Role\Role.class
+ui\WholesalerRole\ShippingOperatorWorkAreaJPanel.class
 Business\Organization\InventoryOrganization.class
 Business\Organization\ShippingOrganization.class
 ui\WholesalerRole\WholesalerWorkAreaJPanel.class
@@ -47,6 +49,7 @@ ui\DoctorRole\DoctorWorkAreaJPanel.class
 Business\EcoSystem.class
 Business\Organization\DoctorOrganization.class
 ui\SupplierAdminRole\SupplierAdminWorkAreaJPanel.class
+Business\WorkQueue\WholesaleWorkRequest$RequestType.class
 ui\SystemAdminWorkArea\ManageEnterpriseJPanel$3.class
 ui\SystemAdminWorkArea\SystemAdminWorkAreaJPanel$2.class
 ui\AdministrativeRole\ManageEmployeeJPanel$4.class
@@ -56,6 +59,7 @@ ui\SupplierAdminRole\SupplierAdminWorkAreaJPanel$3.class
 ui\SupplierAdminRole\ManageMaterialRequest$4.class
 ui\SystemAdminWorkArea\ManageNetworkJPanel$2.class
 ui\SystemAdminWorkArea\ManageEnterpriseJPanel.class
+ui\WholesalerRole\WholesalerWorkflowJPanel$View.class
 Business\Role\ShippingOrderStaffRole.class
 Business\Enterprise\WholesalerEnterprise.class
 Business\Network\Network.class
@@ -86,6 +90,7 @@ Business\Organization\Organization$Type.class
 ui\AdministrativeRole\ManageUserAccountJPanel$1.class
 ui\LabAssistantRole\LabAssistantWorkAreaJPanel$2.class
 Business\UserAccount\UserAccountDirectory.class
+ui\WholesalerRole\ShippingOrderStaffWorkAreaJPanel.class
 Business\Supplier\PickingOrder.class
 ui\LabManagerRole\LabManagerWorkAreaJPanel$2.class
 ui\SystemAdminWorkArea\SystemAdminWorkAreaJPanel$4.class
@@ -113,8 +118,11 @@ ui\AdministrativeRole\ManageEmployeeJPanel$1.class
 ui\MaterialShippingWorkAreaJPanel$3.class
 Business\Organization\OrganizationDirectory.class
 Business\Role\ShippingOperatorRole.class
+ui\WholesalerRole\WholesaleWorkflowActionJPanel$1.class
 ui\AdministrativeRole\AdminWorkAreaJPanel$3.class
+ui\WholesalerRole\WholesaleWorkflowActionJPanel.class
 ui\SystemAdminWorkArea\ManageNetworkJPanel.class
+Business\WorkQueue\WholesaleWorkRequest.class
 Business\Role\Role$RoleType.class
 Business\Role\LabManagerRole.class
 ui\DoctorRole\RequestLabTestJPanel$1.class

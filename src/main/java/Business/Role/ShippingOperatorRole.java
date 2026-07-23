@@ -5,7 +5,7 @@ import Business.Enterprise.Enterprise;
 import Business.Organization.Organization;
 import Business.UserAccount.UserAccount;
 import javax.swing.JPanel;
-import ui.WholesalerRole.ShippingOperatorWorkAreaJPanel;
+import ui.WholesalerRole.WholesalerWorkflowJPanel;
 
 /**
  * Role responsible for executing wholesaler shipments.
@@ -15,7 +15,7 @@ public class ShippingOperatorRole extends Role {
     @Override
     public JPanel createWorkArea(JPanel userProcessContainer, UserAccount account,
             Organization organization, Enterprise enterprise, EcoSystem business) {
-        return new ShippingOperatorWorkAreaJPanel(enterprise);
+        return new WholesalerWorkflowJPanel(userProcessContainer, WholesalerWorkflowJPanel.View.SHIPPING_OPERATOR, account, organization, enterprise);
     }
 
     @Override
