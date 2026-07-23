@@ -14,7 +14,6 @@ import java.awt.CardLayout;
 import java.awt.Component;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -86,11 +85,7 @@ public class RequestLabTestJPanel extends javax.swing.JPanel {
 
     private void requestTestJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_requestTestJButtonActionPerformed
         
-        String message = messageJTextField.getText().trim();
-        if (message.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Please enter a test request message.", "Missing request message", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
+        String message = messageJTextField.getText();
         
         LabTestWorkRequest request = new LabTestWorkRequest();
         request.setMessage(message);
@@ -107,10 +102,6 @@ public class RequestLabTestJPanel extends javax.swing.JPanel {
         if (org!=null){
             org.getWorkQueue().getWorkRequestList().add(request);
             userAccount.getWorkQueue().getWorkRequestList().add(request);
-            JOptionPane.showMessageDialog(this, "Lab test request submitted.", "Request submitted", JOptionPane.INFORMATION_MESSAGE);
-            messageJTextField.setText("");
-        } else {
-            JOptionPane.showMessageDialog(this, "This enterprise does not have a lab organization to receive the request.", "Lab unavailable", JOptionPane.WARNING_MESSAGE);
         }
         
     }//GEN-LAST:event_requestTestJButtonActionPerformed

@@ -4,7 +4,6 @@
  */
 package ui;
 
-import Business.ConfigureASystem;
 import Business.EcoSystem;
 import Business.DB4OUtil.DB4OUtil;
 import Business.Enterprise.Enterprise;
@@ -30,15 +29,7 @@ public class MainJFrame extends javax.swing.JFrame {
     public MainJFrame() {
         initComponents();
         system = dB4OUtil.retrieveSystem();
-        
-        if(system.getNetworkList().isEmpty()){
-            system = ConfigureASystem.configure();
-            dB4OUtil.storeSystem(system);
-        }
-        
-        
-        
-        this.setSize(1200, 800);
+        this.setSize(1680, 1050);
     }
 
     /**
