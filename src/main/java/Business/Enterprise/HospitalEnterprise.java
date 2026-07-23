@@ -6,6 +6,7 @@
 package Business.Enterprise;
 
 import Business.Role.Role;
+import Business.Organization.Organization.Type;
 import java.util.ArrayList;
 
 /**
@@ -20,6 +21,11 @@ public class HospitalEnterprise extends Enterprise {
     @Override
     public ArrayList<Role> getSupportedRole() {
         return null;
+    }
+
+    @Override
+    public boolean supportsOrganization(Type type) {
+        return type == Type.Doctor || type == Type.Lab || type == Type.Supplier;
     }
     
 }

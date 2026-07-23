@@ -7,7 +7,9 @@ package ui.AdministrativeRole;
 import Business.Organization.Organization;
 import Business.Organization.Organization.Type;
 import Business.Organization.OrganizationDirectory;
+import Business.Enterprise.Enterprise;
 import java.awt.CardLayout;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 
@@ -18,15 +20,17 @@ import javax.swing.table.DefaultTableModel;
 public class ManageOrganizationJPanel extends javax.swing.JPanel {
 
     private OrganizationDirectory directory;
+    private Enterprise enterprise;
     private JPanel userProcessContainer;
     
     /**
      * Creates new form ManageOrganizationJPanel
      */
-    public ManageOrganizationJPanel(JPanel userProcessContainer,OrganizationDirectory directory) {
+    public ManageOrganizationJPanel(JPanel userProcessContainer, Enterprise enterprise) {
         initComponents();
         this.userProcessContainer = userProcessContainer;
-        this.directory = directory;
+        this.enterprise = enterprise;
+        this.directory = enterprise.getOrganizationDirectory();
         
         populateTable();
         populateCombo();
@@ -35,7 +39,7 @@ public class ManageOrganizationJPanel extends javax.swing.JPanel {
     private void populateCombo(){
         organizationJComboBox.removeAllItems();
         for (Type type : Organization.Type.values()){
-            if (!type.getValue().equals(Type.Admin.getValue()))
+            if (enterprise.supportsOrganization(type))
                 organizationJComboBox.addItem(type);
         }
     }
@@ -159,8 +163,23 @@ public class ManageOrganizationJPanel extends javax.swing.JPanel {
     private void addJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addJButtonActionPerformed
 
         Type type = (Type) organizationJComboBox.getSelectedItem();
+        if (type == null) {
+            JOptionPane.showMessageDialog(this, "There are no organization types available for this enterprise.", "No organization types", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        if (!enterprise.supportsOrganization(type)) {
+            JOptionPane.showMessageDialog(this, "The selected organization type is not allowed for this enterprise.", "Organization type not allowed", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        for (Organization existingOrganization : directory.getOrganizationList()) {
+            if (existingOrganization.getName().equals(type.getValue())) {
+                JOptionPane.showMessageDialog(this, "This enterprise already has a " + type.getValue() + ".", "Duplicate organization", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+        }
         directory.createOrganization(type);
         populateTable();
+        JOptionPane.showMessageDialog(this, type.getValue() + " created successfully.", "Organization created", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_addJButtonActionPerformed
 
     private void backJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backJButtonActionPerformed

@@ -7,6 +7,7 @@ package Business.Enterprise;
 
 import Business.Organization.Organization;
 import Business.Organization.OrganizationDirectory;
+import Business.Organization.Organization.Type;
 
 /**
  *
@@ -56,5 +57,12 @@ public abstract class Enterprise extends Organization{
         super(name);
         this.enterpriseType=type;
         organizationDirectory=new OrganizationDirectory();
+    }
+
+    /**
+     * Defines which organization types this enterprise is allowed to contain.
+     */
+    public boolean supportsOrganization(Type type) {
+        return false;
     }
 }
