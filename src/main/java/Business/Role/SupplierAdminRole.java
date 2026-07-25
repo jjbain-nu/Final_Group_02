@@ -32,5 +32,9 @@ public class SupplierAdminRole extends Role{
     
     }
     
+    @Override
+    public String toString() {
+        return "Supplier Admin";
+    }
     
 }

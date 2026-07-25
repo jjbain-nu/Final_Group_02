@@ -21,6 +21,11 @@ public class MaterialShippingRole extends Role {
     @Override
     public JPanel createWorkArea(JPanel userProcessContainer, UserAccount account, Organization organization, Enterprise enterprise, EcoSystem business) {
     return new MaterialShippingWorkPanel(userProcessContainer, account, (SupplierOrganization)organization, enterprise);
-   
+       
 }
+    @Override
+    public String toString() {
+        return "Material Shipping";
+    }
+    
 }

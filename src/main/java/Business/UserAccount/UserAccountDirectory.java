@@ -20,6 +20,10 @@ public class UserAccountDirectory {
         userAccountList = new ArrayList();
     }
 
+     public void deleteUserAccount(UserAccount account) {
+         userAccountList.remove(account);
+     }
+     
     public ArrayList<UserAccount> getUserAccountList() {
         return userAccountList;
     }
@@ -49,4 +53,8 @@ public class UserAccountDirectory {
         }
         return true;
     }
+    
+    
+    
+    
 }

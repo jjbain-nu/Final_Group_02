@@ -234,6 +234,11 @@ public class SupplierAdminWorkAreaJPanel extends javax.swing.JPanel {
 
     private void btnManageUserAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManageUserAccountActionPerformed
         // TODO add your handling code here:
+        ManageUserAccount mua = new ManageUserAccount(userProcessContainer, userAccount,organization,enterprise);
+        userProcessContainer.add("ManageUserAccount",mua);
+        CardLayout layout=(CardLayout)userProcessContainer.getLayout();
+        layout.next(userProcessContainer);
+        
     }//GEN-LAST:event_btnManageUserAccountActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
