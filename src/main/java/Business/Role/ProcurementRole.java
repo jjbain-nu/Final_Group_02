@@ -11,6 +11,7 @@ import Business.Organization.ProcurementOrganization;
 import Business.Organization.SupplierOrganization;
 import Business.UserAccount.UserAccount;
 import javax.swing.JPanel;
+import ui.ProcurementRole.ProcurementWorkAreaPanel;
 import ui.SupplierAdminRole.SupplierAdminWorkAreaJPanel;
 
 /**
@@ -26,7 +27,7 @@ public class ProcurementRole extends Role{
                             Enterprise enterprise, 
                             EcoSystem business) {
     
-    return new ProcurementWorkAreaJPanel(
+    return new ProcurementWorkAreaPanel(
             userProcessContainer, 
             account, 
             (ProcurementOrganization)organization,

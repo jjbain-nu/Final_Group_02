@@ -12,6 +12,7 @@ public class MedicineInventory {
     
     private Medicine medicine;
     private int quantity;
+    private int standardStock;
 
     public Medicine getMedicine() {
         return medicine;
@@ -28,6 +29,29 @@ public class MedicineInventory {
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
+
+    public int getStandardStock() {
+        return standardStock;
+    }
+
+    public void setStandardStock(int standardStock) {
+        this.standardStock = standardStock;
+    }
+    
+    public int getShortageQty(){
+        return Math.max(0,standardStock - quantity);
+        
+    }
+    
+    public boolean isShortage(){
+        return quantity < standardStock;
+    }
+    
+        public boolean isExcess(){
+        return quantity > standardStock;
+    }
+
+    
     
     
     

@@ -12,9 +12,16 @@ import Business.WorkQueue.WorkRequest;
  */
 public class ReplenishmentRequest extends WorkRequest {
     
+    private static int count = 1;
+
+    private int replenishId;
     private Medicine medicine;
     private int replenishQty;
 
+    public ReplenishmentRequest() {
+        replenishId = count++;
+    }
+    
     public Medicine getMedicine() {
         return medicine;
     }
@@ -31,5 +38,10 @@ public class ReplenishmentRequest extends WorkRequest {
         this.replenishQty = replenishQty;
     }
 
+    @Override
+    public String toString(){
+        return String.valueOf(replenishId);
+        
+    }
     
 }

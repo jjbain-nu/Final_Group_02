@@ -27,10 +27,12 @@ public class MedicineInventoryDirectory {
         this.inventoryList = inventoryList;
     }
     
-    public void addInventory(Medicine medicine, int qty){
+    public void addInventory(Medicine medicine, int qty,int standardQty){
         MedicineInventory inv = new MedicineInventory();
         inv.setMedicine(medicine);
         inv.setQuantity(qty);
+        inv.setStandardStock(standardQty);
+        
         inventoryList.add(inv);
         
     }

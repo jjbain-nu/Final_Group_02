@@ -243,13 +243,16 @@ public class ConfigureASystem {
             Medicine medicine = sharedCatalog.addMedicine(medicineId, medicineName, medicinePrice);
             
             int qtyA = faker.number().numberBetween(0,100);
-            pharmacyOrgA.getMedicineInventoryDirectory().addInventory(medicine, qtyA);
+            int standardqtyA = faker.options().option(30,40,50,60,70);
+            pharmacyOrgA.getMedicineInventoryDirectory().addInventory(medicine,qtyA, standardqtyA);
             
             int qtyB = faker.number().numberBetween(0,100);
-            pharmacyOrgB.getMedicineInventoryDirectory().addInventory(medicine, qtyB);
+            int standardqtyB = faker.options().option(30,40,50,60,70);
+            pharmacyOrgB.getMedicineInventoryDirectory().addInventory(medicine, qtyB,standardqtyB);
             
             int qtyC = faker.number().numberBetween(0,100);
-            pharmacyOrgC.getMedicineInventoryDirectory().addInventory(medicine, qtyC);
+            int standardqtyC = faker.options().option(30,40,50,60,70);
+            pharmacyOrgC.getMedicineInventoryDirectory().addInventory(medicine, qtyC,standardqtyC);
         
         }
         

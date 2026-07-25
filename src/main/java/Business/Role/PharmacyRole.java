@@ -11,6 +11,7 @@ import Business.Organization.PharmacyOrganization;
 import Business.Organization.SupplierOrganization;
 import Business.UserAccount.UserAccount;
 import javax.swing.JPanel;
+import ui.PharmacyRole.PharmacyWorkAreaPanel;
 import ui.SupplierAdminRole.SupplierAdminWorkAreaJPanel;
 
 /**
@@ -26,7 +27,7 @@ public class PharmacyRole extends Role{
                             Enterprise enterprise, 
                             EcoSystem business) {
     
-    return new PharmacyWorkAreaJPanel(
+    return new PharmacyWorkAreaPanel(
             userProcessContainer, 
             account, 
             (PharmacyOrganization)organization,
