@@ -20,7 +20,9 @@ C:\Users\yu101\Desktop\Final_Group_02\src\main\java\Business\DB4OUtil\DB4OUtil.j
 C:\Users\yu101\Desktop\Final_Group_02\src\main\java\Business\Role\SupplierAdminRole.java
 C:\Users\yu101\Desktop\Final_Group_02\src\main\java\ui\AdministrativeRole\ManageUserAccountJPanel.java
 C:\Users\yu101\Desktop\Final_Group_02\src\main\java\ui\MaterialShippingRole\ManageShippingRequest.java
+C:\Users\yu101\Desktop\Final_Group_02\src\main\java\Business\Role\PharmacyRole.java
 C:\Users\yu101\Desktop\Final_Group_02\src\main\java\Business\Network\Network.java
+C:\Users\yu101\Desktop\Final_Group_02\src\main\java\Business\Organization\PharmacyOrganization.java
 C:\Users\yu101\Desktop\Final_Group_02\src\main\java\Business\Organization\SupplierOrganization.java
 C:\Users\yu101\Desktop\Final_Group_02\src\main\java\ui\SupplierAdminRole\ManageShippingOrder.java
 C:\Users\yu101\Desktop\Final_Group_02\src\main\java\Business\Fleet\FleetDirectory.java
@@ -43,6 +45,7 @@ C:\Users\yu101\Desktop\Final_Group_02\src\main\java\ui\TransportRole\CreateDeliv
 C:\Users\yu101\Desktop\Final_Group_02\src\main\java\ui\LabManagerRole\LabManagerWorkAreaJPanel.java
 C:\Users\yu101\Desktop\Final_Group_02\src\main\java\Business\WorkQueue\WorkQueue.java
 C:\Users\yu101\Desktop\Final_Group_02\src\main\java\ui\AdministrativeRole\AdminWorkAreaJPanel.java
+C:\Users\yu101\Desktop\Final_Group_02\src\main\java\Business\Organization\ProcurementOrganization.java
 C:\Users\yu101\Desktop\Final_Group_02\src\main\java\Business\Role\DriverRole.java
 C:\Users\yu101\Desktop\Final_Group_02\src\main\java\Business\Supplier\Material.java
 C:\Users\yu101\Desktop\Final_Group_02\src\main\java\Business\WorkQueue\LabTestWorkRequest.java
@@ -52,6 +55,7 @@ C:\Users\yu101\Desktop\Final_Group_02\src\main\java\ui\LabAssistantRole\LabAssis
 C:\Users\yu101\Desktop\Final_Group_02\src\main\java\ui\TransportRole\UpdateDeliveryProofJPanel.java
 C:\Users\yu101\Desktop\Final_Group_02\src\main\java\Business\Supplier\MaterialInventory.java
 C:\Users\yu101\Desktop\Final_Group_02\src\main\java\ui\DoctorRole\RequestLabTestJPanel.java
+C:\Users\yu101\Desktop\Final_Group_02\src\main\java\Business\Role\ProcurementRole.java
 C:\Users\yu101\Desktop\Final_Group_02\src\main\java\ui\DoctorRole\DoctorWorkAreaJPanel.java
 C:\Users\yu101\Desktop\Final_Group_02\src\main\java\Business\Organization\LabOrganization.java
 C:\Users\yu101\Desktop\Final_Group_02\src\main\java\Business\Role\DoctorRole.java
