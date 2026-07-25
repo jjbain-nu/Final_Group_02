@@ -142,6 +142,7 @@ public class ManageShippingOrder extends javax.swing.JPanel {
             tblShippingOrder.getColumnModel().getColumn(6).setResizable(false);
         }
 
+        lblShippingOrder.setFont(new java.awt.Font("Yu Gothic UI", 1, 18)); // NOI18N
         lblShippingOrder.setText("Shipping Order");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -156,8 +157,8 @@ public class ManageShippingOrder extends javax.swing.JPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnShippingComplete, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnBack)
-                            .addComponent(lblShippingOrder))
-                        .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(lblShippingOrder, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 610, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 776, Short.MAX_VALUE)
                         .addContainerGap())))
@@ -174,7 +175,7 @@ public class ManageShippingOrder extends javax.swing.JPanel {
                 .addComponent(btnShippingComplete)
                 .addGap(34, 34, 34)
                 .addComponent(btnBack)
-                .addContainerGap(268, Short.MAX_VALUE))
+                .addContainerGap(259, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 

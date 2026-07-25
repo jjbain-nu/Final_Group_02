@@ -140,6 +140,7 @@ public class ManageUserAccount extends javax.swing.JPanel {
             tblUserAccount.getColumnModel().getColumn(2).setResizable(false);
         }
 
+        lblUserList.setFont(new java.awt.Font("Yu Gothic UI", 1, 18)); // NOI18N
         lblUserList.setText("User List");
 
         btnDelete.setText("Delete");
@@ -157,7 +158,6 @@ public class ManageUserAccount extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblUserList)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -165,7 +165,8 @@ public class ManageUserAccount extends javax.swing.JPanel {
                                 .addComponent(btnAdd, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGap(43, 43, 43)
                             .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblUserList, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 440, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -182,7 +183,7 @@ public class ManageUserAccount extends javax.swing.JPanel {
                     .addComponent(btnDelete))
                 .addGap(34, 34, 34)
                 .addComponent(btnBack)
-                .addContainerGap(268, Short.MAX_VALUE))
+                .addContainerGap(259, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 

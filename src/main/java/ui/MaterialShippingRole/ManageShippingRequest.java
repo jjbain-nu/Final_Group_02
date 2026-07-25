@@ -196,11 +196,14 @@ public class ManageShippingRequest extends javax.swing.JPanel {
 
         add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, 776, 130));
 
+        lblMaterialRequest.setBackground(new java.awt.Color(153, 204, 255));
+        lblMaterialRequest.setFont(new java.awt.Font("Yu Gothic UI", 1, 18)); // NOI18N
         lblMaterialRequest.setText("Shipping Order");
-        add(lblMaterialRequest, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 280, -1, -1));
+        add(lblMaterialRequest, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 270, 150, -1));
 
+        lblPickingOrder.setFont(new java.awt.Font("Yu Gothic UI", 1, 18)); // NOI18N
         lblPickingOrder.setText("Picking Order");
-        add(lblPickingOrder, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, -1, -1));
+        add(lblPickingOrder, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 170, -1));
 
         btnPrintPickingList.setText("Print Picking List");
         btnPrintPickingList.addActionListener(new java.awt.event.ActionListener() {
@@ -208,7 +211,7 @@ public class ManageShippingRequest extends javax.swing.JPanel {
                 btnPrintPickingListActionPerformed(evt);
             }
         });
-        add(btnPrintPickingList, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 240, 166, -1));
+        add(btnPrintPickingList, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 230, 166, -1));
 
         btnCompletePicking.setText("Picking complete");
         btnCompletePicking.addActionListener(new java.awt.event.ActionListener() {
@@ -216,7 +219,7 @@ public class ManageShippingRequest extends javax.swing.JPanel {
                 btnCompletePickingActionPerformed(evt);
             }
         });
-        add(btnCompletePicking, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 240, 166, -1));
+        add(btnCompletePicking, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 230, 166, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLoadingCompleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoadingCompleteActionPerformed

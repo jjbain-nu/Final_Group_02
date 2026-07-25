@@ -58,12 +58,12 @@ public class SupplierAdminWorkAreaJPanel extends javax.swing.JPanel {
         btnCreatePickingOrder = new javax.swing.JButton();
         btnViewOrder = new javax.swing.JButton();
         btnManageUserAccount = new javax.swing.JButton();
-        jPanel1 = new javax.swing.JPanel();
-        lblTitle = new javax.swing.JLabel();
         lblEnterprise = new javax.swing.JLabel();
         enterpriseValueLabel = new javax.swing.JLabel();
         userValueLabel = new javax.swing.JLabel();
         lblUser = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        enterpriseLabel = new javax.swing.JLabel();
 
         btnCheckInventory.setBackground(new java.awt.Color(0, 51, 102));
         btnCheckInventory.setFont(new java.awt.Font("Yu Gothic UI", 1, 14)); // NOI18N
@@ -115,38 +115,43 @@ public class SupplierAdminWorkAreaJPanel extends javax.swing.JPanel {
             }
         });
 
+        lblEnterprise.setFont(new java.awt.Font("Yu Gothic UI", 0, 14)); // NOI18N
+        lblEnterprise.setText("Enterprise : ");
+
+        enterpriseValueLabel.setFont(new java.awt.Font("Yu Gothic UI", 0, 14)); // NOI18N
+
+        userValueLabel.setFont(new java.awt.Font("Yu Gothic UI", 0, 14)); // NOI18N
+
+        lblUser.setFont(new java.awt.Font("Yu Gothic UI", 0, 14)); // NOI18N
+        lblUser.setText("User : ");
+
         jPanel1.setBackground(new java.awt.Color(0, 51, 102));
 
-        lblTitle.setFont(new java.awt.Font("Yu Gothic UI", 1, 24)); // NOI18N
-        lblTitle.setForeground(new java.awt.Color(255, 255, 255));
-        lblTitle.setText("Supplier Admin Portal");
+        enterpriseLabel.setFont(new java.awt.Font("Yu Gothic UI", 1, 24)); // NOI18N
+        enterpriseLabel.setForeground(new java.awt.Color(255, 255, 255));
+        enterpriseLabel.setText("Supplier Admin Portal");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addComponent(lblTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 367, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28)
+                .addComponent(enterpriseLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lblTitle)
-                .addContainerGap())
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(enterpriseLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(14, Short.MAX_VALUE))
         );
-
-        lblEnterprise.setText("Enterprise : ");
-
-        lblUser.setText("User : ");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addGap(70, 70, 70)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -168,12 +173,13 @@ public class SupplierAdminWorkAreaJPanel extends javax.swing.JPanel {
                             .addComponent(enterpriseValueLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(userValueLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addGap(130, 130, 130))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(8, 8, 8)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(lblEnterprise, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(enterpriseValueLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -191,7 +197,7 @@ public class SupplierAdminWorkAreaJPanel extends javax.swing.JPanel {
                     .addComponent(btnViewOrder, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(29, 29, 29)
                 .addComponent(btnManageUserAccount, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(78, Short.MAX_VALUE))
+                .addContainerGap(71, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -247,10 +253,10 @@ public class SupplierAdminWorkAreaJPanel extends javax.swing.JPanel {
     private javax.swing.JButton btnManageMaterialRequest;
     private javax.swing.JButton btnManageUserAccount;
     private javax.swing.JButton btnViewOrder;
+    private javax.swing.JLabel enterpriseLabel;
     private javax.swing.JLabel enterpriseValueLabel;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblEnterprise;
-    private javax.swing.JLabel lblTitle;
     private javax.swing.JLabel lblUser;
     private javax.swing.JLabel userValueLabel;
     // End of variables declaration//GEN-END:variables

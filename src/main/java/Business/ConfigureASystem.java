@@ -73,7 +73,7 @@ public class ConfigureASystem {
         transOrg.getFleetDirectory().addTruck("TN-01-BB-5678", "Tata LPT 1613", 12000);
         
          //create an enterprise
-        SupplierEnterprise supplierEnterprise = new SupplierEnterprise("Supplier");
+        SupplierEnterprise supplierEnterprise = new SupplierEnterprise("Supplier A");
         
         //initialize some organizations
         SupplierOrganization supplierOrg = new SupplierOrganization();

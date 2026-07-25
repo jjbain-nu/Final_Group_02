@@ -24,10 +24,10 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="btnCreatePickOrder" min="-2" pref="166" max="-2" attributes="0"/>
                           <Component id="btnBack" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblMaterialRequest" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblPickingOrder" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblMaterialRequest" alignment="0" min="-2" pref="207" max="-2" attributes="0"/>
+                          <Component id="lblPickingOrder" alignment="0" min="-2" pref="179" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="581" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
                       <Group type="103" groupAlignment="1" attributes="0">
@@ -56,7 +56,7 @@
               <Component id="jScrollPane2" min="-2" pref="130" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
               <Component id="btnBack" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="39" max="32767" attributes="0"/>
+              <EmptySpace pref="21" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -253,11 +253,17 @@
     </Container>
     <Component class="javax.swing.JLabel" name="lblMaterialRequest">
       <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Yu Gothic UI" size="18" style="1"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Material Request"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblPickingOrder">
       <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Yu Gothic UI" size="18" style="1"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Picking Order"/>
       </Properties>
     </Component>

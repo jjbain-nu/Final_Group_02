@@ -24,9 +24,9 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="btnShippingComplete" min="-2" pref="166" max="-2" attributes="0"/>
                           <Component id="btnBack" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblShippingOrder" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblShippingOrder" alignment="0" min="-2" pref="178" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="610" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
                       <Component id="jScrollPane2" pref="776" max="32767" attributes="0"/>
@@ -48,7 +48,7 @@
               <Component id="btnShippingComplete" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
               <Component id="btnBack" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="268" max="32767" attributes="0"/>
+              <EmptySpace pref="259" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -179,6 +179,9 @@
     </Container>
     <Component class="javax.swing.JLabel" name="lblShippingOrder">
       <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Yu Gothic UI" size="18" style="1"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Shipping Order"/>
       </Properties>
     </Component>
