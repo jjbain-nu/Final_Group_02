@@ -4,6 +4,7 @@
  */
 package Business.Organization;
 
+import Business.Hospital.MedicineInventoryDirectory;
 import Business.Role.PharmacyRole;
 import Business.Role.ProcurementRole;
 import Business.Role.Role;
@@ -15,9 +16,23 @@ import java.util.ArrayList;
  */
 public class PharmacyOrganization extends Organization {
     
+    private MedicineInventoryDirectory medicineInventoryDirectory;
+    
      public PharmacyOrganization() {
         super(Organization.Type.Pharmacy.getValue());
+        
+        medicineInventoryDirectory = new MedicineInventoryDirectory();
+        
      }
+
+    public MedicineInventoryDirectory getMedicineInventoryDirectory() {
+        return medicineInventoryDirectory;
+    }
+
+    public void setMedicineInventoryList(MedicineInventoryDirectory medicineInventoryDirectory) {
+        this.medicineInventoryDirectory = medicineInventoryDirectory;
+    }
+     
      
       @Override
         public ArrayList<Role> getSupportedRole() {

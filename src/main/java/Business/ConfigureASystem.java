@@ -5,15 +5,22 @@ import Business.Role.LabManagerRole;
 import Business.Role.SystemAdminRole;
 import Business.UserAccount.UserAccount;
 import Business.Enterprise.Enterprise;
+import Business.Enterprise.HospitalEnterprise;
 import Business.Enterprise.SupplierEnterprise;
 import Business.Enterprise.TransportEnterprise;
+import Business.Hospital.Medicine;
+import Business.Hospital.MedicineCatalog;
 import Business.Network.Network;
 import Business.Organization.Organization;
+import Business.Organization.PharmacyOrganization;
+import Business.Organization.ProcurementOrganization;
 import Business.Organization.SupplierOrganization;
 import Business.Organization.TransportOrganization;
 import Business.Role.AdminRole;
 import Business.Role.DriverRole;
 import Business.Role.MaterialShippingRole;
+import Business.Role.PharmacyRole;
+import Business.Role.ProcurementRole;
 import Business.Role.SupplierAdminRole;
 import Business.Role.TransportAdminRole;
 import Business.Supplier.Material;
@@ -72,15 +79,15 @@ public class ConfigureASystem {
         transOrg.getFleetDirectory().addTruck("TN-01-AA-1234", "Volvo FH16", 20000);
         transOrg.getFleetDirectory().addTruck("TN-01-BB-5678", "Tata LPT 1613", 12000);
         
-         //create an enterprise
+         //create a supplier enterprise
         SupplierEnterprise supplierEnterprise = new SupplierEnterprise("Supplier A");
         
-        //initialize some organizations
+        //initialize supplier organizations
         SupplierOrganization supplierOrg = new SupplierOrganization();
         supplierEnterprise.getOrganizationDirectory().getOrganizationList().add(supplierOrg);
         network.getEnterpriseDirectory().getEnterpriseList().add(supplierEnterprise);
         
-        //have some employees 
+        //have some supplier enterprise employees 
         Employee enterpriseAdminEmp = supplierEnterprise.getEmployeeDirectory().createEmployee("supplierEnterpriseAdmin");
         supplierEnterprise.getUserAccountDirectory().createUserAccount(
                 "SEA",
@@ -88,6 +95,7 @@ public class ConfigureASystem {
                 enterpriseAdminEmp,
                 new AdminRole());
         
+        // have some supplier employees
         Employee supplierAdminEmp01 = supplierOrg.getEmployeeDirectory().createEmployee("SupplierAdmin01");
         Employee MaterialShipping01 = supplierOrg.getEmployeeDirectory().createEmployee("MaterialShipping01");
         
@@ -95,10 +103,7 @@ public class ConfigureASystem {
         UserAccount sa01 = supplierOrg.getUserAccountDirectory().createUserAccount("SA","1111",supplierAdminEmp01, new SupplierAdminRole());
         UserAccount ms01 = supplierOrg.getUserAccountDirectory().createUserAccount("MS","1111",MaterialShipping01, new MaterialShippingRole());        
 
-        System.out.println("Supplier Admin Created");
-        
-       
-        
+                
         //Create 100 sample material and material inventory
         MaterialCatalog catalog = supplierEnterprise.getMaterialCatalog();
         Faker faker = new Faker();
@@ -146,6 +151,111 @@ public class ConfigureASystem {
                    
             supplierOrg.getWorkQueue().getWorkRequestList().add(mr);
         }
+        
+        
+          //create hospital enterprises
+        HospitalEnterprise hospitalEnterpriseA = new HospitalEnterprise("Hospital A");
+        HospitalEnterprise hospitalEnterpriseB = new HospitalEnterprise("Hospital B");
+        HospitalEnterprise hospitalEnterpriseC = new HospitalEnterprise("Hospital C");
+       
+        network.getEnterpriseDirectory().getEnterpriseList().add(hospitalEnterpriseA);
+        network.getEnterpriseDirectory().getEnterpriseList().add(hospitalEnterpriseB);
+        network.getEnterpriseDirectory().getEnterpriseList().add(hospitalEnterpriseC);
+        
+         //create hospital organizations
+        ProcurementOrganization procurementOrgA = new ProcurementOrganization();
+        PharmacyOrganization pharmacyOrgA = new PharmacyOrganization();
+        hospitalEnterpriseA.getOrganizationDirectory().getOrganizationList().add(procurementOrgA);
+        hospitalEnterpriseA.getOrganizationDirectory().getOrganizationList().add(pharmacyOrgA);
+        
+        ProcurementOrganization procurementOrgB = new ProcurementOrganization();
+        PharmacyOrganization pharmacyOrgB = new PharmacyOrganization();
+        hospitalEnterpriseB.getOrganizationDirectory().getOrganizationList().add(procurementOrgB);
+        hospitalEnterpriseB.getOrganizationDirectory().getOrganizationList().add(pharmacyOrgB);
+        
+        ProcurementOrganization procurementOrgC = new ProcurementOrganization();
+        PharmacyOrganization pharmacyOrgC = new PharmacyOrganization();
+        hospitalEnterpriseC.getOrganizationDirectory().getOrganizationList().add(procurementOrgC);
+        hospitalEnterpriseC.getOrganizationDirectory().getOrganizationList().add(pharmacyOrgC);
+        
+         //have some hospital enterprice admin employees 
+        Employee hospitalEnterpriseAdminA = hospitalEnterpriseA.getEmployeeDirectory().createEmployee("hospitalEnterpriseAdminA");
+        Employee hospitalEnterpriseAdminB = hospitalEnterpriseB.getEmployeeDirectory().createEmployee("hospitalEnterpriseAdminB");
+        Employee hospitalEnterpriseAdminC = hospitalEnterpriseB.getEmployeeDirectory().createEmployee("hospitalEnterpriseAdminC");
+        
+        hospitalEnterpriseA.getUserAccountDirectory().createUserAccount(
+                "HEA-A",
+                "1111",
+                hospitalEnterpriseAdminA,
+                new AdminRole());
+        
+        hospitalEnterpriseB.getUserAccountDirectory().createUserAccount(
+                "HEA-B",
+                "1111",
+                hospitalEnterpriseAdminB,
+                new AdminRole());
+         
+        hospitalEnterpriseC.getUserAccountDirectory().createUserAccount(
+                "HEA-C",
+                "1111",
+                hospitalEnterpriseAdminC,
+                new AdminRole());
+        
+        // have some hospital employees
+        
+        Employee procurementEmpA = procurementOrgA.getEmployeeDirectory().createEmployee("Procurement A");
+        Employee procurementEmpB = procurementOrgB.getEmployeeDirectory().createEmployee("Procurement B");
+        Employee procurementEmpC = procurementOrgC.getEmployeeDirectory().createEmployee("Procurement C");
+        
+        Employee PharmacyEmpA = pharmacyOrgA.getEmployeeDirectory().createEmployee("Pharmacy A");
+        Employee PharmacyEmpB = pharmacyOrgB.getEmployeeDirectory().createEmployee("Pharmacy B");
+        Employee PharmacyEmpC = pharmacyOrgC.getEmployeeDirectory().createEmployee("Pharmacy C");
+
+        UserAccount proA = procurementOrgA.getUserAccountDirectory().createUserAccount("ProA","1111",procurementEmpA, new ProcurementRole());
+        UserAccount proB = procurementOrgB.getUserAccountDirectory().createUserAccount("ProB","1111",procurementEmpB, new ProcurementRole());
+        UserAccount proC = procurementOrgC.getUserAccountDirectory().createUserAccount("ProC","1111",procurementEmpC, new ProcurementRole());
+        
+        UserAccount phaA = pharmacyOrgA.getUserAccountDirectory().createUserAccount("PhaA","1111",PharmacyEmpA, new PharmacyRole());
+        UserAccount phaB = pharmacyOrgB.getUserAccountDirectory().createUserAccount("PhaB","1111",PharmacyEmpB, new PharmacyRole());
+        UserAccount phaC = pharmacyOrgC.getUserAccountDirectory().createUserAccount("PhaC","1111",PharmacyEmpC, new PharmacyRole());
+        
+        //Create sample medicines and hospital inventory
+        MedicineCatalog sharedCatalog = new MedicineCatalog();
+               
+        String[] medicines = {
+        "Paracetamol Tablet",
+        "Ibuprofen Tablet",
+        "Amoxicillin Capsule",
+        "Metformin Tablet",
+        "Atorvastatin Tablet",
+        "Losartan Tablet",
+        "Aspirin Tablet",
+        "Omeprazole Capsule",
+        "Insulin Injection",
+        "Azithromycin Tablet"
+};
+        
+        for(String medicineName : medicines){
+               
+            String medicineId = faker.regexify("[A-Z]{3}[0-9]{4}");
+            int medicinePrice = faker.number().numberBetween(100,2000);
+            
+            Medicine medicine = sharedCatalog.addMedicine(medicineId, medicineName, medicinePrice);
+            
+            int qtyA = faker.number().numberBetween(0,100);
+            pharmacyOrgA.getMedicineInventoryDirectory().addInventory(medicine, qtyA);
+            
+            int qtyB = faker.number().numberBetween(0,100);
+            pharmacyOrgB.getMedicineInventoryDirectory().addInventory(medicine, qtyB);
+            
+            int qtyC = faker.number().numberBetween(0,100);
+            pharmacyOrgC.getMedicineInventoryDirectory().addInventory(medicine, qtyC);
+        
+        }
+        
+        hospitalEnterpriseA.setMedicineCatalog(sharedCatalog);
+        hospitalEnterpriseB.setMedicineCatalog(sharedCatalog);
+        hospitalEnterpriseC.setMedicineCatalog(sharedCatalog);
         
         
         return system;

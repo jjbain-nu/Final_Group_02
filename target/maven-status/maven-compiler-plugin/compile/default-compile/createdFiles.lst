@@ -31,6 +31,7 @@ ui\SupplierAdminRole\ManageUserAccount$3.class
 Business\Enterprise\Enterprise$EnterpriseType.class
 Business\Role\AdminRole.class
 ui\TransportRole\DriverWorkAreaJPanel$3.class
+Business\Hospital\ReplenishmentRequest.class
 Business\WorkQueue\DeliveryWorkRequest.class
 ui\SystemAdminWorkArea\SystemAdminWorkAreaJPanel$1.class
 ui\AdministrativeRole\ManageOrganizationJPanel.class
@@ -51,8 +52,10 @@ ui\AdministrativeRole\ManageOrganizationJPanel$3.class
 ui\SupplierAdminRole\CreateUserAccount.class
 Business\Role\DoctorRole.class
 Business\Employee\Employee.class
+Business\Hospital\Medicine.class
 Business\Role\TransportAdminRole.class
 ui\TransportRole\ManageFleetJPanel$1.class
+Business\Hospital\ProcurementOrder.class
 ui\TransportRole\ManageFleetJPanel$4.class
 Business\Supplier\MaterialRequest.class
 ui\TransportRole\DriverWorkAreaJPanel$5.class
@@ -60,6 +63,7 @@ ui\SystemAdminWorkArea\ManageEnterpriseJPanel$2.class
 ui\AdministrativeRole\ManageUserAccountJPanel$4.class
 ui\SupplierAdminRole\ManageMaterialRequest$3.class
 ui\SupplierAdminRole\ManageUserAccount$1.class
+Business\Hospital\MedicineInventory.class
 Business\Enterprise\EnterpriseDirectory.class
 ui\AdministrativeRole\AdminWorkAreaJPanel.class
 Business\Organization\SupplierOrganization.class

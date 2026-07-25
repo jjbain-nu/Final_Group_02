@@ -1,4 +1,5 @@
 C:\Users\yu101\Desktop\Final_Group_02\src\main\java\Business\Role\MaterialShippingRole.java
+C:\Users\yu101\Desktop\Final_Group_02\src\main\java\Business\Hospital\MedicineInventoryDirectory.java
 C:\Users\yu101\Desktop\Final_Group_02\src\main\java\Business\Supplier\MaterialCatalog.java
 C:\Users\yu101\Desktop\Final_Group_02\src\main\java\ui\SystemAdminWorkArea\ManageNetworkJPanel.java
 C:\Users\yu101\Desktop\Final_Group_02\src\main\java\ui\LabAssistantRole\ProcessWorkRequestJPanel.java
@@ -7,11 +8,13 @@ C:\Users\yu101\Desktop\Final_Group_02\src\main\java\Business\Organization\AdminO
 C:\Users\yu101\Desktop\Final_Group_02\src\main\java\Business\Organization\OrganizationDirectory.java
 C:\Users\yu101\Desktop\Final_Group_02\src\main\java\Business\WorkQueue\DeliveryWorkRequest.java
 C:\Users\yu101\Desktop\Final_Group_02\src\main\java\ui\TransportRole\UnloadingInspectionJPanel.java
+C:\Users\yu101\Desktop\Final_Group_02\src\main\java\Business\Hospital\MedicineInventory.java
 C:\Users\yu101\Desktop\Final_Group_02\src\main\java\ui\AdministrativeRole\ManageOrganizationJPanel.java
 C:\Users\yu101\Desktop\Final_Group_02\src\main\java\Business\Role\LabAssistantRole.java
 C:\Users\yu101\Desktop\Final_Group_02\src\main\java\Business\Enterprise\SupplierEnterprise.java
 C:\Users\yu101\Desktop\Final_Group_02\src\main\java\Business\Role\SystemAdminRole.java
 C:\Users\yu101\Desktop\Final_Group_02\src\main\java\Business\Employee\Employee.java
+C:\Users\yu101\Desktop\Final_Group_02\src\main\java\Business\Hospital\ReplenishmentRequest.java
 C:\Users\yu101\Desktop\Final_Group_02\src\main\java\Business\Role\TransportAdminRole.java
 C:\Users\yu101\Desktop\Final_Group_02\src\main\java\ui\SupplierAdminRole\ViewOrderStatus.java
 C:\Users\yu101\Desktop\Final_Group_02\src\main\java\ui\SystemAdminWorkArea\SystemAdminWorkAreaJPanel.java
@@ -22,6 +25,7 @@ C:\Users\yu101\Desktop\Final_Group_02\src\main\java\ui\AdministrativeRole\Manage
 C:\Users\yu101\Desktop\Final_Group_02\src\main\java\ui\MaterialShippingRole\ManageShippingRequest.java
 C:\Users\yu101\Desktop\Final_Group_02\src\main\java\Business\Role\PharmacyRole.java
 C:\Users\yu101\Desktop\Final_Group_02\src\main\java\Business\Network\Network.java
+C:\Users\yu101\Desktop\Final_Group_02\src\main\java\Business\Hospital\Medicine.java
 C:\Users\yu101\Desktop\Final_Group_02\src\main\java\Business\Organization\PharmacyOrganization.java
 C:\Users\yu101\Desktop\Final_Group_02\src\main\java\Business\Organization\SupplierOrganization.java
 C:\Users\yu101\Desktop\Final_Group_02\src\main\java\ui\SupplierAdminRole\ManageShippingOrder.java
@@ -69,7 +73,9 @@ C:\Users\yu101\Desktop\Final_Group_02\src\main\java\Business\Supplier\ShippingOr
 C:\Users\yu101\Desktop\Final_Group_02\src\main\java\ui\SupplierAdminRole\SupplierAdminWorkAreaJPanel.java
 C:\Users\yu101\Desktop\Final_Group_02\src\main\java\Business\Employee\EmployeeDirectory.java
 C:\Users\yu101\Desktop\Final_Group_02\src\main\java\Business\Supplier\PickingOrderDirectory.java
+C:\Users\yu101\Desktop\Final_Group_02\src\main\java\Business\Hospital\ProcurementOrder.java
 C:\Users\yu101\Desktop\Final_Group_02\src\main\java\ui\TransportRole\ReportDeliveryResultJPanel.java
+C:\Users\yu101\Desktop\Final_Group_02\src\main\java\Business\Hospital\MedicineCatalog.java
 C:\Users\yu101\Desktop\Final_Group_02\src\main\java\Business\ConfigureASystem.java
 C:\Users\yu101\Desktop\Final_Group_02\src\main\java\ui\TransportRole\SchedulingJPanel.java
 C:\Users\yu101\Desktop\Final_Group_02\src\main\java\Business\Supplier\MaterialInventoryDirectory.java

@@ -5,11 +5,13 @@
  */
 package Business.Enterprise;
 
+import Business.Hospital.MedicineCatalog;
 import Business.Role.MaterialShippingRole;
 import Business.Role.PharmacyRole;
 import Business.Role.ProcurementRole;
 import Business.Role.Role;
 import Business.Role.SupplierAdminRole;
+import Business.Supplier.MaterialCatalog;
 import java.util.ArrayList;
 
 /**
@@ -18,9 +20,27 @@ import java.util.ArrayList;
  */
 public class HospitalEnterprise extends Enterprise {
     
+    private MedicineCatalog medicineCatalog;
+    
     public HospitalEnterprise(String name){
         super(name,EnterpriseType.Hospital);
+        
+        this.medicineCatalog = new MedicineCatalog();
+        
+        
     }
+
+    public MedicineCatalog getMedicineCatalog() {
+        return medicineCatalog;
+    }
+
+    public void setMedicineCatalog(MedicineCatalog medicineCatalog) {
+        this.medicineCatalog = medicineCatalog;
+    }
+    
+    
+    
+    
     
      @Override
     public ArrayList<Role> getSupportedRole() {
