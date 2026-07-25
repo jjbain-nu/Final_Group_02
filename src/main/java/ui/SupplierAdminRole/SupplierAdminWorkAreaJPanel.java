@@ -215,12 +215,21 @@ public class SupplierAdminWorkAreaJPanel extends javax.swing.JPanel {
 
     private void btnCreatePickingOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreatePickingOrderActionPerformed
         // TODO add your handling code here:
-       
+        ManageShippingOrder mso = new ManageShippingOrder(userProcessContainer, userAccount,organization,enterprise);
+        userProcessContainer.add("manageMaterialRequest",mso);
+        CardLayout layout=(CardLayout)userProcessContainer.getLayout();
+        layout.next(userProcessContainer);
+        
         
     }//GEN-LAST:event_btnCreatePickingOrderActionPerformed
 
     private void btnViewOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewOrderActionPerformed
         // TODO add your handling code here:
+        ViewOrderStatus vos = new ViewOrderStatus(userProcessContainer, userAccount,organization,enterprise);
+        userProcessContainer.add("ViewOrderStatus",vos);
+        CardLayout layout=(CardLayout)userProcessContainer.getLayout();
+        layout.next(userProcessContainer);
+     
     }//GEN-LAST:event_btnViewOrderActionPerformed
 
     private void btnManageUserAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManageUserAccountActionPerformed

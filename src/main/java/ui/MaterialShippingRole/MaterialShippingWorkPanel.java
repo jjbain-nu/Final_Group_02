@@ -202,6 +202,10 @@ public class MaterialShippingWorkPanel extends javax.swing.JPanel {
 
     private void btnViewOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewOrderActionPerformed
         // TODO add your handling code here:
+        ViewOrderStatus vos = new ViewOrderStatus(userProcessContainer, userAccount,organization,enterprise);
+        userProcessContainer.add("ViewOrderStatus",vos);
+        CardLayout layout=(CardLayout)userProcessContainer.getLayout();
+        layout.next(userProcessContainer);
     }//GEN-LAST:event_btnViewOrderActionPerformed
 
     private void btnManageUserAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManageUserAccountActionPerformed
