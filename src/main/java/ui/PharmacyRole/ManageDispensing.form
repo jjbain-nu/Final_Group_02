@@ -29,17 +29,14 @@
                           <Component id="btnBack" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="lblPurchaseRequest" alignment="0" min="-2" pref="207" max="-2" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="btnCreatePurchaseOrder" min="-2" pref="179" max="-2" attributes="0"/>
+                              <Component id="btnDispensing" min="-2" pref="179" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="58" max="-2" attributes="0"/>
                               <Component id="lblReplenish" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="txtReplenishQty" min="-2" pref="142" max="-2" attributes="0"/>
+                              <Component id="txtDispenseQty" min="-2" pref="142" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="btnStoreMedicine" alignment="0" min="-2" pref="179" max="-2" attributes="0"/>
-                          <Component id="lblPickingOrder" alignment="0" min="-2" pref="179" max="-2" attributes="0"/>
-                          <Component id="jScrollPane2" alignment="0" min="-2" pref="711" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="333" max="32767" attributes="0"/>
                   </Group>
               </Group>
           </Group>
@@ -52,20 +49,14 @@
               <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
               <Component id="lblPurchaseRequest" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="jScrollPane1" min="-2" pref="187" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
+              <Component id="jScrollPane1" min="-2" pref="217" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="btnCreatePurchaseOrder" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnDispensing" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="lblReplenish" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="txtReplenishQty" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="txtDispenseQty" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
-              <Component id="lblPickingOrder" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="jScrollPane2" min="-2" pref="130" max="-2" attributes="0"/>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="btnStoreMedicine" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="210" max="-2" attributes="0"/>
               <Component id="btnBack" min="-2" max="-2" attributes="0"/>
               <EmptySpace pref="14" max="32767" attributes="0"/>
           </Group>
@@ -133,12 +124,12 @@
         </Component>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JButton" name="btnCreatePurchaseOrder">
+    <Component class="javax.swing.JButton" name="btnDispensing">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Create Replenish Request"/>
+        <Property name="text" type="java.lang.String" value="Dispensing"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCreatePurchaseOrderActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDispensingActionPerformed"/>
       </Events>
     </Component>
     <Container class="javax.swing.JPanel" name="jPanel1">
@@ -177,7 +168,7 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Manage Replenishment Request"/>
+            <Property name="text" type="java.lang.String" value="Manage Dispensing"/>
           </Properties>
         </Component>
       </SubComponents>
@@ -190,66 +181,6 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBackActionPerformed"/>
       </Events>
     </Component>
-    <Container class="javax.swing.JScrollPane" name="jScrollPane2">
-      <AuxValues>
-        <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
-      </AuxValues>
-
-      <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
-      <SubComponents>
-        <Component class="javax.swing.JTable" name="tblReplenishRequest">
-          <Properties>
-            <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="6" rowCount="0">
-                <Column editable="false" title="Replenish ID" type="java.lang.String"/>
-                <Column editable="false" title="Medicine ID" type="java.lang.String"/>
-                <Column editable="false" title="Medicine" type="java.lang.String"/>
-                <Column editable="false" title="Request Qty" type="java.lang.Integer"/>
-                <Column editable="false" title="Request Date" type="java.lang.String"/>
-                <Column editable="false" title="Status" type="java.lang.String"/>
-              </Table>
-            </Property>
-            <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
-              <TableColumnModel selectionModel="0">
-                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
-                  <Title/>
-                  <Editor/>
-                  <Renderer/>
-                </Column>
-                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
-                  <Title/>
-                  <Editor/>
-                  <Renderer/>
-                </Column>
-                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
-                  <Title/>
-                  <Editor/>
-                  <Renderer/>
-                </Column>
-                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
-                  <Title/>
-                  <Editor/>
-                  <Renderer/>
-                </Column>
-                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
-                  <Title/>
-                  <Editor/>
-                  <Renderer/>
-                </Column>
-                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
-                  <Title/>
-                  <Editor/>
-                  <Renderer/>
-                </Column>
-              </TableColumnModel>
-            </Property>
-            <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
-              <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
-            </Property>
-          </Properties>
-        </Component>
-      </SubComponents>
-    </Container>
     <Component class="javax.swing.JLabel" name="lblPurchaseRequest">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -258,28 +189,12 @@
         <Property name="text" type="java.lang.String" value="Medicine Inventory"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="lblPickingOrder">
-      <Properties>
-        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Yu Gothic UI" size="18" style="1"/>
-        </Property>
-        <Property name="text" type="java.lang.String" value="Replenish Request"/>
-      </Properties>
-    </Component>
     <Component class="javax.swing.JLabel" name="lblReplenish">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Replenish Qty : "/>
+        <Property name="text" type="java.lang.String" value="Dispense Qty"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="txtReplenishQty">
-    </Component>
-    <Component class="javax.swing.JButton" name="btnStoreMedicine">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Store medicine"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnStoreMedicineActionPerformed"/>
-      </Events>
+    <Component class="javax.swing.JTextField" name="txtDispenseQty">
     </Component>
   </SubComponents>
 </Form>

@@ -51,7 +51,9 @@ public class MedicineInventory {
         return quantity > standardStock;
     }
 
-    
+    public String toString(){
+        return medicine.getMedicineId();
+    }
     
     
     

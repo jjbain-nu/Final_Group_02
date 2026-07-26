@@ -213,6 +213,11 @@ public class PharmacyWorkAreaPanel extends javax.swing.JPanel {
 
     private void btnDispensingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDispensingActionPerformed
         // TODO add your handling code here:
+        ManageDispensing md = new ManageDispensing(userProcessContainer, userAccount,organization,enterprise);
+        userProcessContainer.add("ManageDispensing",md);
+        CardLayout layout=(CardLayout)userProcessContainer.getLayout();
+        layout.next(userProcessContainer);
+        
        
         
         

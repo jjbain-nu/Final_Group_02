@@ -5,6 +5,7 @@
 package ui.PharmacyRole;
 
 import Business.Hospital.MedicineInventory;
+import Business.Hospital.ReplenishmentRequest;
 import Business.Organization.PharmacyOrganization;
 import ui.SupplierAdminRole.*;
 import Business.Organization.SupplierOrganization;
@@ -44,36 +45,11 @@ public class CheckMedicineInventoryPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tblInventory = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         lblTitle = new javax.swing.JLabel();
         btnBack = new javax.swing.JButton();
-
-        tblInventory.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Medicine ID", "Medicine", "Available Qty", "Available Qty"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jScrollPane1.setViewportView(tblInventory);
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblInventory = new javax.swing.JTable();
 
         jPanel1.setBackground(new java.awt.Color(102, 0, 102));
 
@@ -105,6 +81,31 @@ public class CheckMedicineInventoryPanel extends javax.swing.JPanel {
             }
         });
 
+        tblInventory.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Medicine ID", "Medicine", "Stock Qty", "Standard Qty", "Shortage Qty", "Request Qty"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(tblInventory);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -113,17 +114,17 @@ public class CheckMedicineInventoryPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnBack)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 628, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 647, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBack))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(33, 33, 33)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(43, 43, 43)
                 .addComponent(btnBack)
                 .addContainerGap(255, Short.MAX_VALUE))
         );
@@ -147,21 +148,37 @@ public class CheckMedicineInventoryPanel extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 
     private void populateInventoryTable() {
-           DefaultTableModel model = (DefaultTableModel) tblInventory.getModel();
+ DefaultTableModel model = (DefaultTableModel) tblInventory.getModel();
         
         model.setRowCount(0);
+        
         for (MedicineInventory mi : organization.getMedicineInventoryDirectory().getInventoryList()){
             
-            Object[] row = new Object[4];
-            row[0] = mi.getMedicine();
+            int requestQty =0;
+            
+            for (WorkRequest wr : organization.getWorkQueue().getWorkRequestList()){
+            
+            if(wr instanceof ReplenishmentRequest rr){
+            
+                if(rr.getMedicine().equals(mi.getMedicine())){   
+                    requestQty = rr.getReplenishQty();
+                    break;
+                }
+            }
+            }
+            
+            Object[] row = new Object[6];
+            row[0] = mi;
             row[1] = mi.getMedicine().getMedicineName();
             row[2] = mi.getQuantity();
-            row[3] = mi.getQuantity();
+            row[3] = mi.getStandardStock();
+            row[4] = mi.getShortageQty();
+            row[5] = requestQty;
+            
             
             model.addRow(row);
             }
+        
+            }
     
-    
-    }
-
 }

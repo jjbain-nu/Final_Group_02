@@ -201,7 +201,7 @@ public class CreatePharmacyUserAccount extends javax.swing.JPanel {
         userProcessContainer.remove(this);
         Component[] componentArray = userProcessContainer.getComponents();
         Component component = componentArray[componentArray.length - 1];
-        ManageUserAccount panel = (ManageUserAccount) component;
+        ManagePharmacyUserAccount panel = (ManagePharmacyUserAccount) component;
         panel.populateUserAccountTable();
 
         CardLayout layout = (CardLayout) userProcessContainer.getLayout();

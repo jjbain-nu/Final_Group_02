@@ -31,7 +31,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author raunak
  */
-public class ManagePurchaseRequest extends javax.swing.JPanel {
+public class ManageDispensing extends javax.swing.JPanel {
 
     private JPanel userProcessContainer;
     private PharmacyOrganization organization;
@@ -42,7 +42,7 @@ public class ManagePurchaseRequest extends javax.swing.JPanel {
     /**
      * Creates new form DoctorWorkAreaJPanel
      */
-    public ManagePurchaseRequest(JPanel userProcessContainer, UserAccount account, PharmacyOrganization organization, Enterprise enterprise) {
+    public ManageDispensing(JPanel userProcessContainer, UserAccount account, PharmacyOrganization organization, Enterprise enterprise) {
         initComponents();
         
         this.userProcessContainer = userProcessContainer;
@@ -58,7 +58,7 @@ public class ManagePurchaseRequest extends javax.swing.JPanel {
           
         
         populateInventoryTable();
-        populateReplenishRequestTable();
+        
     }
     
     public void populateInventoryTable(){
@@ -112,17 +112,13 @@ public class ManagePurchaseRequest extends javax.swing.JPanel {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         tblInventory = new javax.swing.JTable();
-        btnCreatePurchaseOrder = new javax.swing.JButton();
+        btnDispensing = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         enterpriseLabel = new javax.swing.JLabel();
         btnBack = new javax.swing.JButton();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        tblReplenishRequest = new javax.swing.JTable();
         lblPurchaseRequest = new javax.swing.JLabel();
-        lblPickingOrder = new javax.swing.JLabel();
         lblReplenish = new javax.swing.JLabel();
-        txtReplenishQty = new javax.swing.JTextField();
-        btnStoreMedicine = new javax.swing.JButton();
+        txtDispenseQty = new javax.swing.JTextField();
 
         tblInventory.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -157,10 +153,10 @@ public class ManagePurchaseRequest extends javax.swing.JPanel {
             tblInventory.getColumnModel().getColumn(5).setResizable(false);
         }
 
-        btnCreatePurchaseOrder.setText("Create Replenish Request");
-        btnCreatePurchaseOrder.addActionListener(new java.awt.event.ActionListener() {
+        btnDispensing.setText("Dispensing");
+        btnDispensing.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCreatePurchaseOrderActionPerformed(evt);
+                btnDispensingActionPerformed(evt);
             }
         });
 
@@ -168,7 +164,7 @@ public class ManagePurchaseRequest extends javax.swing.JPanel {
 
         enterpriseLabel.setFont(new java.awt.Font("Yu Gothic UI", 1, 24)); // NOI18N
         enterpriseLabel.setForeground(new java.awt.Color(255, 255, 255));
-        enterpriseLabel.setText("Manage Replenishment Request");
+        enterpriseLabel.setText("Manage Dispensing");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -194,53 +190,10 @@ public class ManagePurchaseRequest extends javax.swing.JPanel {
             }
         });
 
-        tblReplenishRequest.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Replenish ID", "Medicine ID", "Medicine", "Request Qty", "Request Date", "Status"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jScrollPane2.setViewportView(tblReplenishRequest);
-        if (tblReplenishRequest.getColumnModel().getColumnCount() > 0) {
-            tblReplenishRequest.getColumnModel().getColumn(0).setResizable(false);
-            tblReplenishRequest.getColumnModel().getColumn(1).setResizable(false);
-            tblReplenishRequest.getColumnModel().getColumn(2).setResizable(false);
-            tblReplenishRequest.getColumnModel().getColumn(3).setResizable(false);
-            tblReplenishRequest.getColumnModel().getColumn(4).setResizable(false);
-            tblReplenishRequest.getColumnModel().getColumn(5).setResizable(false);
-        }
-
         lblPurchaseRequest.setFont(new java.awt.Font("Yu Gothic UI", 1, 18)); // NOI18N
         lblPurchaseRequest.setText("Medicine Inventory");
 
-        lblPickingOrder.setFont(new java.awt.Font("Yu Gothic UI", 1, 18)); // NOI18N
-        lblPickingOrder.setText("Replenish Request");
-
-        lblReplenish.setText("Replenish Qty : ");
-
-        btnStoreMedicine.setText("Store medicine");
-        btnStoreMedicine.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnStoreMedicineActionPerformed(evt);
-            }
-        });
+        lblReplenish.setText("Dispense Qty");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -258,15 +211,12 @@ public class ManagePurchaseRequest extends javax.swing.JPanel {
                             .addComponent(btnBack)
                             .addComponent(lblPurchaseRequest, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnCreatePurchaseOrder, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnDispensing, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(58, 58, 58)
                                 .addComponent(lblReplenish)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtReplenishQty, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(btnStoreMedicine, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblPickingOrder, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 711, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                                .addComponent(txtDispenseQty, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 333, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -275,36 +225,21 @@ public class ManagePurchaseRequest extends javax.swing.JPanel {
                 .addGap(10, 10, 10)
                 .addComponent(lblPurchaseRequest)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnCreatePurchaseOrder)
+                    .addComponent(btnDispensing)
                     .addComponent(lblReplenish)
-                    .addComponent(txtReplenishQty, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(25, 25, 25)
-                .addComponent(lblPickingOrder)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnStoreMedicine)
-                .addGap(23, 23, 23)
+                    .addComponent(txtDispenseQty, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(210, 210, 210)
                 .addComponent(btnBack)
                 .addContainerGap(14, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnCreatePurchaseOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreatePurchaseOrderActionPerformed
+    private void btnDispensingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDispensingActionPerformed
         
           
-        if (procurementOrg == null) {
-            JOptionPane.showMessageDialog(
-             null,
-             "Procurement Organization not found.",
-             "Error",
-             JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
         int selectedRow = tblInventory.getSelectedRow();
         
         if(selectedRow <0){
@@ -315,66 +250,42 @@ public class ManagePurchaseRequest extends javax.swing.JPanel {
         
         MedicineInventory mi = (MedicineInventory) tblInventory.getValueAt(selectedRow,0);
        
-        if(txtReplenishQty.getText().trim().isEmpty()){
-             JOptionPane.showMessageDialog(null,"Please enter replenish quantity","Warning",
+        if(txtDispenseQty.getText().trim().isEmpty()){
+             JOptionPane.showMessageDialog(null,"Please enter dispense quantity","Warning",
     JOptionPane.WARNING_MESSAGE);
             return;
         }
         
-        int replenishQty;
+        int dispenseQty;
         
         try{
-        replenishQty = Integer.parseInt(txtReplenishQty.getText().trim());
+        dispenseQty = Integer.parseInt(txtDispenseQty.getText().trim());
             
         }catch(NumberFormatException e){
         JOptionPane.showMessageDialog(null,"Please enter a valid number","Warning",
          JOptionPane.WARNING_MESSAGE);
             return;
         }
-        if(replenishQty <= 0){
+        if(dispenseQty <= 0){
                JOptionPane.showMessageDialog(null,"Number must be greater than 0","Warning",
          JOptionPane.WARNING_MESSAGE);
             return;
         }
             
-                   
-        ReplenishmentRequest rr = new ReplenishmentRequest();
-        rr.setMedicine(mi.getMedicine());
-        rr.setReplenishQty(replenishQty);
-        rr.setStatus("Requested");
-        rr.setSender(userAccount);   // Pharmacy user
-        rr.setRequestDate(new Date());
-        
-        boolean exists = false;
-        
-       
-        
-            for( WorkRequest wr : procurementOrg.getWorkQueue().getWorkRequestList()){
-                
-                if( wr instanceof ReplenishmentRequest RR){
-                
-                    if(RR.getSender()==userAccount 
-                            && RR.getMedicine().equals(mi.getMedicine())
-                            &&!"Stored".equals(RR.getStatus())){
-                     
-                    JOptionPane.showMessageDialog(null,"A replenish request for this medicine already exists.","Warning",
-                     JOptionPane.WARNING_MESSAGE);
-                    return;
-                    }
-        
-                }
-        
-            }
-            procurementOrg.getWorkQueue().getWorkRequestList().add(rr);
+        if(dispenseQty > mi.getQuantity()){
+             JOptionPane.showMessageDialog(null,"Stock is insufficient","Warning",
+         JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        mi.setQuantity(mi.getQuantity()-dispenseQty);
             
-             JOptionPane.showMessageDialog(null,"Replenish order has been created");
-            txtReplenishQty.setText("");
+            JOptionPane.showMessageDialog(null,"Medicine has been dispensed");
+            txtDispenseQty.setText("");
            
-            populateInventoryTable();
-            populateReplenishRequestTable();
-      
+            populateInventoryTable();    
            
-    }//GEN-LAST:event_btnCreatePurchaseOrderActionPerformed
+    }//GEN-LAST:event_btnDispensingActionPerformed
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
@@ -384,79 +295,18 @@ public class ManagePurchaseRequest extends javax.swing.JPanel {
         
     }//GEN-LAST:event_btnBackActionPerformed
 
-    private void btnStoreMedicineActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStoreMedicineActionPerformed
-        // TODO add your handling code here:
-        int selectedRow = tblReplenishRequest.getSelectedRow();
-        
-        if(selectedRow <0){
-            JOptionPane.showMessageDialog(null,"Please select a request","Warning",
-    JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-        
-        ReplenishmentRequest rr = (ReplenishmentRequest) tblReplenishRequest.getValueAt(selectedRow,0);
-        
-        if(!"Received".equals(rr.getStatus())){
-            JOptionPane.showMessageDialog(null,"Medicine has not been received by Procurement.","Warning",JOptionPane.WARNING_MESSAGE);
-            return;
-        } 
-           
-        for (MedicineInventory mi : organization.getMedicineInventoryDirectory().getInventoryList()){
-           if(mi.getMedicine().equals(rr.getMedicine())){
-               mi.setQuantity(mi.getQuantity()+rr.getReplenishQty());
-               rr.setStatus("Stored");
-               break;
-           }
-        }
-
- 
-        JOptionPane.showMessageDialog(null,"Stored medicine successfully.");
-           
-           
-        populateInventoryTable();
-        populateReplenishRequestTable();
-        
-    }//GEN-LAST:event_btnStoreMedicineActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBack;
-    private javax.swing.JButton btnCreatePurchaseOrder;
-    private javax.swing.JButton btnStoreMedicine;
+    private javax.swing.JButton btnDispensing;
     private javax.swing.JLabel enterpriseLabel;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JLabel lblPickingOrder;
     private javax.swing.JLabel lblPurchaseRequest;
     private javax.swing.JLabel lblReplenish;
     private javax.swing.JTable tblInventory;
-    private javax.swing.JTable tblReplenishRequest;
-    private javax.swing.JTextField txtReplenishQty;
+    private javax.swing.JTextField txtDispenseQty;
     // End of variables declaration//GEN-END:variables
 
-    private void populateReplenishRequestTable() {
-       DefaultTableModel model = (DefaultTableModel) tblReplenishRequest.getModel();
-        
-        model.setRowCount(0);
-        
-        
-        for (WorkRequest wr : procurementOrg.getWorkQueue().getWorkRequestList()){
-            
-            if(wr instanceof ReplenishmentRequest rr && rr.getSender()== userAccount){
-            
-            SimpleDateFormat sdf = new SimpleDateFormat("MMM dd, yyyy");
-                     
-            Object[] row = new Object[6];
-            row[0] = rr;
-            row[1] = rr.getMedicine().getMedicineId();
-            row[2] = rr.getMedicine().getMedicineName();
-            row[3] = rr.getReplenishQty();
-            row[4] = sdf.format(rr.getRequestDate());
-            row[5] = rr.getStatus();
-            
-            model.addRow(row);
-        }
-    }
+  
     
-    }
 }

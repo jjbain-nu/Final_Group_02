@@ -10,7 +10,9 @@ import Business.EcoSystem;
 import Business.Enterprise.Enterprise;
 import Business.Hospital.ReplenishmentRequest;
 import Business.Organization.DoctorOrganization;
+import Business.Organization.Organization;
 import Business.Organization.PharmacyOrganization;
+import Business.Organization.ProcurementOrganization;
 import Business.Organization.SupplierOrganization;
 import Business.Supplier.MaterialInventory;
 import Business.Supplier.MaterialRequest;
@@ -35,6 +37,7 @@ public class ViewPurchaseOrderStatus extends javax.swing.JPanel {
 
     private JPanel userProcessContainer;
     private PharmacyOrganization organization;
+    private ProcurementOrganization procurementOrg;
     private Enterprise enterprise;
     private UserAccount userAccount;
     /**
@@ -48,21 +51,27 @@ public class ViewPurchaseOrderStatus extends javax.swing.JPanel {
         this.enterprise = enterprise;
         this.userAccount = account;
         
+          for(Organization o : enterprise.getOrganizationDirectory().getOrganizationList()){
+            if(o instanceof ProcurementOrganization){
+            procurementOrg = (ProcurementOrganization)o;
+            }
+        }
       
         populateReplenishRequestTable();
       
     }
     
     public void populateReplenishRequestTable(){
-        DefaultTableModel model = (DefaultTableModel) tblReplenishRequest.getModel();
+       DefaultTableModel model = (DefaultTableModel) tblReplenishRequest.getModel();
         
         model.setRowCount(0);
-         for (WorkRequest wr : organization.getWorkQueue().getWorkRequestList()){
+        
+        
+        for (WorkRequest wr : procurementOrg.getWorkQueue().getWorkRequestList()){
             
-            if(wr instanceof ReplenishmentRequest){
+            if(wr instanceof ReplenishmentRequest rr && rr.getSender()== userAccount){
             
             SimpleDateFormat sdf = new SimpleDateFormat("MMM dd, yyyy");
-            ReplenishmentRequest rr = (ReplenishmentRequest)wr;
                      
             Object[] row = new Object[6];
             row[0] = rr;
@@ -73,7 +82,6 @@ public class ViewPurchaseOrderStatus extends javax.swing.JPanel {
             row[5] = rr.getStatus();
             
             model.addRow(row);
-      
         }
     }
     }
@@ -88,44 +96,12 @@ public class ViewPurchaseOrderStatus extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tblReplenishRequest = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         enterpriseLabel = new javax.swing.JLabel();
         btnBack = new javax.swing.JButton();
         lblMaterialRequest = new javax.swing.JLabel();
-
-        tblReplenishRequest.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Replenish Id", "Medicinel ID", "Medicine", "Request Qty", "Request Date", "Order Status"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.Object.class
-            };
-            boolean[] canEdit = new boolean [] {
-                true, false, false, false, false, false
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jScrollPane1.setViewportView(tblReplenishRequest);
-        if (tblReplenishRequest.getColumnModel().getColumnCount() > 0) {
-            tblReplenishRequest.getColumnModel().getColumn(1).setResizable(false);
-            tblReplenishRequest.getColumnModel().getColumn(2).setResizable(false);
-            tblReplenishRequest.getColumnModel().getColumn(3).setResizable(false);
-            tblReplenishRequest.getColumnModel().getColumn(4).setResizable(false);
-            tblReplenishRequest.getColumnModel().getColumn(5).setResizable(false);
-        }
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tblReplenishRequest = new javax.swing.JTable();
 
         jPanel1.setBackground(new java.awt.Color(102, 0, 102));
 
@@ -160,6 +136,31 @@ public class ViewPurchaseOrderStatus extends javax.swing.JPanel {
         lblMaterialRequest.setFont(new java.awt.Font("Yu Gothic UI", 1, 18)); // NOI18N
         lblMaterialRequest.setText("Request Order Status");
 
+        tblReplenishRequest.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Replenish ID", "Medicine ID", "Medicine", "Request Qty", "Request Date", "Status"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane2.setViewportView(tblReplenishRequest);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -169,8 +170,8 @@ public class ViewPurchaseOrderStatus extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnBack)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 655, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblMaterialRequest, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblMaterialRequest, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 711, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -180,8 +181,8 @@ public class ViewPurchaseOrderStatus extends javax.swing.JPanel {
                 .addGap(10, 10, 10)
                 .addComponent(lblMaterialRequest)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(63, 63, 63)
                 .addComponent(btnBack)
                 .addContainerGap(199, Short.MAX_VALUE))
         );
@@ -199,7 +200,7 @@ public class ViewPurchaseOrderStatus extends javax.swing.JPanel {
     private javax.swing.JButton btnBack;
     private javax.swing.JLabel enterpriseLabel;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblMaterialRequest;
     private javax.swing.JTable tblReplenishRequest;
     // End of variables declaration//GEN-END:variables
