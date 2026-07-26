@@ -38,7 +38,7 @@ public class ProcurementWorkAreaPanel extends javax.swing.JPanel {
         initComponents();
         
         this.userProcessContainer = userProcessContainer;
-        this.procurementOrg = procurementOrg;
+        this.procurementOrg = organization;
         this.enterprise = enterprise;
         this.userAccount = account;
          
@@ -66,7 +66,6 @@ public class ProcurementWorkAreaPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         btnCheckInventory = new javax.swing.JButton();
-        btnDispensing = new javax.swing.JButton();
         btnPurchaseRequest = new javax.swing.JButton();
         btnViewOrder = new javax.swing.JButton();
         btnManageUserAccount = new javax.swing.JButton();
@@ -76,6 +75,7 @@ public class ProcurementWorkAreaPanel extends javax.swing.JPanel {
         lblUser = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         enterpriseLabel = new javax.swing.JLabel();
+        btnReceiveOrder = new javax.swing.JButton();
 
         btnCheckInventory.setBackground(new java.awt.Color(102, 0, 102));
         btnCheckInventory.setFont(new java.awt.Font("Yu Gothic UI", 1, 14)); // NOI18N
@@ -84,16 +84,6 @@ public class ProcurementWorkAreaPanel extends javax.swing.JPanel {
         btnCheckInventory.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCheckInventoryActionPerformed(evt);
-            }
-        });
-
-        btnDispensing.setBackground(new java.awt.Color(102, 0, 102));
-        btnDispensing.setFont(new java.awt.Font("Yu Gothic UI", 1, 14)); // NOI18N
-        btnDispensing.setForeground(new java.awt.Color(255, 255, 255));
-        btnDispensing.setText("Dispensing");
-        btnDispensing.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDispensingActionPerformed(evt);
             }
         });
 
@@ -141,7 +131,7 @@ public class ProcurementWorkAreaPanel extends javax.swing.JPanel {
 
         enterpriseLabel.setFont(new java.awt.Font("Yu Gothic UI", 1, 24)); // NOI18N
         enterpriseLabel.setForeground(new java.awt.Color(255, 255, 255));
-        enterpriseLabel.setText("Pharmacy Portal");
+        enterpriseLabel.setText("Procurement Portal");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -160,6 +150,16 @@ public class ProcurementWorkAreaPanel extends javax.swing.JPanel {
                 .addContainerGap(14, Short.MAX_VALUE))
         );
 
+        btnReceiveOrder.setBackground(new java.awt.Color(102, 0, 102));
+        btnReceiveOrder.setFont(new java.awt.Font("Yu Gothic UI", 1, 14)); // NOI18N
+        btnReceiveOrder.setForeground(new java.awt.Color(255, 255, 255));
+        btnReceiveOrder.setText("Receive Order");
+        btnReceiveOrder.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReceiveOrderActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -168,10 +168,10 @@ public class ProcurementWorkAreaPanel extends javax.swing.JPanel {
                 .addGap(70, 70, 70)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btnDispensing, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnManageUserAccount, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnPurchaseRequest, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnManageUserAccount, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnReceiveOrder, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(35, 35, 35)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(btnCheckInventory, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -200,38 +200,31 @@ public class ProcurementWorkAreaPanel extends javax.swing.JPanel {
                     .addComponent(lblUser)
                     .addComponent(userValueLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnDispensing, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnCheckInventory, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnCheckInventory, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnPurchaseRequest, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(36, 36, 36)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnPurchaseRequest, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnViewOrder, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(29, 29, 29)
+                    .addComponent(btnViewOrder, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnReceiveOrder, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(37, 37, 37)
                 .addComponent(btnManageUserAccount, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(71, Short.MAX_VALUE))
+                .addContainerGap(63, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCheckInventoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCheckInventoryActionPerformed
         // TODO add your handling code here:
-        CheckMedicineInventoryPanel cip = new CheckMedicineInventoryPanel(userProcessContainer, pharmacyOrg);
+        CheckMedicineInventoryPanel cip = new CheckMedicineInventoryPanel(userProcessContainer, pharmacyOrg,enterprise);
         userProcessContainer.add("CheckMedicineInventoryPanel",cip);
         CardLayout layout=(CardLayout)userProcessContainer.getLayout();
         layout.next(userProcessContainer);
     }//GEN-LAST:event_btnCheckInventoryActionPerformed
 
-    private void btnDispensingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDispensingActionPerformed
-        // TODO add your handling code here:
-       
-        
-        
-    }//GEN-LAST:event_btnDispensingActionPerformed
-
     private void btnPurchaseRequestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPurchaseRequestActionPerformed
         // TODO add your handling code here:
-        ManagePurchaseRequest mpr = new ManagePurchaseRequest(userProcessContainer, userAccount,pharmacyOrg,enterprise);
-        userProcessContainer.add("ManagePurchaseRequest",mpr);
+        ManageProcurementRequest mpr = new ManageProcurementRequest(userProcessContainer, userAccount,pharmacyOrg,enterprise);
+        userProcessContainer.add("ManageProcurementRequest",mpr);
         CardLayout layout=(CardLayout)userProcessContainer.getLayout();
         layout.next(userProcessContainer);
         
@@ -240,8 +233,8 @@ public class ProcurementWorkAreaPanel extends javax.swing.JPanel {
 
     private void btnViewOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewOrderActionPerformed
         // TODO add your handling code here:
-        ViewPurchaseOrderStatus vpos = new ViewPurchaseOrderStatus(userProcessContainer, userAccount,pharmacyOrg,enterprise);
-        userProcessContainer.add("ViewPurchaseOrderStatus",vpos);
+        ViewProcurementOrderStatus vpos = new ViewProcurementOrderStatus(userProcessContainer, userAccount,pharmacyOrg,enterprise);
+        userProcessContainer.add("ViewProcurementOrderStatus",vpos);
         CardLayout layout=(CardLayout)userProcessContainer.getLayout();
         layout.next(userProcessContainer);
      
@@ -256,11 +249,20 @@ public class ProcurementWorkAreaPanel extends javax.swing.JPanel {
         
     }//GEN-LAST:event_btnManageUserAccountActionPerformed
 
+    private void btnReceiveOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReceiveOrderActionPerformed
+        // TODO add your handling code here:
+        ManageReceiveOrder mro = new ManageReceiveOrder(userProcessContainer, userAccount,procurementOrg,enterprise);
+        userProcessContainer.add("ManageReceiveOrder",mro);
+        CardLayout layout=(CardLayout)userProcessContainer.getLayout();
+        layout.next(userProcessContainer);
+        
+    }//GEN-LAST:event_btnReceiveOrderActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCheckInventory;
-    private javax.swing.JButton btnDispensing;
     private javax.swing.JButton btnManageUserAccount;
     private javax.swing.JButton btnPurchaseRequest;
+    private javax.swing.JButton btnReceiveOrder;
     private javax.swing.JButton btnViewOrder;
     private javax.swing.JLabel enterpriseLabel;
     private javax.swing.JLabel enterpriseValueLabel;

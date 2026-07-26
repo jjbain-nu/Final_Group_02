@@ -181,7 +181,7 @@ public class ConfigureASystem {
          //have some hospital enterprice admin employees 
         Employee hospitalEnterpriseAdminA = hospitalEnterpriseA.getEmployeeDirectory().createEmployee("hospitalEnterpriseAdminA");
         Employee hospitalEnterpriseAdminB = hospitalEnterpriseB.getEmployeeDirectory().createEmployee("hospitalEnterpriseAdminB");
-        Employee hospitalEnterpriseAdminC = hospitalEnterpriseB.getEmployeeDirectory().createEmployee("hospitalEnterpriseAdminC");
+        Employee hospitalEnterpriseAdminC = hospitalEnterpriseC.getEmployeeDirectory().createEmployee("hospitalEnterpriseAdminC");
         
         hospitalEnterpriseA.getUserAccountDirectory().createUserAccount(
                 "HEA-A",

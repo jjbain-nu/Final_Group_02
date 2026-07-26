@@ -222,6 +222,7 @@ public class ManageShippingOrder extends javax.swing.JPanel {
         so.setPickingOrder(po);
         so.setSender(userAccount);
         //so.setReceiver(receiverUserAccount); Once Vy informed user account or organization, update
+        
         so.setStatus("Pending Receiving");
      
      

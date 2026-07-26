@@ -8,6 +8,7 @@ ui\PharmacyRole\ViewPurchaseOrderStatus$2.class
 ui\PharmacyRole\CreatePharmacyUserAccount.class
 Business\Organization\Organization.class
 ui\TransportRole\ViewDeliveryStatusJPanel$1.class
+ui\PharmacyRole\ManageDispensing$2.class
 ui\TransportRole\DriverWorkAreaJPanel$1.class
 ui\PharmacyRole\PharmacyWorkAreaPanel$4.class
 ui\ProcurementRole\ProcurementWorkAreaPanel$4.class
@@ -60,6 +61,7 @@ ui\AdministrativeRole\ManageEmployeeJPanel.class
 Business\Employee\Employee.class
 ui\MaterialShippingRole\ManageShippingRequest$2.class
 ui\TransportRole\SchedulingJPanel$1.class
+ui\PharmacyRole\ManageDispensing$3.class
 Business\Role\TransportAdminRole.class
 ui\TransportRole\ManageFleetJPanel$1.class
 Business\Hospital\ProcurementOrder.class
@@ -90,9 +92,9 @@ ui\TransportRole\SchedulingJPanel.class
 ui\SupplierAdminRole\ViewOrderStatus$1.class
 ui\AdministrativeRole\ManageUserAccountJPanel$1.class
 ui\ProcurementRole\ManageProcurementUserAccount$4.class
+ui\PharmacyRole\ManageDispensing$1.class
 ui\MaterialShippingRole\ManageShippingRequest.class
 ui\TransportRole\TransportAdminWorkAreaJPanel$5.class
-ui\ProcurementRole\ProcurementWorkAreaPanel$5.class
 ui\SupplierAdminRole\CreateUserAccount$2.class
 ui\PharmacyRole\ManagePharmacyUserAccount.class
 ui\SystemAdminWorkArea\SystemAdminWorkAreaJPanel$4.class
@@ -111,6 +113,7 @@ Business\Role\DriverRole.class
 Business\Fleet\FleetDirectory.class
 ui\DoctorRole\DoctorWorkAreaJPanel$1.class
 ui\MainJFrame.class
+ui\PharmacyRole\ManagePurchaseRequest$5.class
 ui\MainJFrame$1.class
 Business\Role\PharmacyRole.class
 ui\PharmacyRole\PharmacyWorkAreaPanel$2.class
@@ -146,6 +149,7 @@ ui\TransportRole\UpdateDeliveryProofJPanel.class
 ui\SupplierAdminRole\ManageMaterialRequest.class
 ui\TransportRole\ReportDeliveryResultJPanel$3.class
 Business\Role\MaterialShippingRole.class
+ui\PharmacyRole\ManageDispensing.class
 Business\Hospital\MedicineInventoryDirectory.class
 ui\TransportRole\DriverWorkAreaJPanel$4.class
 ui\SupplierAdminRole\ManageMaterialRequest$2.class

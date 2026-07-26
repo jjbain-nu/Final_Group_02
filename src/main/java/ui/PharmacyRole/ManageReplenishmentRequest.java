@@ -31,7 +31,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author raunak
  */
-public class ManagePurchaseRequest extends javax.swing.JPanel {
+public class ManageReplenishmentRequest extends javax.swing.JPanel {
 
     private JPanel userProcessContainer;
     private PharmacyOrganization organization;
@@ -42,7 +42,7 @@ public class ManagePurchaseRequest extends javax.swing.JPanel {
     /**
      * Creates new form DoctorWorkAreaJPanel
      */
-    public ManagePurchaseRequest(JPanel userProcessContainer, UserAccount account, PharmacyOrganization organization, Enterprise enterprise) {
+    public ManageReplenishmentRequest(JPanel userProcessContainer, UserAccount account, PharmacyOrganization organization, Enterprise enterprise) {
         initComponents();
         
         this.userProcessContainer = userProcessContainer;

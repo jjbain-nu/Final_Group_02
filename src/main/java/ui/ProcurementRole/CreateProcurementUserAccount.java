@@ -203,7 +203,7 @@ public class CreateProcurementUserAccount extends javax.swing.JPanel {
         userProcessContainer.remove(this);
         Component[] componentArray = userProcessContainer.getComponents();
         Component component = componentArray[componentArray.length - 1];
-        ManageUserAccount panel = (ManageUserAccount) component;
+        ManageProcurementUserAccount panel = (ManageProcurementUserAccount) component;
         panel.populateUserAccountTable();
 
         CardLayout layout = (CardLayout) userProcessContainer.getLayout();

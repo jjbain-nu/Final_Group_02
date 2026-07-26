@@ -14,6 +14,8 @@ import Business.Organization.Organization;
 import Business.Organization.PharmacyOrganization;
 import Business.Organization.ProcurementOrganization;
 import Business.Organization.SupplierOrganization;
+import Business.Role.PharmacyRole;
+import Business.Role.ProcurementRole;
 import Business.Supplier.MaterialInventory;
 import Business.Supplier.MaterialRequest;
 import Business.Supplier.PickingOrder;
@@ -256,6 +258,7 @@ public class ManageProcurementUserAccount extends javax.swing.JPanel {
         for (Organization org : enterprise.getOrganizationDirectory().getOrganizationList()){
             for(UserAccount ua : org.getUserAccountDirectory().getUserAccountList()){
             
+            if(ua.getRole() instanceof ProcurementRole){
              
             Object[] row = new Object[3];
             row[0] = ua;
@@ -263,8 +266,9 @@ public class ManageProcurementUserAccount extends javax.swing.JPanel {
             row[2] = ua.getRole();
             
             model.addRow(row);
+            }
+            }
         }
-    }
     
     }
 
