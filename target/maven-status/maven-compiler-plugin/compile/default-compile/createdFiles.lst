@@ -119,14 +119,14 @@ ui\MaterialShippingWorkAreaJPanel$3.class
 Business\Organization\OrganizationDirectory.class
 Business\Role\ShippingOperatorRole.class
 ui\WholesalerRole\WholesaleWorkflowActionJPanel$1.class
-ui\AdministrativeRole\AdminWorkAreaJPanel$3.class
 ui\WholesalerRole\WholesaleWorkflowActionJPanel.class
-ui\SystemAdminWorkArea\ManageNetworkJPanel.class
 Business\WorkQueue\WholesaleWorkRequest.class
+Business\Role\InventoryAdminRole.class
+ui\AdministrativeRole\AdminWorkAreaJPanel$3.class
+ui\SystemAdminWorkArea\ManageNetworkJPanel.class
 Business\Role\Role$RoleType.class
 Business\Role\LabManagerRole.class
 ui\DoctorRole\RequestLabTestJPanel$1.class
-Business\Role\InventoryAdminRole.class
 ui\LabAssistantRole\ProcessWorkRequestJPanel$2.class
 Business\Organization\LabOrganization.class
 ui\LabAssistantRole\LabAssistantWorkAreaJPanel$4.class

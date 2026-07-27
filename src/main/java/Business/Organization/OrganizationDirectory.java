@@ -1,58 +1,22 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package Business.Organization;
 
 import Business.Organization.Organization.Type;
 import java.util.ArrayList;
 
-/**
- *
- * @author raunak
- */
 public class OrganizationDirectory {
-    
     private ArrayList<Organization> organizationList;
+    public OrganizationDirectory() { organizationList = new ArrayList<>(); }
+    public ArrayList<Organization> getOrganizationList() { return organizationList; }
 
-    public OrganizationDirectory() {
-        organizationList = new ArrayList();
-    }
-
-    public ArrayList<Organization> getOrganizationList() {
-        return organizationList;
-    }
-    
-    public Organization createOrganization(Type type){
+    public Organization createOrganization(Type type) {
         Organization organization = null;
-        if (type.getValue().equals(Type.Doctor.getValue())){
-            organization = new DoctorOrganization();
-            organizationList.add(organization);
-        }
-        else if (type.getValue().equals(Type.Lab.getValue())){
-            organization = new LabOrganization();
-            organizationList.add(organization);
-        }
-        else if (type.getValue().equals(Type.Supplier.getValue())){
-            organization = new SupplierOrganization();
-            organizationList.add(organization);
-        }
-        else if (type.getValue().equals(Type.Inventory.getValue())){
-            organization = new InventoryOrganization();
-            organizationList.add(organization);
-        }
-        else if (type.getValue().equals(Type.Shipping.getValue())){
-            organization = new ShippingOrganization();
-            organizationList.add(organization);
-        }
-        
-        
-        
-        
-        
-        
-        
-        
+        if (type == Type.Doctor) organization = new DoctorOrganization();
+        else if (type == Type.Lab) organization = new LabOrganization();
+        else if (type == Type.Supplier) organization = new SupplierOrganization();
+        else if (type == Type.Inventory) organization = new InventoryOrganization();
+        else if (type == Type.Shipping) organization = new ShippingOrganization();
+        else if (type == Type.Transport) organization = new TransportOrganization();
+        if (organization != null) organizationList.add(organization);
         return organization;
     }
 }
