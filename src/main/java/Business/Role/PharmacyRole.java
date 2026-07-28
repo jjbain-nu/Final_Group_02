@@ -7,16 +7,18 @@ package Business.Role;
 import Business.EcoSystem;
 import Business.Enterprise.Enterprise;
 import Business.Organization.Organization;
+import Business.Organization.PharmacyOrganization;
 import Business.Organization.SupplierOrganization;
 import Business.UserAccount.UserAccount;
 import javax.swing.JPanel;
+import ui.PharmacyRole.PharmacyWorkAreaPanel;
 import ui.SupplierAdminRole.SupplierAdminWorkAreaJPanel;
 
 /**
  *
  * @author yu101
  */
-public class SupplierAdminRole extends Role{
+public class PharmacyRole extends Role{
     
     @Override
     public JPanel createWorkArea(JPanel userProcessContainer,
@@ -24,17 +26,18 @@ public class SupplierAdminRole extends Role{
                             Organization organization, 
                             Enterprise enterprise, 
                             EcoSystem business) {
-    return new SupplierAdminWorkAreaJPanel(
+    
+    return new PharmacyWorkAreaPanel(
             userProcessContainer, 
             account, 
-            (SupplierOrganization)organization,
+            (PharmacyOrganization)organization,
             enterprise);
     
     }
     
     @Override
     public String toString() {
-        return "Supplier Admin";
+        return "Pharmacy Role";
     }
     
 }
