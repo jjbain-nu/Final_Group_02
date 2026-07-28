@@ -210,8 +210,10 @@ public class ManageMaterialRequest extends javax.swing.JPanel {
             tblPickingOrder.getColumnModel().getColumn(6).setResizable(false);
         }
 
+        lblMaterialRequest.setFont(new java.awt.Font("Yu Gothic UI", 1, 18)); // NOI18N
         lblMaterialRequest.setText("Material Request");
 
+        lblPickingOrder.setFont(new java.awt.Font("Yu Gothic UI", 1, 18)); // NOI18N
         lblPickingOrder.setText("Picking Order");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -226,9 +228,9 @@ public class ManageMaterialRequest extends javax.swing.JPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnCreatePickOrder, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnBack)
-                            .addComponent(lblMaterialRequest)
-                            .addComponent(lblPickingOrder))
-                        .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(lblMaterialRequest, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblPickingOrder, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 581, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING)
@@ -251,7 +253,7 @@ public class ManageMaterialRequest extends javax.swing.JPanel {
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(33, 33, 33)
                 .addComponent(btnBack)
-                .addContainerGap(39, Short.MAX_VALUE))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -269,7 +271,17 @@ public class ManageMaterialRequest extends javax.swing.JPanel {
        
         MaterialInventory mi = organization.getMaterialInventoryDirectory()
                     .findInventoryByMaterial(mr.getMaterial()); 
+        if (mi == null) {
+            JOptionPane.showMessageDialog(this, "No inventory record was found for the selected material.", "Inventory unavailable", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         
+        if(mr.getQty() <= 0){
+             JOptionPane.showMessageDialog(this,"The selected request has an invalid quantity.","Invalid quantity",
+    JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
         if(mr.getQty()>mi.getAvailableQty()){
              JOptionPane.showMessageDialog(null,"Available stock is insufficient","Warning",
     JOptionPane.WARNING_MESSAGE);

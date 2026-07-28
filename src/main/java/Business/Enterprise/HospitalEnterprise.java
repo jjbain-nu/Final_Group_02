@@ -5,8 +5,13 @@
  */
 package Business.Enterprise;
 
+import Business.Hospital.MedicineCatalog;
+import Business.Role.MaterialShippingRole;
+import Business.Role.PharmacyRole;
+import Business.Role.ProcurementRole;
 import Business.Role.Role;
-import Business.Organization.Organization.Type;
+import Business.Role.SupplierAdminRole;
+import Business.Supplier.MaterialCatalog;
 import java.util.ArrayList;
 
 /**
@@ -15,17 +20,39 @@ import java.util.ArrayList;
  */
 public class HospitalEnterprise extends Enterprise {
     
+    private MedicineCatalog medicineCatalog;
+    
     public HospitalEnterprise(String name){
         super(name,EnterpriseType.Hospital);
+        
+        this.medicineCatalog = new MedicineCatalog();
+        
+        
     }
-    @Override
+
+    public MedicineCatalog getMedicineCatalog() {
+        return medicineCatalog;
+    }
+
+    public void setMedicineCatalog(MedicineCatalog medicineCatalog) {
+        this.medicineCatalog = medicineCatalog;
+    }
+    
+    
+    
+    
+    
+     @Override
     public ArrayList<Role> getSupportedRole() {
-        return null;
+        ArrayList<Role> roles = new ArrayList<>();
+        roles.add(new ProcurementRole());
+        roles.add(new PharmacyRole());
+        
+        return roles;
     }
 
     @Override
     public boolean supportsOrganization(Type type) {
         return type == Type.Doctor || type == Type.Lab || type == Type.Supplier;
     }
-    
 }

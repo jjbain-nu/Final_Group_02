@@ -1,3 +1,4 @@
+ui\SupplierAdminRole\ViewOrderStatus$2.class
 ui\SystemAdminWorkArea\SystemAdminWorkAreaJPanel$3.class
 ui\LabAssistantRole\LabAssistantWorkAreaJPanel$3.class
 ui\LabAssistantRole\LabAssistantWorkAreaJPanel.class
@@ -8,6 +9,7 @@ ui\TransportRole\ViewDeliveryStatusJPanel$1.class
 ui\TransportRole\DriverWorkAreaJPanel$1.class
 Business\UserAccount\UserAccount.class
 ui\LabManagerRole\LabManagerWorkAreaJPanel$1.class
+ui\MaterialShippingRole\MaterialShippingWorkPanel$3.class
 ui\MainJFrame$2.class
 ui\DoctorRole\RequestLabTestJPanel$2.class
 ui\AdministrativeRole\ManageUserAccountJPanel$3.class
@@ -24,6 +26,7 @@ ui\AdministrativeRole\AdminWorkAreaJPanel$1.class
 ui\DoctorRole\DoctorWorkAreaJPanel$2.class
 ui\AdministrativeRole\ManageUserAccountJPanel$2.class
 ui\SystemAdminWorkArea\ManageNetworkJPanel$1.class
+ui\SupplierAdminRole\ManageUserAccount$3.class
 Business\Enterprise\Enterprise$EnterpriseType.class
 Business\WorkQueue\DeliveryWorkRequest.class
 Business\ConfigureASystem.class

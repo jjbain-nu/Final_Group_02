@@ -30,7 +30,10 @@ public abstract class Organization {
         Supplier("Supplier Organization"),
         Inventory("Wholesaler Inventory Organization"),
         Shipping("Wholesaler Shipping Organization"),
-        Transport("Transport Organization");
+        Transport("Transport Organization"), 
+        Procurement("Procurement Organization"), 
+        Pharmacy("Pharmacy Organization");
+        
         private String value;
         private Type(String value) {
             this.value = value;
