@@ -272,7 +272,7 @@ public class ConfigureASystem {
             WholesalerEnterprise wholesaler = new WholesalerEnterprise("Wholesaler " + suffix);
             network.getEnterpriseDirectory().getEnterpriseList().add(wholesaler);
 
-            String enterpriseAdminUsername = "wesley" + suffix;
+            String enterpriseAdminUsername = "WEA-" + suffix;
             Employee enterpriseAdmin = wholesaler.getEmployeeDirectory().createEmployee("Wesley Wholesaler Admin " + suffix);
             wholesaler.getUserAccountDirectory().createUserAccount(
                     enterpriseAdminUsername, enterpriseAdminUsername, enterpriseAdmin, new AdminRole());
@@ -282,17 +282,17 @@ public class ConfigureASystem {
             wholesaler.getOrganizationDirectory().getOrganizationList().add(inventoryOrg);
             wholesaler.getOrganizationDirectory().getOrganizationList().add(shippingOrg);
 
-            String inventoryUsername = "william" + suffix;
+            String inventoryUsername = "Inventory" + suffix;
             Employee inventoryEmployee = inventoryOrg.getEmployeeDirectory().createEmployee("william Inventory " + suffix);
             inventoryOrg.getUserAccountDirectory().createUserAccount(
                     inventoryUsername, inventoryUsername, inventoryEmployee, new InventoryAdminRole());
 
-            String shippingStaffUsername = "wanda" + suffix;
+            String shippingStaffUsername = "ShipStaff" + suffix;
             Employee shippingStaffEmployee = shippingOrg.getEmployeeDirectory().createEmployee("wanda Shipping Staff " + suffix);
             shippingOrg.getUserAccountDirectory().createUserAccount(
                     shippingStaffUsername, shippingStaffUsername, shippingStaffEmployee, new ShippingOrderStaffRole());
 
-            String shippingOperatorUsername = "warren" + suffix;
+            String shippingOperatorUsername = "ShipOp" + suffix;
             Employee shippingOperatorEmployee = shippingOrg.getEmployeeDirectory().createEmployee("warren Shipping Operator " + suffix);
             shippingOrg.getUserAccountDirectory().createUserAccount(
                     shippingOperatorUsername, shippingOperatorUsername, shippingOperatorEmployee, new ShippingOperatorRole());
