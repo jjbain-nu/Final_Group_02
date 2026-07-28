@@ -195,8 +195,10 @@ public class ManageEnterpriseJPanel extends javax.swing.JPanel {
             return;
         }
 
-        if (type != Enterprise.EnterpriseType.Hospital && type != Enterprise.EnterpriseType.Wholesaler) {
-            JOptionPane.showMessageDialog(this, "Only Hospital and Wholesaler enterprises are currently implemented.", "Unsupported enterprise type", JOptionPane.WARNING_MESSAGE);
+        if (type != Enterprise.EnterpriseType.Hospital
+                && type != Enterprise.EnterpriseType.Wholesaler
+                && type != Enterprise.EnterpriseType.Transport) {
+            JOptionPane.showMessageDialog(this, "Only Hospital, Wholesaler, and Transport enterprises are currently implemented.", "Unsupported enterprise type", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
