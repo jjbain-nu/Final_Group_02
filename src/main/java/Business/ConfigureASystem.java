@@ -268,14 +268,27 @@ public class ConfigureASystem {
 
         // Seed three independent wholesalers, each with the organizations and
         // role accounts required to exercise the internal wholesaler workflow.
+        WholesalerEnterprise wholesalerA = null;
+        WholesalerEnterprise wholesalerB = null;
+        WholesalerEnterprise wholesalerC = null;
+        
         for (String suffix : new String[]{"A", "B", "C"}) {
             WholesalerEnterprise wholesaler = new WholesalerEnterprise("Wholesaler " + suffix);
             network.getEnterpriseDirectory().getEnterpriseList().add(wholesaler);
 
+            if (suffix.equals("A")) {
+                wholesalerA = wholesaler;
+            } else if (suffix.equals("B")) {
+                wholesalerB = wholesaler;
+            } else if (suffix.equals("C")) {
+                wholesalerC = wholesaler;
+            }
+            
             String enterpriseAdminUsername = "WEA-" + suffix;
+            String pass = "1111";
             Employee enterpriseAdmin = wholesaler.getEmployeeDirectory().createEmployee("Wesley Wholesaler Admin " + suffix);
             wholesaler.getUserAccountDirectory().createUserAccount(
-                    enterpriseAdminUsername, enterpriseAdminUsername, enterpriseAdmin, new AdminRole());
+                    enterpriseAdminUsername, pass, enterpriseAdmin, new AdminRole());
 
             InventoryOrganization inventoryOrg = new InventoryOrganization();
             ShippingOrganization shippingOrg = new ShippingOrganization();
@@ -285,19 +298,22 @@ public class ConfigureASystem {
             String inventoryUsername = "Inventory" + suffix;
             Employee inventoryEmployee = inventoryOrg.getEmployeeDirectory().createEmployee("william Inventory " + suffix);
             inventoryOrg.getUserAccountDirectory().createUserAccount(
-                    inventoryUsername, inventoryUsername, inventoryEmployee, new InventoryAdminRole());
+                    inventoryUsername, pass, inventoryEmployee, new InventoryAdminRole());
 
             String shippingStaffUsername = "ShipStaff" + suffix;
             Employee shippingStaffEmployee = shippingOrg.getEmployeeDirectory().createEmployee("wanda Shipping Staff " + suffix);
             shippingOrg.getUserAccountDirectory().createUserAccount(
-                    shippingStaffUsername, shippingStaffUsername, shippingStaffEmployee, new ShippingOrderStaffRole());
+                    shippingStaffUsername, pass, shippingStaffEmployee, new ShippingOrderStaffRole());
 
             String shippingOperatorUsername = "ShipOp" + suffix;
             Employee shippingOperatorEmployee = shippingOrg.getEmployeeDirectory().createEmployee("warren Shipping Operator " + suffix);
             shippingOrg.getUserAccountDirectory().createUserAccount(
-                    shippingOperatorUsername, shippingOperatorUsername, shippingOperatorEmployee, new ShippingOperatorRole());
+                    shippingOperatorUsername, pass, shippingOperatorEmployee, new ShippingOperatorRole());
         }
         
+            hospitalEnterpriseA.setAssignedWholesaler(wholesalerA);
+            hospitalEnterpriseB.setAssignedWholesaler(wholesalerB);
+            hospitalEnterpriseC.setAssignedWholesaler(wholesalerC);
         
         return system;
     }

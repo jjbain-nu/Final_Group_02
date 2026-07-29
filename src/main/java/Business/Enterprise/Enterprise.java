@@ -26,7 +26,7 @@ public abstract class Enterprise extends Organization{
         Supplier("Supplier"),
         Manufacturer("Manufacturer"),
         Transport("Transport"),
-        Wholesaler("Wholesaler"),
+        Wholesaler("Wholesaler"),      
         Hospital("Hospital");
         
         private String value;

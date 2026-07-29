@@ -200,11 +200,24 @@ public class ManageReceiveOrder extends javax.swing.JPanel {
         }
         
         ProcurementRequest pr = (ProcurementRequest) tblReceiveOrder.getValueAt(selectedRow,0);
+        if (!"Shipped".equals(pr.getStatus())) {
+            JOptionPane.showMessageDialog(this, "Only shipped procurement requests can be received.", "Request not shipped", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        if (JOptionPane.showConfirmDialog(this, "Mark this procurement request as received?", "Confirm receipt", JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
+            return;
+        }
         
         pr.setStatus("Received");
         pr.getReplenishmentRequest().setStatus("Received");
+        for (Organization org : enterprise.getOrganizationDirectory().getOrganizationList()) {
+            if (org instanceof PharmacyOrganization
+                    && !org.getWorkQueue().getWorkRequestList().contains(pr)) {
+                org.getWorkQueue().getWorkRequestList().add(pr);
+            }
+        }
          
-        JOptionPane.showMessageDialog(null,"Received procurement order.");
+        JOptionPane.showMessageDialog(null,"Received procurement order and sent it to Pharmacy.");
            
         populateProcurementRequestTable();
         

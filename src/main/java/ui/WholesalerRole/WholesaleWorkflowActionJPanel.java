@@ -4,6 +4,7 @@ import Business.Enterprise.Enterprise;
 import Business.Organization.Organization;
 import Business.Organization.ShippingOrganization;
 import Business.UserAccount.UserAccount;
+import Business.Hospital.ProcurementRequest;
 import Business.WorkQueue.WholesaleWorkRequest;
 import Business.WorkQueue.WorkRequest;
 import java.awt.BorderLayout;
@@ -104,6 +105,10 @@ public class WholesaleWorkflowActionJPanel extends JPanel {
         int row = table.getSelectedRow(); if (row < 0) { JOptionPane.showMessageDialog(this, "Select an order first.", "No order selected", JOptionPane.WARNING_MESSAGE); return; }
         WholesaleWorkRequest request = (WholesaleWorkRequest)table.getValueAt(row, 0);
         if (!fromStatus.equals(request.getStatus())) { JOptionPane.showMessageDialog(this, "This order is no longer eligible for this step.", "Order changed", JOptionPane.WARNING_MESSAGE); refreshStage(); return; }
+        if (request instanceof ProcurementRequest && WholesaleWorkRequest.RECEIVED_INTO_INVENTORY.equals(toStatus)) {
+            JOptionPane.showMessageDialog(this, "Hospital Procurement must mark a shipped procurement request as Received.", "Hospital action required", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
         if (JOptionPane.showConfirmDialog(this, action + " for " + request.getMessage() + "?", "Confirm", JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) return;
         request.setStatus(toStatus); request.setReceiver(account); if (WholesaleWorkRequest.RECEIVED_INTO_INVENTORY.equals(toStatus)) { request.setResolveDate(new Date()); /* TODO: update wholesaler inventory when implemented. */ }
         JOptionPane.showMessageDialog(this, "Order updated to " + toStatus + ".", "Workflow updated", JOptionPane.INFORMATION_MESSAGE); refreshStage();

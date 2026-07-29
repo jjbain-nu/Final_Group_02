@@ -9,6 +9,7 @@ import ui.DoctorRole.*;
 import Business.EcoSystem;
 import Business.Enterprise.Enterprise;
 import Business.Hospital.MedicineInventory;
+import Business.Hospital.ProcurementRequest;
 import Business.Hospital.ReplenishmentRequest;
 import Business.Organization.DoctorOrganization;
 import Business.Organization.Organization;
@@ -400,6 +401,9 @@ public class ManageReplenishmentRequest extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null,"Medicine has not been received by Procurement.","Warning",JOptionPane.WARNING_MESSAGE);
             return;
         } 
+        if (JOptionPane.showConfirmDialog(this, "Store this received medicine?", "Confirm storage", JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
+            return;
+        }
            
         for (MedicineInventory mi : organization.getMedicineInventoryDirectory().getInventoryList()){
            if(mi.getMedicine().equals(rr.getMedicine())){
@@ -407,6 +411,14 @@ public class ManageReplenishmentRequest extends javax.swing.JPanel {
                rr.setStatus("Stored");
                break;
            }
+        }
+
+        for (WorkRequest request : organization.getWorkQueue().getWorkRequestList()) {
+            if (request instanceof ProcurementRequest procurementRequest
+                    && procurementRequest.getReplenishmentRequest() == rr) {
+                procurementRequest.setStatus("Stored");
+                break;
+            }
         }
 
  

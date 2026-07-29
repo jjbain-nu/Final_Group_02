@@ -1,3 +1,4 @@
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
@@ -25,7 +26,9 @@ public class TransportEnterprise extends Enterprise {
     }
 
     @Override
+
     public boolean supportsOrganization(Type type) {
         return type == Type.Transport;
     }
 }
+
