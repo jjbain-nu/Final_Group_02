@@ -23,11 +23,11 @@ public abstract class Enterprise extends Organization{
     }
     
     public enum EnterpriseType{
-        Hospital("Hospital"),
-        Transport("Transport"),
         Supplier("Supplier"),
-        Wholesaler("Wholesaler")      
-        ; 
+        Manufacturer("Manufacturer"),
+        Transport("Transport"),
+        Wholesaler("Wholesaler"),      
+        Hospital("Hospital");
         
         private String value;
         
@@ -39,8 +39,8 @@ public abstract class Enterprise extends Organization{
         }
         @Override
         public String toString(){
-        return value;
-    }
+            return value;
+        }
     }
 
     public EnterpriseType getEnterpriseType() {
@@ -55,5 +55,9 @@ public abstract class Enterprise extends Organization{
         super(name);
         this.enterpriseType=type;
         organizationDirectory=new OrganizationDirectory();
+    }
+
+    public boolean supportsOrganization(Type type) {
+        return false;
     }
 }

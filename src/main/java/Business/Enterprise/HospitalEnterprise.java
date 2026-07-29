@@ -50,4 +50,9 @@ public class HospitalEnterprise extends Enterprise {
         
         return roles;
     }
+
+    @Override
+    public boolean supportsOrganization(Type type) {
+        return type == Type.Doctor || type == Type.Lab || type == Type.Supplier;
+    }
 }

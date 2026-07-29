@@ -8,19 +8,25 @@ import Business.Enterprise.Enterprise;
 import Business.Enterprise.HospitalEnterprise;
 import Business.Enterprise.SupplierEnterprise;
 import Business.Enterprise.TransportEnterprise;
+import Business.Enterprise.WholesalerEnterprise;
 import Business.Hospital.Medicine;
 import Business.Hospital.MedicineCatalog;
 import Business.Network.Network;
 import Business.Organization.Organization;
 import Business.Organization.PharmacyOrganization;
 import Business.Organization.ProcurementOrganization;
+import Business.Organization.InventoryOrganization;
+import Business.Organization.ShippingOrganization;
 import Business.Organization.SupplierOrganization;
 import Business.Organization.TransportOrganization;
 import Business.Role.AdminRole;
 import Business.Role.DriverRole;
 import Business.Role.MaterialShippingRole;
+import Business.Role.InventoryAdminRole;
 import Business.Role.PharmacyRole;
 import Business.Role.ProcurementRole;
+import Business.Role.ShippingOperatorRole;
+import Business.Role.ShippingOrderStaffRole;
 import Business.Role.SupplierAdminRole;
 import Business.Role.TransportAdminRole;
 import Business.Supplier.Material;
@@ -259,6 +265,38 @@ public class ConfigureASystem {
         hospitalEnterpriseA.setMedicineCatalog(sharedCatalog);
         hospitalEnterpriseB.setMedicineCatalog(sharedCatalog);
         hospitalEnterpriseC.setMedicineCatalog(sharedCatalog);
+
+        // Seed three independent wholesalers, each with the organizations and
+        // role accounts required to exercise the internal wholesaler workflow.
+        for (String suffix : new String[]{"A", "B", "C"}) {
+            WholesalerEnterprise wholesaler = new WholesalerEnterprise("Wholesaler " + suffix);
+            network.getEnterpriseDirectory().getEnterpriseList().add(wholesaler);
+
+            String enterpriseAdminUsername = "WEA-" + suffix;
+            Employee enterpriseAdmin = wholesaler.getEmployeeDirectory().createEmployee("Wesley Wholesaler Admin " + suffix);
+            wholesaler.getUserAccountDirectory().createUserAccount(
+                    enterpriseAdminUsername, enterpriseAdminUsername, enterpriseAdmin, new AdminRole());
+
+            InventoryOrganization inventoryOrg = new InventoryOrganization();
+            ShippingOrganization shippingOrg = new ShippingOrganization();
+            wholesaler.getOrganizationDirectory().getOrganizationList().add(inventoryOrg);
+            wholesaler.getOrganizationDirectory().getOrganizationList().add(shippingOrg);
+
+            String inventoryUsername = "Inventory" + suffix;
+            Employee inventoryEmployee = inventoryOrg.getEmployeeDirectory().createEmployee("william Inventory " + suffix);
+            inventoryOrg.getUserAccountDirectory().createUserAccount(
+                    inventoryUsername, inventoryUsername, inventoryEmployee, new InventoryAdminRole());
+
+            String shippingStaffUsername = "ShipStaff" + suffix;
+            Employee shippingStaffEmployee = shippingOrg.getEmployeeDirectory().createEmployee("wanda Shipping Staff " + suffix);
+            shippingOrg.getUserAccountDirectory().createUserAccount(
+                    shippingStaffUsername, shippingStaffUsername, shippingStaffEmployee, new ShippingOrderStaffRole());
+
+            String shippingOperatorUsername = "ShipOp" + suffix;
+            Employee shippingOperatorEmployee = shippingOrg.getEmployeeDirectory().createEmployee("warren Shipping Operator " + suffix);
+            shippingOrg.getUserAccountDirectory().createUserAccount(
+                    shippingOperatorUsername, shippingOperatorUsername, shippingOperatorEmployee, new ShippingOperatorRole());
+        }
         
         
         return system;
