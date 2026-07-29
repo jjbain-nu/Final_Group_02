@@ -45,12 +45,14 @@ public class WholesalerWorkflowJPanel extends JPanel {
     private final JPanel userProcessContainer;
     private final UserAccount account;
     private final Enterprise enterprise;
+    private final Organization organization;
 
     public WholesalerWorkflowJPanel(JPanel userProcessContainer, View view, UserAccount account, Organization organization, Enterprise enterprise) {
         this.userProcessContainer = userProcessContainer;
         this.view = view;
         this.account = account;
         this.enterprise = enterprise;
+        this.organization = organization;
         setLayout(new BorderLayout());
         setBackground(PAGE_BACKGROUND);
         add(createHeader(), BorderLayout.NORTH);
@@ -105,7 +107,7 @@ public class WholesalerWorkflowJPanel extends JPanel {
         actions.setBorder(BorderFactory.createEmptyBorder(16, 0, 0, 0));
         if (view == View.INVENTORY_ADMIN) {
             addAction(actions, "Check Inventory", 0, 0, this::showInventoryTodo);
-            addAction(actions, "Create Replenishment Request", 1, 0, () -> navigate(WholesaleWorkflowActionJPanel.request(userProcessContainer, account, enterprise, WholesaleWorkRequest.RequestType.REPLENISHMENT)));
+            addAction(actions, "Review Procurement Requests", 1, 0, () -> navigate(new InventoryProcurementJPanel(userProcessContainer, account, organization, enterprise)));
             addAction(actions, "Check Another Wholesaler Inventory", 0, 1, this::showOtherWholesalerTodo);
             addAction(actions, "Transfer Order Request", 1, 1, () -> navigate(WholesaleWorkflowActionJPanel.request(userProcessContainer, account, enterprise, WholesaleWorkRequest.RequestType.TRANSFER)));
             addAction(actions, "View Replenishment / Order Status", 0, 2, () -> navigate(WholesaleWorkflowActionJPanel.status(userProcessContainer, account, enterprise, true)));
@@ -119,7 +121,7 @@ public class WholesalerWorkflowJPanel extends JPanel {
             addAction(actions, "Picking", 0, 0, () -> navigate(WholesaleWorkflowActionJPanel.stage(userProcessContainer, account, enterprise, WholesaleWorkRequest.PICKING, WholesaleWorkRequest.PICKED, "Complete picking")));
             addAction(actions, "Packing", 1, 0, () -> navigate(WholesaleWorkflowActionJPanel.stage(userProcessContainer, account, enterprise, WholesaleWorkRequest.PICKED, WholesaleWorkRequest.PACKED, "Complete packing")));
             addAction(actions, "Shipping", 0, 1, () -> navigate(WholesaleWorkflowActionJPanel.stage(userProcessContainer, account, enterprise, WholesaleWorkRequest.PACKED, WholesaleWorkRequest.SHIPPED, "Confirm shipment")));
-            addAction(actions, "Receive Finished Goods", 1, 1, () -> navigate(WholesaleWorkflowActionJPanel.stage(userProcessContainer, account, enterprise, WholesaleWorkRequest.SHIPPED, WholesaleWorkRequest.RECEIVED_INTO_INVENTORY, "Receive into inventory")));
+            addAction(actions, "Receive Finished Goods", 1, 1, this::showReceiveFinishedGoodsTodo);
             addAction(actions, "View Replenishment / Order Status", 0, 2, () -> navigate(WholesaleWorkflowActionJPanel.status(userProcessContainer, account, enterprise, false)));
             addAction(actions, "My Profile", 1, 2, () -> navigate(WholesaleWorkflowActionJPanel.profile(userProcessContainer, account, enterprise)));
         }
@@ -224,6 +226,13 @@ public class WholesalerWorkflowJPanel extends JPanel {
     private void showDeliveryTodo() {
         // TODO: Implement transporter integration and delivery requests.
         JOptionPane.showMessageDialog(this, "Transporter delivery requests are outside the current Wholesaler-only scope.", "Transporter TODO", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    private void showReceiveFinishedGoodsTodo() {
+        // TODO: Implement manufacturer-to-wholesaler finished-goods receiving and inventory updates.
+        JOptionPane.showMessageDialog(this,
+                "Receiving finished goods from a manufacturer is not implemented yet.",
+                "Manufacturer receiving TODO", JOptionPane.INFORMATION_MESSAGE);
     }
 
     private void showProfile() {

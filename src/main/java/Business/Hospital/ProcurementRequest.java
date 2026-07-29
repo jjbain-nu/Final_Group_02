@@ -4,19 +4,28 @@
  */
 package Business.Hospital;
 
-import Business.WorkQueue.WorkRequest;
+import Business.WorkQueue.WholesaleWorkRequest;
 
 /**
  *
  * @author yu101
  */
-public class ProcurementRequest extends WorkRequest{
+/**
+ * A hospital request that is fulfilled through the wholesaler shipping workflow.
+ * The same instance is shared by Hospital Procurement, Wholesaler Inventory,
+ * Wholesaler Shipping, and Hospital Pharmacy queues.
+ */
+public class ProcurementRequest extends WholesaleWorkRequest {
     private static int count = 1;
 
     private int procurementId;
     private Medicine medicine;
     private int requestQty;
     private ReplenishmentRequest replenishmentRequest;
+
+    public ProcurementRequest() {
+        super(RequestType.TRANSFER, "Hospital procurement request", 1);
+    }
 
     public Medicine getMedicine() {
         return medicine;
@@ -48,6 +57,16 @@ public class ProcurementRequest extends WorkRequest{
 
     public void setReplenishmentRequest(ReplenishmentRequest replenishmentRequest) {
         this.replenishmentRequest = replenishmentRequest;
+    }
+
+    @Override
+    public String getItemDescription() {
+        return medicine == null ? super.getItemDescription() : medicine.getMedicineName();
+    }
+
+    @Override
+    public int getQuantity() {
+        return requestQty > 0 ? requestQty : super.getQuantity();
     }
     
     
