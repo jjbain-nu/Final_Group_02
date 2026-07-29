@@ -295,6 +295,14 @@ public class ConfigureASystem {
             wholesaler.getOrganizationDirectory().getOrganizationList().add(inventoryOrg);
             wholesaler.getOrganizationDirectory().getOrganizationList().add(shippingOrg);
 
+            // Give every wholesaler the same medicine catalog as the hospitals,
+            // with independent sample quantities for its own stock.
+            for (Medicine medicine : sharedCatalog.getMedicineList()) {
+                int quantity = faker.number().numberBetween(100, 501);
+                int standardStock = faker.options().option(100, 150, 200, 250, 300);
+                inventoryOrg.getMedicineInventoryDirectory().addInventory(medicine, quantity, standardStock);
+            }
+
             String inventoryUsername = "Inventory" + suffix;
             Employee inventoryEmployee = inventoryOrg.getEmployeeDirectory().createEmployee("william Inventory " + suffix);
             inventoryOrg.getUserAccountDirectory().createUserAccount(

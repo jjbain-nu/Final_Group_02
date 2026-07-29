@@ -106,9 +106,9 @@ public class WholesalerWorkflowJPanel extends JPanel {
         actions.setBackground(PAGE_BACKGROUND);
         actions.setBorder(BorderFactory.createEmptyBorder(16, 0, 0, 0));
         if (view == View.INVENTORY_ADMIN) {
-            addAction(actions, "Check Inventory", 0, 0, this::showInventoryTodo);
+            addAction(actions, "Check Inventory", 0, 0, () -> navigate(new WholesalerInventoryJPanel(userProcessContainer, (Business.Organization.InventoryOrganization) organization)));
             addAction(actions, "Review Procurement Requests", 1, 0, () -> navigate(new InventoryProcurementJPanel(userProcessContainer, account, organization, enterprise)));
-            addAction(actions, "Check Another Wholesaler Inventory", 0, 1, this::showOtherWholesalerTodo);
+            addAction(actions, "Create Replenishment Request", 0, 1, () -> navigate(new ManufacturerReplenishmentJPanel(userProcessContainer, account, (Business.Organization.InventoryOrganization) organization)));
             addAction(actions, "Transfer Order Request", 1, 1, () -> navigate(WholesaleWorkflowActionJPanel.request(userProcessContainer, account, enterprise, WholesaleWorkRequest.RequestType.TRANSFER)));
             addAction(actions, "View Replenishment / Order Status", 0, 2, () -> navigate(WholesaleWorkflowActionJPanel.status(userProcessContainer, account, enterprise, true)));
         } else if (view == View.SHIPPING_ORDER_STAFF) {
@@ -211,11 +211,6 @@ public class WholesalerWorkflowJPanel extends JPanel {
         String text = requests.isEmpty() ? "No wholesale requests found." : requests.stream()
                 .map(WholesaleWorkRequest::toString).collect(Collectors.joining("\n"));
         JOptionPane.showMessageDialog(this, text, "Wholesaler order status", JOptionPane.INFORMATION_MESSAGE);
-    }
-
-    private void showInventoryTodo() {
-        // TODO: Implement wholesaler material catalog and inventory quantity management.
-        JOptionPane.showMessageDialog(this, "Inventory catalog and stock levels are not implemented yet.", "Inventory TODO", JOptionPane.INFORMATION_MESSAGE);
     }
 
     private void showOtherWholesalerTodo() {
