@@ -5,6 +5,7 @@
 package Business.Enterprise;
 
 import Business.Role.Role;
+
 import java.util.ArrayList;
 
 /**
@@ -22,4 +23,10 @@ public class TransportEnterprise extends Enterprise {
     public ArrayList<Role> getSupportedRole() {
         return null;
     }
+
+
+    public boolean supportsOrganization(Type type) {
+        return type == Type.Transport;
+    }
 }
+
