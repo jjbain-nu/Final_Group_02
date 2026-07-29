@@ -21,6 +21,8 @@ import java.util.ArrayList;
 public class HospitalEnterprise extends Enterprise {
     
     private MedicineCatalog medicineCatalog;
+    private WholesalerEnterprise assignedWholesaler;
+    
     
     public HospitalEnterprise(String name){
         super(name,EnterpriseType.Hospital);
@@ -28,6 +30,14 @@ public class HospitalEnterprise extends Enterprise {
         this.medicineCatalog = new MedicineCatalog();
         
         
+    }
+    
+    public WholesalerEnterprise getAssignedWholesaler() {
+        return assignedWholesaler;
+    }
+
+    public void setAssignedWholesaler(WholesalerEnterprise assignedWholesaler) {
+        this.assignedWholesaler = assignedWholesaler;
     }
 
     public MedicineCatalog getMedicineCatalog() {

@@ -268,10 +268,22 @@ public class ConfigureASystem {
 
         // Seed three independent wholesalers, each with the organizations and
         // role accounts required to exercise the internal wholesaler workflow.
+        WholesalerEnterprise wholesalerA = null;
+        WholesalerEnterprise wholesalerB = null;
+        WholesalerEnterprise wholesalerC = null;
+        
         for (String suffix : new String[]{"A", "B", "C"}) {
             WholesalerEnterprise wholesaler = new WholesalerEnterprise("Wholesaler " + suffix);
             network.getEnterpriseDirectory().getEnterpriseList().add(wholesaler);
 
+            if (suffix.equals("A")) {
+                wholesalerA = wholesaler;
+            } else if (suffix.equals("B")) {
+                wholesalerB = wholesaler;
+            } else if (suffix.equals("C")) {
+                wholesalerC = wholesaler;
+            }
+            
             String enterpriseAdminUsername = "WEA-" + suffix;
             Employee enterpriseAdmin = wholesaler.getEmployeeDirectory().createEmployee("Wesley Wholesaler Admin " + suffix);
             wholesaler.getUserAccountDirectory().createUserAccount(
@@ -298,6 +310,9 @@ public class ConfigureASystem {
                     shippingOperatorUsername, shippingOperatorUsername, shippingOperatorEmployee, new ShippingOperatorRole());
         }
         
+            hospitalEnterpriseA.setAssignedWholesaler(wholesalerA);
+            hospitalEnterpriseB.setAssignedWholesaler(wholesalerB);
+            hospitalEnterpriseC.setAssignedWholesaler(wholesalerC);
         
         return system;
     }

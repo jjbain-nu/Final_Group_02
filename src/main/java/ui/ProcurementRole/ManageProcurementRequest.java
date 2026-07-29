@@ -9,10 +9,13 @@ import ui.SupplierAdminRole.*;
 import ui.DoctorRole.*;
 import Business.EcoSystem;
 import Business.Enterprise.Enterprise;
+import Business.Enterprise.HospitalEnterprise;
+import Business.Enterprise.WholesalerEnterprise;
 import Business.Hospital.MedicineInventory;
 import Business.Hospital.ProcurementRequest;
 import Business.Hospital.ReplenishmentRequest;
 import Business.Organization.DoctorOrganization;
+import Business.Organization.InventoryOrganization;
 import Business.Organization.Organization;
 import Business.Organization.PharmacyOrganization;
 import Business.Organization.ProcurementOrganization;
@@ -263,10 +266,23 @@ public class ManageProcurementRequest extends javax.swing.JPanel {
          
         procurementOrg.getWorkQueue().getWorkRequestList().add(pr);
         
+        HospitalEnterprise hospitalEnterprise = (HospitalEnterprise) enterprise;
+        WholesalerEnterprise wholesaler = hospitalEnterprise.getAssignedWholesaler();
+
+        for (Organization org : wholesaler.getOrganizationDirectory().getOrganizationList()) {
+
+            if (org instanceof InventoryOrganization) {
+
+                InventoryOrganization inventoryOrg = (InventoryOrganization) org;
+
+                inventoryOrg.getWorkQueue()
+                    .getWorkRequestList()
+                    .add(pr);
+
+                break;
+            }
+        }
         JOptionPane.showMessageDialog(null,"Procurement request has been created successfully.");
-           
-        // TODO
-        // wholesalerOrg.getWorkQueue().add(pr);  Waiting for Joseph’s reply 
         
         populateReplenishmentRequestTable();
         populateProcurementRequestTable();
