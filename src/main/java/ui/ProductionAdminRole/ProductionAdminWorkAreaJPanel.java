@@ -5,6 +5,8 @@
 
 package ui.ProductionAdminRole;
 
+import Business.Enterprise.SupplierEnterprise;
+import Business.WorkQueue.WorkRequest;
 import Business.EcoSystem;
 import Business.Network.Network;
 import Business.Organization.Organization;
@@ -224,7 +226,7 @@ public ProductionAdminWorkAreaJPanel(JPanel userProcessContainer,
         return;
     }
 
-    java.util.ArrayList<Material> materials = supplierOrg.getMaterialCatalog().getMaterialList();
+    java.util.ArrayList<Material> materials = ((SupplierEnterprise) supplierEnterprise).getMaterialCatalog().getMaterialList();
     if (materials.isEmpty()) {
         javax.swing.JOptionPane.showMessageDialog(this, "No materials available in Supplier catalog.");
         return;
@@ -331,8 +333,18 @@ public ProductionAdminWorkAreaJPanel(JPanel userProcessContainer,
     }//GEN-LAST:event_manageAdminAccountButtonActionPerformed
 
     private void viewOrderStatusButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewOrderStatusButtonActionPerformed
-        // TODO add your handling code here:
-        javax.swing.JOptionPane.showMessageDialog(this, "TODO: View Order Status screen");
+        // TODO add your handling code here
+    java.util.ArrayList<WorkRequest> requests = organization.getWorkQueue().getWorkRequestList();
+    if (requests.isEmpty()) {
+        javax.swing.JOptionPane.showMessageDialog(this, "No requests in the queue.");
+        return;
+    }
+    StringBuilder sb = new StringBuilder();
+    for (WorkRequest wr : requests) {
+        sb.append(wr.toString()).append(" - ").append(wr.getStatus()).append("\n");
+    }
+    javax.swing.JOptionPane.showMessageDialog(this, sb.toString(), "Order Status", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+
     }//GEN-LAST:event_viewOrderStatusButtonActionPerformed
 
 
