@@ -4,6 +4,10 @@
  */
 package ui.QualityAssuranceRole;
 
+import Business.Organization.Organization;
+import Business.Organization.ProductionOrganization;
+import Business.Production.QualityInspectionResult;
+import Business.Role.ProductionAdminRole;
 import Business.Enterprise.Enterprise;
 import Business.Organization.QualityAssuranceOrganization;
 import Business.UserAccount.UserAccount;
@@ -140,7 +144,45 @@ public QualityAssuranceWorkAreaJPanel(JPanel userProcessContainer,
 
     private void enterInspectionResultButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enterInspectionResultButtonActionPerformed
         // TODO add your handling code here:
-        javax.swing.JOptionPane.showMessageDialog(this, "TODO: Enter Quality Inspection Result screen");
+    String productName = javax.swing.JOptionPane.showInputDialog(this, "Enter product name:");
+    if (productName == null || productName.trim().isEmpty()) {
+        return;
+    }
+    int response = javax.swing.JOptionPane.showConfirmDialog(this, "Did the product pass inspection?", "Quality Inspection Result", javax.swing.JOptionPane.YES_NO_OPTION);
+    boolean passed = (response == javax.swing.JOptionPane.YES_OPTION);
+
+    ProductionOrganization productionOrg = null;
+    for (Organization org : enterprise.getOrganizationDirectory().getOrganizationList()) {
+        if (org instanceof ProductionOrganization) {
+            productionOrg = (ProductionOrganization) org;
+            break;
+        }
+    }
+    if (productionOrg == null) {
+        javax.swing.JOptionPane.showMessageDialog(this, "No Production organization found.");
+        return;
+    }
+
+    UserAccount adminAccount = null;
+    for (UserAccount ua : productionOrg.getUserAccountDirectory().getUserAccountList()) {
+        if (ua.getRole() instanceof ProductionAdminRole) {
+            adminAccount = ua;
+            break;
+        }
+    }
+    if (adminAccount == null) {
+        javax.swing.JOptionPane.showMessageDialog(this, "No Production Admin account found.");
+        return;
+    }
+
+    QualityInspectionResult result = new QualityInspectionResult(productName, passed);
+    result.setMessage("Inspection result for " + productName + ": " + (passed ? "Passed" : "Failed"));
+    result.setSender(account);
+    result.setReceiver(adminAccount);
+    productionOrg.getWorkQueue().getWorkRequestList().add(result);
+
+    javax.swing.JOptionPane.showMessageDialog(this, "Inspection result submitted for " + productName);
+
     }//GEN-LAST:event_enterInspectionResultButtonActionPerformed
 
     private void viewOrderStatusButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewOrderStatusButtonActionPerformed
