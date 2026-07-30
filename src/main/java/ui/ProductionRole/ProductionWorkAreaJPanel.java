@@ -4,6 +4,10 @@
  */
 package ui.ProductionRole;
 
+import Business.Organization.Organization;
+import Business.Organization.QualityAssuranceOrganization;
+import Business.Production.FinishedGoods;
+import Business.Role.QualityAssuranceRole;
 import Business.Enterprise.Enterprise;
 import Business.Organization.ProductionOrganization;
 import Business.UserAccount.UserAccount;
@@ -152,7 +156,54 @@ public ProductionWorkAreaJPanel(JPanel userProcessContainer,
 
     private void registerFinishedGoodsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerFinishedGoodsButtonActionPerformed
         // TODO add your handling code here:
-    javax.swing.JOptionPane.showMessageDialog(this, "TODO: Register Finished Goods screen");
+    String productName = javax.swing.JOptionPane.showInputDialog(this, "Enter product name:");
+    if (productName == null || productName.trim().isEmpty()) {
+        return;
+    }
+    String qtyStr = javax.swing.JOptionPane.showInputDialog(this, "Enter quantity:");
+    if (qtyStr == null || qtyStr.trim().isEmpty()) {
+        return;
+    }
+    int qty;
+    try {
+        qty = Integer.parseInt(qtyStr.trim());
+    } catch (NumberFormatException e) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Quantity must be a number.");
+        return;
+    }
+
+    QualityAssuranceOrganization qaOrg = null;
+    for (Organization org : enterprise.getOrganizationDirectory().getOrganizationList()) {
+        if (org instanceof QualityAssuranceOrganization) {
+            qaOrg = (QualityAssuranceOrganization) org;
+            break;
+        }
+    }
+    if (qaOrg == null) {
+        javax.swing.JOptionPane.showMessageDialog(this, "No Quality Assurance organization found.");
+        return;
+    }
+
+    UserAccount qaAccount = null;
+    for (UserAccount ua : qaOrg.getUserAccountDirectory().getUserAccountList()) {
+        if (ua.getRole() instanceof QualityAssuranceRole) {
+            qaAccount = ua;
+            break;
+        }
+    }
+    if (qaAccount == null) {
+        javax.swing.JOptionPane.showMessageDialog(this, "No Quality Assurance account found.");
+        return;
+    }
+
+    FinishedGoods fg = new FinishedGoods(productName, qty);
+    fg.setMessage("Finished goods ready for inspection: " + productName);
+    fg.setSender(account);
+    fg.setReceiver(qaAccount);
+    qaOrg.getWorkQueue().getWorkRequestList().add(fg);
+
+    javax.swing.JOptionPane.showMessageDialog(this, "Finished goods registered and sent to QA: " + productName);
+
     }//GEN-LAST:event_registerFinishedGoodsButtonActionPerformed
 
     private void shippingButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_shippingButtonActionPerformed

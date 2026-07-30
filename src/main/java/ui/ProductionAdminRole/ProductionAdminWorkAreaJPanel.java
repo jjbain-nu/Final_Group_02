@@ -8,6 +8,8 @@ package ui.ProductionAdminRole;
 import Business.Enterprise.Enterprise;
 import Business.Organization.ProductionOrganization;
 import Business.UserAccount.UserAccount;
+import Business.Production.ProductionOrder;
+import Business.Role.ProductionRole;
 import javax.swing.JPanel;
 
 /**
@@ -179,7 +181,42 @@ public ProductionAdminWorkAreaJPanel(JPanel userProcessContainer,
 
     private void issueProductionOrderButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_issueProductionOrderButtonActionPerformed
         // TODO add your handling code here:
-        javax.swing.JOptionPane.showMessageDialog(this, "TODO: Issue Production Order screen");
+        String productName = javax.swing.JOptionPane.showInputDialog(this, "Enter product name:");
+        if (productName == null || productName.trim().isEmpty()) {
+            return;
+        }
+        String qtyStr = javax.swing.JOptionPane.showInputDialog(this, "Enter quantity:");
+        if (qtyStr == null || qtyStr.trim().isEmpty()) {
+            return;
+        }
+        int qty;
+        try {
+            qty = Integer.parseInt(qtyStr.trim());
+        } catch (NumberFormatException e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Quantity must be a number.");
+            return;
+        }
+
+        UserAccount operatorAccount = null;
+        for (UserAccount ua : organization.getUserAccountDirectory().getUserAccountList()) {
+            if (ua.getRole() instanceof ProductionRole) {
+                operatorAccount = ua;
+                break;
+            }
+        }
+        if (operatorAccount == null) {
+            javax.swing.JOptionPane.showMessageDialog(this, "No Production Operator account found.");
+            return;
+        }
+
+        ProductionOrder po = new ProductionOrder(productName, qty);
+        po.setMessage("Production order: " + productName);
+        po.setSender(account);
+        po.setReceiver(operatorAccount);
+        organization.getWorkQueue().getWorkRequestList().add(po);
+
+        javax.swing.JOptionPane.showMessageDialog(this, "Production order issued for " + productName);
+    
     }//GEN-LAST:event_issueProductionOrderButtonActionPerformed
 
     private void issueDeliveryRequestButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_issueDeliveryRequestButtonActionPerformed
