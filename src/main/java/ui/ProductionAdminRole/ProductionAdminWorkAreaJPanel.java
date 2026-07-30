@@ -5,6 +5,13 @@
 
 package ui.ProductionAdminRole;
 
+import Business.EcoSystem;
+import Business.Network.Network;
+import Business.Organization.Organization;
+import Business.Organization.SupplierOrganization;
+import Business.Role.SupplierAdminRole;
+import Business.Supplier.Material;
+import Business.Supplier.MaterialRequest;
 import Business.Enterprise.Enterprise;
 import Business.Organization.ProductionOrganization;
 import Business.UserAccount.UserAccount;
@@ -176,7 +183,95 @@ public ProductionAdminWorkAreaJPanel(JPanel userProcessContainer,
 
     private void createMaterialRequestButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createMaterialRequestButtonActionPerformed
         // TODO add your handling code here:
-        javax.swing.JOptionPane.showMessageDialog(this, "TODO: Create Material Request screen");
+    EcoSystem system = EcoSystem.getInstance();
+
+    Enterprise supplierEnterprise = null;
+    outer:
+    for (Network network : system.getNetworkList()) {
+        for (Enterprise ent : network.getEnterpriseDirectory().getEnterpriseList()) {
+            if (ent.getEnterpriseType() == Enterprise.EnterpriseType.Supplier) {
+                supplierEnterprise = ent;
+                break outer;
+            }
+        }
+    }
+    if (supplierEnterprise == null) {
+        javax.swing.JOptionPane.showMessageDialog(this, "No Supplier enterprise found.");
+        return;
+    }
+
+    SupplierOrganization supplierOrg = null;
+    for (Organization org : supplierEnterprise.getOrganizationDirectory().getOrganizationList()) {
+        if (org instanceof SupplierOrganization) {
+            supplierOrg = (SupplierOrganization) org;
+            break;
+        }
+    }
+    if (supplierOrg == null) {
+        javax.swing.JOptionPane.showMessageDialog(this, "No Supplier organization found.");
+        return;
+    }
+
+    UserAccount supplierAdminAccount = null;
+    for (UserAccount ua : supplierOrg.getUserAccountDirectory().getUserAccountList()) {
+        if (ua.getRole() instanceof SupplierAdminRole) {
+            supplierAdminAccount = ua;
+            break;
+        }
+    }
+    if (supplierAdminAccount == null) {
+        javax.swing.JOptionPane.showMessageDialog(this, "No Supplier Admin account found.");
+        return;
+    }
+
+    java.util.ArrayList<Material> materials = supplierOrg.getMaterialCatalog().getMaterialList();
+    if (materials.isEmpty()) {
+        javax.swing.JOptionPane.showMessageDialog(this, "No materials available in Supplier catalog.");
+        return;
+    }
+    String[] materialNames = new String[materials.size()];
+    for (int i = 0; i < materials.size(); i++) {
+        materialNames[i] = materials.get(i).getMaterialName();
+    }
+    String selectedName = (String) javax.swing.JOptionPane.showInputDialog(
+            this,
+            "Select material:",
+            "Create Material Request",
+            javax.swing.JOptionPane.QUESTION_MESSAGE,
+            null,
+            materialNames,
+            materialNames[0]);
+    if (selectedName == null) {
+        return;
+    }
+    Material selectedMaterial = null;
+    for (Material m : materials) {
+        if (m.getMaterialName().equals(selectedName)) {
+            selectedMaterial = m;
+            break;
+        }
+    }
+
+    String qtyStr = javax.swing.JOptionPane.showInputDialog(this, "Enter quantity:");
+    if (qtyStr == null || qtyStr.trim().isEmpty()) {
+        return;
+    }
+    int qty;
+    try {
+        qty = Integer.parseInt(qtyStr.trim());
+    } catch (NumberFormatException e) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Quantity must be a number.");
+        return;
+    }
+
+    MaterialRequest mr = new MaterialRequest(selectedMaterial, qty);
+    mr.setMessage("Request: " + selectedMaterial.getMaterialName());
+    mr.setSender(account);
+    mr.setReceiver(supplierAdminAccount);
+    supplierOrg.getWorkQueue().getWorkRequestList().add(mr);
+
+    javax.swing.JOptionPane.showMessageDialog(this, "Material request sent for " + selectedMaterial.getMaterialName());
+        
     }//GEN-LAST:event_createMaterialRequestButtonActionPerformed
 
     private void issueProductionOrderButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_issueProductionOrderButtonActionPerformed
