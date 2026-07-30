@@ -15,12 +15,21 @@ public class ProductionOrder extends WorkRequest {
 
     private String productName;
     private int qty;
+    private String planId;
 
     public ProductionOrder(String productName, int qty) {
         this.productName = productName;
         this.qty = qty;
         setStatus("Sent");
         setRequestDate(new Date());
+    }
+
+    public String getPlanId() {
+        return planId;
+    }
+
+    public void setPlanId(String planId) {
+        this.planId = planId;
     }
 
     public String getProductName() {

@@ -15,12 +15,21 @@ public class QualityInspectionResult extends WorkRequest {
 
     private String productName;
     private boolean passed;
+    private String planId;
 
     public QualityInspectionResult(String productName, boolean passed) {
         this.productName = productName;
         this.passed = passed;
         setStatus("Sent");
         setRequestDate(new Date());
+    }
+
+    public String getPlanId() {
+        return planId;
+    }
+
+    public void setPlanId(String planId) {
+        this.planId = planId;
     }
 
     public String getProductName() {

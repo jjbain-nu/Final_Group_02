@@ -18,7 +18,14 @@ import Business.Enterprise.Enterprise;
 import Business.Organization.ProductionOrganization;
 import Business.UserAccount.UserAccount;
 import Business.Production.ProductionOrder;
+import Business.Production.ProductionPlan;
+import Business.Role.ProductionAdminRole;
 import Business.Role.ProductionRole;
+import Business.Role.QualityAssuranceRole;
+import Business.Role.Role;
+import Business.Organization.QualityAssuranceOrganization;
+import Business.Employee.Employee;
+import Business.Supplier.MaterialInventory;
 import javax.swing.JPanel;
 
 /**
@@ -174,13 +181,46 @@ public ProductionAdminWorkAreaJPanel(JPanel userProcessContainer,
 
     private void checkRawMaterialStockButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkRawMaterialStockButtonActionPerformed
         // TODO add your handling code here:
-       javax.swing.JOptionPane.showMessageDialog(this, "TODO: Check Raw Material Stock screen");
+    java.util.ArrayList<MaterialInventory> inventoryList = organization.getRawMaterialInventoryDirectory().getInventoryList();
+    if (inventoryList.isEmpty()) {
+        javax.swing.JOptionPane.showMessageDialog(this, "No raw material in stock yet.");
+        return;
+    }
+    StringBuilder sb = new StringBuilder();
+    for (MaterialInventory mi : inventoryList) {
+        sb.append(mi.getMaterial().getMaterialName())
+          .append(" - Available: ").append(mi.getAvailableQty())
+          .append("\n");
+    }
+    javax.swing.JOptionPane.showMessageDialog(this, sb.toString(), "Raw Material Stock", javax.swing.JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_checkRawMaterialStockButtonActionPerformed
 
     private void createProductionPlanButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createProductionPlanButtonActionPerformed
         // TODO add your handling code here:
-        javax.swing.JOptionPane.showMessageDialog(this, "TODO: Create Production Plan screen");
-    
+        String productName = javax.swing.JOptionPane.showInputDialog(this, "Enter product name:");
+        if (productName == null || productName.trim().isEmpty()) {
+            return;
+        }
+        String qtyStr = javax.swing.JOptionPane.showInputDialog(this, "Enter planned quantity:");
+        if (qtyStr == null || qtyStr.trim().isEmpty()) {
+            return;
+        }
+        int qty;
+        try {
+            qty = Integer.parseInt(qtyStr.trim());
+        } catch (NumberFormatException e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Quantity must be a number.");
+            return;
+        }
+        if (qty <= 0) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Quantity must be greater than 0.");
+            return;
+        }
+
+        ProductionPlan plan = organization.getProductionPlanDirectory().addProductionPlan(productName, qty);
+
+        javax.swing.JOptionPane.showMessageDialog(this, "Production plan created: " + plan.getPlanId() + " - " + productName + " (" + qty + ")");
+
     }//GEN-LAST:event_createProductionPlanButtonActionPerformed
 
     private void createMaterialRequestButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createMaterialRequestButtonActionPerformed
@@ -265,55 +305,125 @@ public ProductionAdminWorkAreaJPanel(JPanel userProcessContainer,
         javax.swing.JOptionPane.showMessageDialog(this, "Quantity must be a number.");
         return;
     }
+    if (qty <= 0) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Quantity must be greater than 0.");
+        return;
+    }
 
     MaterialRequest mr = new MaterialRequest(selectedMaterial, qty);
     mr.setMessage("Request: " + selectedMaterial.getMaterialName());
     mr.setSender(account);
     mr.setReceiver(supplierAdminAccount);
+    // MaterialRequest's own constructor defaults status to lowercase "sent",
+    // but Supplier's ManageMaterialRequest screen checks for "Sent" (capital S)
+    // before it will create a Picking Order. Force it here so the request
+    // is actually processable on the Supplier side.
+    mr.setStatus("Sent");
     supplierOrg.getWorkQueue().getWorkRequestList().add(mr);
+    // Also keep a reference in Production's own queue (same object) so this
+    // request shows up under Production Admin's "View Order Status" too.
+    organization.getWorkQueue().getWorkRequestList().add(mr);
 
     javax.swing.JOptionPane.showMessageDialog(this, "Material request sent for " + selectedMaterial.getMaterialName());
-        
+
     }//GEN-LAST:event_createMaterialRequestButtonActionPerformed
 
     private void issueProductionOrderButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_issueProductionOrderButtonActionPerformed
         // TODO add your handling code here:
-        String productName = javax.swing.JOptionPane.showInputDialog(this, "Enter product name:");
-        if (productName == null || productName.trim().isEmpty()) {
+        java.util.ArrayList<ProductionPlan> openPlans = new java.util.ArrayList<>();
+        for (ProductionPlan p : organization.getProductionPlanDirectory().getProductionPlanList()) {
+            if ("Created".equals(p.getStatus())) {
+                openPlans.add(p);
+            }
+        }
+        if (openPlans.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "No open production plan found. Please create a production plan first.");
             return;
         }
-        String qtyStr = javax.swing.JOptionPane.showInputDialog(this, "Enter quantity:");
-        if (qtyStr == null || qtyStr.trim().isEmpty()) {
+        String[] planLabels = new String[openPlans.size()];
+        for (int i = 0; i < openPlans.size(); i++) {
+            planLabels[i] = openPlans.get(i).toString();
+        }
+        String selectedPlanLabel = (String) javax.swing.JOptionPane.showInputDialog(
+                this,
+                "Select production plan:",
+                "Issue Production Order",
+                javax.swing.JOptionPane.QUESTION_MESSAGE,
+                null,
+                planLabels,
+                planLabels[0]);
+        if (selectedPlanLabel == null) {
             return;
         }
-        int qty;
-        try {
-            qty = Integer.parseInt(qtyStr.trim());
-        } catch (NumberFormatException e) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Quantity must be a number.");
-            return;
-        }
-
-        UserAccount operatorAccount = null;
-        for (UserAccount ua : organization.getUserAccountDirectory().getUserAccountList()) {
-            if (ua.getRole() instanceof ProductionRole) {
-                operatorAccount = ua;
+        ProductionPlan selectedPlan = null;
+        for (ProductionPlan p : openPlans) {
+            if (p.toString().equals(selectedPlanLabel)) {
+                selectedPlan = p;
                 break;
             }
         }
-        if (operatorAccount == null) {
+
+        java.util.ArrayList<MaterialInventory> stock = organization.getRawMaterialInventoryDirectory().getInventoryList();
+        if (stock.isEmpty()) {
+            int confirm = javax.swing.JOptionPane.showConfirmDialog(this,
+                    "Raw material stock is currently empty. Issue this production order anyway?",
+                    "Low Stock Warning",
+                    javax.swing.JOptionPane.YES_NO_OPTION);
+            if (confirm != javax.swing.JOptionPane.YES_OPTION) {
+                return;
+            }
+        }
+
+        java.util.ArrayList<UserAccount> operators = new java.util.ArrayList<>();
+        for (UserAccount ua : organization.getUserAccountDirectory().getUserAccountList()) {
+            if (ua.getRole() instanceof ProductionRole) {
+                operators.add(ua);
+            }
+        }
+        if (operators.isEmpty()) {
             javax.swing.JOptionPane.showMessageDialog(this, "No Production Operator account found.");
             return;
         }
+        UserAccount operatorAccount;
+        if (operators.size() == 1) {
+            operatorAccount = operators.get(0);
+        } else {
+            String[] operatorNames = new String[operators.size()];
+            for (int i = 0; i < operators.size(); i++) {
+                operatorNames[i] = operators.get(i).getUsername();
+            }
+            String selectedOperatorName = (String) javax.swing.JOptionPane.showInputDialog(
+                    this,
+                    "Select production operator:",
+                    "Issue Production Order",
+                    javax.swing.JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    operatorNames,
+                    operatorNames[0]);
+            if (selectedOperatorName == null) {
+                return;
+            }
+            operatorAccount = null;
+            for (UserAccount ua : operators) {
+                if (ua.getUsername().equals(selectedOperatorName)) {
+                    operatorAccount = ua;
+                    break;
+                }
+            }
+        }
 
-        ProductionOrder po = new ProductionOrder(productName, qty);
-        po.setMessage("Production order: " + productName);
+        ProductionOrder po = new ProductionOrder(selectedPlan.getProductName(), selectedPlan.getQty());
+        po.setPlanId(selectedPlan.getPlanId());
+        po.setMessage("Production order: " + selectedPlan.getProductName());
         po.setSender(account);
         po.setReceiver(operatorAccount);
         organization.getWorkQueue().getWorkRequestList().add(po);
 
-        javax.swing.JOptionPane.showMessageDialog(this, "Production order issued for " + productName);
-    
+        selectedPlan.setStatus("Ordered");
+
+        javax.swing.JOptionPane.showMessageDialog(this, "Production order issued for " + selectedPlan.getProductName()
+                + " (Plan " + selectedPlan.getPlanId() + ")");
+
     }//GEN-LAST:event_issueProductionOrderButtonActionPerformed
 
     private void issueDeliveryRequestButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_issueDeliveryRequestButtonActionPerformed
@@ -324,13 +434,93 @@ public ProductionAdminWorkAreaJPanel(JPanel userProcessContainer,
 
     private void manageOperatorAccountButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manageOperatorAccountButtonActionPerformed
         // TODO add your handling code here:
-        javax.swing.JOptionPane.showMessageDialog(this, "TODO: Manage Operator & QA Account screen");
+    String[] roleOptions = {"Production Operator", "Quality Assurance"};
+    String selectedRoleOption = (String) javax.swing.JOptionPane.showInputDialog(
+            this,
+            "Select account type to manage:",
+            "Manage Operator & QA Account",
+            javax.swing.JOptionPane.QUESTION_MESSAGE,
+            null,
+            roleOptions,
+            roleOptions[0]);
+    if (selectedRoleOption == null) {
+        return;
+    }
+
+    if (roleOptions[0].equals(selectedRoleOption)) {
+        manageAccount(organization, new ProductionRole(), "Production Operator");
+    } else {
+        QualityAssuranceOrganization qaOrg = null;
+        for (Organization org : enterprise.getOrganizationDirectory().getOrganizationList()) {
+            if (org instanceof QualityAssuranceOrganization) {
+                qaOrg = (QualityAssuranceOrganization) org;
+                break;
+            }
+        }
+        if (qaOrg == null) {
+            javax.swing.JOptionPane.showMessageDialog(this, "No Quality Assurance organization found.");
+            return;
+        }
+        manageAccount(qaOrg, new QualityAssuranceRole(), "Quality Assurance");
+    }
     }//GEN-LAST:event_manageOperatorAccountButtonActionPerformed
 
     private void manageAdminAccountButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manageAdminAccountButtonActionPerformed
         // TODO add your handling code here:
-        javax.swing.JOptionPane.showMessageDialog(this, "TODO: Manage Admin Account screen");
+    manageAccount(organization, new ProductionAdminRole(), "Production Admin");
     }//GEN-LAST:event_manageAdminAccountButtonActionPerformed
+
+    /**
+     * Shared helper for Manage Admin Account / Manage Operator & QA Account:
+     * lists existing accounts of the given role type on the given
+     * organization, then optionally creates a new one.
+     */
+    private void manageAccount(Organization org, Role newRole, String roleLabel) {
+        java.util.ArrayList<UserAccount> accounts = new java.util.ArrayList<>();
+        for (UserAccount ua : org.getUserAccountDirectory().getUserAccountList()) {
+            if (ua.getRole().getClass() == newRole.getClass()) {
+                accounts.add(ua);
+            }
+        }
+        StringBuilder sb = new StringBuilder("Current " + roleLabel + " accounts:\n");
+        if (accounts.isEmpty()) {
+            sb.append("(none)\n");
+        } else {
+            for (UserAccount ua : accounts) {
+                sb.append("- ").append(ua.getUsername()).append("\n");
+            }
+        }
+
+        int choice = javax.swing.JOptionPane.showConfirmDialog(this,
+                sb.toString() + "\nCreate a new " + roleLabel + " account?",
+                "Manage Account",
+                javax.swing.JOptionPane.YES_NO_OPTION);
+        if (choice != javax.swing.JOptionPane.YES_OPTION) {
+            return;
+        }
+
+        String username = javax.swing.JOptionPane.showInputDialog(this, "Enter username:");
+        if (username == null || username.trim().isEmpty()) {
+            return;
+        }
+        if (!org.getUserAccountDirectory().checkIfUsernameIsUnique(username.trim())) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Username already exists.");
+            return;
+        }
+        String password = javax.swing.JOptionPane.showInputDialog(this, "Enter password:");
+        if (password == null || password.trim().isEmpty()) {
+            return;
+        }
+        String employeeName = javax.swing.JOptionPane.showInputDialog(this, "Enter employee full name:");
+        if (employeeName == null || employeeName.trim().isEmpty()) {
+            return;
+        }
+
+        Employee employee = org.getEmployeeDirectory().createEmployee(employeeName.trim());
+        org.getUserAccountDirectory().createUserAccount(username.trim(), password.trim(), employee, newRole);
+
+        javax.swing.JOptionPane.showMessageDialog(this, roleLabel + " account created: " + username.trim());
+    }
 
     private void viewOrderStatusButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewOrderStatusButtonActionPerformed
         // TODO add your handling code here

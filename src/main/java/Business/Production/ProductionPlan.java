@@ -4,24 +4,26 @@
  */
 package Business.Production;
 
-import Business.WorkQueue.WorkRequest;
 import java.util.Date;
 
 /**
  *
  * @author vyngo
  */
-public class FinishedGoods extends WorkRequest {
+public class ProductionPlan {
 
+    private String planId;
     private String productName;
     private int qty;
-    private String planId;
+    private Date planDate;
+    private String status;
 
-    public FinishedGoods(String productName, int qty) {
+    public ProductionPlan(String planId, String productName, int qty) {
+        this.planId = planId;
         this.productName = productName;
         this.qty = qty;
-        setStatus("Sent");
-        setRequestDate(new Date());
+        this.planDate = new Date();
+        this.status = "Created";
     }
 
     public String getPlanId() {
@@ -48,8 +50,24 @@ public class FinishedGoods extends WorkRequest {
         this.qty = qty;
     }
 
+    public Date getPlanDate() {
+        return planDate;
+    }
+
+    public void setPlanDate(Date planDate) {
+        this.planDate = planDate;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     @Override
     public String toString() {
-        return productName;
+        return planId + " - " + productName;
     }
 }

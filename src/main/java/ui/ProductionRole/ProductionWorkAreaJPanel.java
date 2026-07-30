@@ -11,6 +11,11 @@ import Business.Role.QualityAssuranceRole;
 import Business.Enterprise.Enterprise;
 import Business.Organization.ProductionOrganization;
 import Business.UserAccount.UserAccount;
+import Business.Supplier.Material;
+import Business.Supplier.MaterialInventory;
+import Business.Supplier.MaterialRequest;
+import Business.Production.ProductionOrder;
+import Business.WorkQueue.WorkRequest;
 import javax.swing.JPanel;
 
 /**
@@ -146,21 +151,140 @@ public ProductionWorkAreaJPanel(JPanel userProcessContainer,
 
     private void receiveRawMaterialsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_receiveRawMaterialsButtonActionPerformed
         // TODO add your handling code here:
-        javax.swing.JOptionPane.showMessageDialog(this, "TODO: Receive Raw Materials screen");
+    java.util.ArrayList<MaterialRequest> pending = new java.util.ArrayList<>();
+    for (WorkRequest wr : organization.getWorkQueue().getWorkRequestList()) {
+        if (wr instanceof MaterialRequest && !"Received".equals(wr.getStatus())) {
+            pending.add((MaterialRequest) wr);
+        }
+    }
+    if (pending.isEmpty()) {
+        javax.swing.JOptionPane.showMessageDialog(this, "No pending material request to receive.");
+        return;
+    }
+
+    String[] labels = new String[pending.size()];
+    for (int i = 0; i < pending.size(); i++) {
+        MaterialRequest mr = pending.get(i);
+        labels[i] = mr.getMaterial().getMaterialName() + " x " + mr.getQty() + " (" + mr.getStatus() + ")";
+    }
+    String selected = (String) javax.swing.JOptionPane.showInputDialog(
+            this,
+            "Select material request to receive:",
+            "Receive Raw Materials",
+            javax.swing.JOptionPane.QUESTION_MESSAGE,
+            null,
+            labels,
+            labels[0]);
+    if (selected == null) {
+        return;
+    }
+    int selectedIndex = java.util.Arrays.asList(labels).indexOf(selected);
+    MaterialRequest mr = pending.get(selectedIndex);
+
+    Material material = mr.getMaterial();
+    MaterialInventory inventory = organization.getRawMaterialInventoryDirectory().findInventoryByMaterial(material);
+    if (inventory == null) {
+        organization.getRawMaterialInventoryDirectory().addInventory(material, mr.getQty());
+    } else {
+        inventory.setAvailableQty(inventory.getAvailableQty() + mr.getQty());
+    }
+
+    mr.setStatus("Received");
+    mr.setResolveDate(new java.util.Date());
+
+    javax.swing.JOptionPane.showMessageDialog(this, "Received " + mr.getQty() + " x " + material.getMaterialName() + " into raw material stock.");
     }//GEN-LAST:event_receiveRawMaterialsButtonActionPerformed
 
     private void executeProductionButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_executeProductionButtonActionPerformed
         // TODO add your handling code here:
-    javax.swing.JOptionPane.showMessageDialog(this, "TODO: Execute Production screen");
+    java.util.ArrayList<ProductionOrder> pending = new java.util.ArrayList<>();
+    for (WorkRequest wr : organization.getWorkQueue().getWorkRequestList()) {
+        if (wr instanceof ProductionOrder && wr.getReceiver() == account && "Sent".equals(wr.getStatus())) {
+            pending.add((ProductionOrder) wr);
+        }
+    }
+    if (pending.isEmpty()) {
+        javax.swing.JOptionPane.showMessageDialog(this, "No pending production order to execute.");
+        return;
+    }
+
+    String[] labels = new String[pending.size()];
+    for (int i = 0; i < pending.size(); i++) {
+        ProductionOrder po = pending.get(i);
+        labels[i] = po.getProductName() + " x " + po.getQty() + " (Plan " + po.getPlanId() + ")";
+    }
+    String selected = (String) javax.swing.JOptionPane.showInputDialog(
+            this,
+            "Select production order to execute:",
+            "Execute Production",
+            javax.swing.JOptionPane.QUESTION_MESSAGE,
+            null,
+            labels,
+            labels[0]);
+    if (selected == null) {
+        return;
+    }
+    int selectedIndex = java.util.Arrays.asList(labels).indexOf(selected);
+    ProductionOrder po = pending.get(selectedIndex);
+
+    java.util.ArrayList<MaterialInventory> stock = organization.getRawMaterialInventoryDirectory().getInventoryList();
+    if (stock.isEmpty()) {
+        int confirm = javax.swing.JOptionPane.showConfirmDialog(this,
+                "Raw material stock is currently empty. Execute this production order anyway?",
+                "Low Stock Warning",
+                javax.swing.JOptionPane.YES_NO_OPTION);
+        if (confirm != javax.swing.JOptionPane.YES_OPTION) {
+            return;
+        }
+    }
+
+    po.setStatus("Completed");
+    po.setResolveDate(new java.util.Date());
+
+    javax.swing.JOptionPane.showMessageDialog(this, "Production executed for " + po.getProductName()
+            + " x " + po.getQty() + ". You can now register the finished goods.");
     }//GEN-LAST:event_executeProductionButtonActionPerformed
 
     private void registerFinishedGoodsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerFinishedGoodsButtonActionPerformed
         // TODO add your handling code here:
-    String productName = javax.swing.JOptionPane.showInputDialog(this, "Enter product name:");
-    if (productName == null || productName.trim().isEmpty()) {
+    java.util.ArrayList<ProductionOrder> completedOrders = new java.util.ArrayList<>();
+    for (WorkRequest wr : organization.getWorkQueue().getWorkRequestList()) {
+        if (wr instanceof ProductionOrder && wr.getReceiver() == account && "Completed".equals(wr.getStatus())) {
+            completedOrders.add((ProductionOrder) wr);
+        }
+    }
+    if (completedOrders.isEmpty()) {
+        javax.swing.JOptionPane.showMessageDialog(this, "No completed production order to register. Please execute a production order first.");
         return;
     }
-    String qtyStr = javax.swing.JOptionPane.showInputDialog(this, "Enter quantity:");
+
+    String[] labels = new String[completedOrders.size()];
+    for (int i = 0; i < completedOrders.size(); i++) {
+        ProductionOrder po = completedOrders.get(i);
+        labels[i] = po.getProductName() + " x " + po.getQty() + " (Plan " + po.getPlanId() + ")";
+    }
+    String selected = (String) javax.swing.JOptionPane.showInputDialog(
+            this,
+            "Select completed production order to register:",
+            "Register Finished Goods",
+            javax.swing.JOptionPane.QUESTION_MESSAGE,
+            null,
+            labels,
+            labels[0]);
+    if (selected == null) {
+        return;
+    }
+    int selectedIndex = java.util.Arrays.asList(labels).indexOf(selected);
+    ProductionOrder po = completedOrders.get(selectedIndex);
+
+    String qtyStr = (String) javax.swing.JOptionPane.showInputDialog(
+            this,
+            "Enter actual finished quantity:",
+            "Register Finished Goods",
+            javax.swing.JOptionPane.QUESTION_MESSAGE,
+            null,
+            null,
+            String.valueOf(po.getQty()));
     if (qtyStr == null || qtyStr.trim().isEmpty()) {
         return;
     }
@@ -169,6 +293,10 @@ public ProductionWorkAreaJPanel(JPanel userProcessContainer,
         qty = Integer.parseInt(qtyStr.trim());
     } catch (NumberFormatException e) {
         javax.swing.JOptionPane.showMessageDialog(this, "Quantity must be a number.");
+        return;
+    }
+    if (qty <= 0) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Quantity must be greater than 0.");
         return;
     }
 
@@ -184,25 +312,58 @@ public ProductionWorkAreaJPanel(JPanel userProcessContainer,
         return;
     }
 
-    UserAccount qaAccount = null;
+    java.util.ArrayList<UserAccount> qaAccounts = new java.util.ArrayList<>();
     for (UserAccount ua : qaOrg.getUserAccountDirectory().getUserAccountList()) {
         if (ua.getRole() instanceof QualityAssuranceRole) {
-            qaAccount = ua;
-            break;
+            qaAccounts.add(ua);
         }
     }
-    if (qaAccount == null) {
+    if (qaAccounts.isEmpty()) {
         javax.swing.JOptionPane.showMessageDialog(this, "No Quality Assurance account found.");
         return;
     }
+    UserAccount qaAccount;
+    if (qaAccounts.size() == 1) {
+        qaAccount = qaAccounts.get(0);
+    } else {
+        String[] qaNames = new String[qaAccounts.size()];
+        for (int i = 0; i < qaAccounts.size(); i++) {
+            qaNames[i] = qaAccounts.get(i).getUsername();
+        }
+        String selectedQaName = (String) javax.swing.JOptionPane.showInputDialog(
+                this,
+                "Select Quality Assurance reviewer:",
+                "Register Finished Goods",
+                javax.swing.JOptionPane.QUESTION_MESSAGE,
+                null,
+                qaNames,
+                qaNames[0]);
+        if (selectedQaName == null) {
+            return;
+        }
+        qaAccount = null;
+        for (UserAccount ua : qaAccounts) {
+            if (ua.getUsername().equals(selectedQaName)) {
+                qaAccount = ua;
+                break;
+            }
+        }
+    }
 
-    FinishedGoods fg = new FinishedGoods(productName, qty);
-    fg.setMessage("Finished goods ready for inspection: " + productName);
+    FinishedGoods fg = new FinishedGoods(po.getProductName(), qty);
+    fg.setPlanId(po.getPlanId());
+    fg.setMessage("Finished goods ready for inspection: " + po.getProductName());
     fg.setSender(account);
     fg.setReceiver(qaAccount);
     qaOrg.getWorkQueue().getWorkRequestList().add(fg);
+    // Also keep a reference in Production's own queue (same object) so this
+    // hand-off shows up under Production Admin's "View Order Status" too.
+    organization.getWorkQueue().getWorkRequestList().add(fg);
 
-    javax.swing.JOptionPane.showMessageDialog(this, "Finished goods registered and sent to QA: " + productName);
+    po.setStatus("Registered");
+
+    javax.swing.JOptionPane.showMessageDialog(this, "Finished goods registered and sent to QA: " + po.getProductName()
+            + " x " + qty + " (Plan " + po.getPlanId() + ")");
 
     }//GEN-LAST:event_registerFinishedGoodsButtonActionPerformed
 
@@ -218,7 +379,16 @@ public ProductionWorkAreaJPanel(JPanel userProcessContainer,
 
     private void viewOrderStatusButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewOrderStatusButtonActionPerformed
         // TODO add your handling code here:
-        javax.swing.JOptionPane.showMessageDialog(this, "TODO: View Order Status screen");
+    java.util.ArrayList<WorkRequest> requests = organization.getWorkQueue().getWorkRequestList();
+    if (requests.isEmpty()) {
+        javax.swing.JOptionPane.showMessageDialog(this, "No requests in the queue.");
+        return;
+    }
+    StringBuilder sb = new StringBuilder();
+    for (WorkRequest wr : requests) {
+        sb.append(wr.toString()).append(" - ").append(wr.getStatus()).append("\n");
+    }
+    javax.swing.JOptionPane.showMessageDialog(this, sb.toString(), "Order Status", javax.swing.JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_viewOrderStatusButtonActionPerformed
 
 

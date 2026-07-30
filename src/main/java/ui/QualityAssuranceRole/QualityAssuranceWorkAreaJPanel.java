@@ -6,11 +6,13 @@ package ui.QualityAssuranceRole;
 
 import Business.Organization.Organization;
 import Business.Organization.ProductionOrganization;
+import Business.Production.FinishedGoods;
 import Business.Production.QualityInspectionResult;
 import Business.Role.ProductionAdminRole;
 import Business.Enterprise.Enterprise;
 import Business.Organization.QualityAssuranceOrganization;
 import Business.UserAccount.UserAccount;
+import Business.WorkQueue.WorkRequest;
 import javax.swing.JPanel;
 
 /**
@@ -134,21 +136,113 @@ public QualityAssuranceWorkAreaJPanel(JPanel userProcessContainer,
 
     private void receiveFinishedGoodsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_receiveFinishedGoodsButtonActionPerformed
         // TODO add your handling code here:
-        javax.swing.JOptionPane.showMessageDialog(this, "TODO: Receive Finished Goods screen");
+    java.util.ArrayList<FinishedGoods> pending = new java.util.ArrayList<>();
+    for (WorkRequest wr : organization.getWorkQueue().getWorkRequestList()) {
+        if (wr instanceof FinishedGoods && wr.getReceiver() == account && "Sent".equals(wr.getStatus())) {
+            pending.add((FinishedGoods) wr);
+        }
+    }
+    if (pending.isEmpty()) {
+        javax.swing.JOptionPane.showMessageDialog(this, "No finished goods pending receipt.");
+        return;
+    }
+
+    String[] labels = new String[pending.size()];
+    for (int i = 0; i < pending.size(); i++) {
+        FinishedGoods fg = pending.get(i);
+        labels[i] = fg.getProductName() + " x " + fg.getQty() + " (Plan " + fg.getPlanId() + ")";
+    }
+    String selected = (String) javax.swing.JOptionPane.showInputDialog(
+            this,
+            "Select finished goods to receive:",
+            "Receive Finished Goods",
+            javax.swing.JOptionPane.QUESTION_MESSAGE,
+            null,
+            labels,
+            labels[0]);
+    if (selected == null) {
+        return;
+    }
+    int selectedIndex = java.util.Arrays.asList(labels).indexOf(selected);
+    FinishedGoods fg = pending.get(selectedIndex);
+
+    fg.setStatus("Received");
+
+    javax.swing.JOptionPane.showMessageDialog(this, "Received " + fg.getProductName() + " x " + fg.getQty()
+            + " (Plan " + fg.getPlanId() + "). You can now execute the quality inspection.");
     }//GEN-LAST:event_receiveFinishedGoodsButtonActionPerformed
 
     private void executeQualityInspectionButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_executeQualityInspectionButtonActionPerformed
         // TODO add your handling code here:
-        javax.swing.JOptionPane.showMessageDialog(this, "TODO: Execute Quality Inspection screen");
+    java.util.ArrayList<FinishedGoods> received = new java.util.ArrayList<>();
+    for (WorkRequest wr : organization.getWorkQueue().getWorkRequestList()) {
+        if (wr instanceof FinishedGoods && wr.getReceiver() == account && "Received".equals(wr.getStatus())) {
+            received.add((FinishedGoods) wr);
+        }
+    }
+    if (received.isEmpty()) {
+        javax.swing.JOptionPane.showMessageDialog(this, "No received finished goods to inspect. Please receive finished goods first.");
+        return;
+    }
+
+    String[] labels = new String[received.size()];
+    for (int i = 0; i < received.size(); i++) {
+        FinishedGoods fg = received.get(i);
+        labels[i] = fg.getProductName() + " x " + fg.getQty() + " (Plan " + fg.getPlanId() + ")";
+    }
+    String selected = (String) javax.swing.JOptionPane.showInputDialog(
+            this,
+            "Select finished goods to inspect:",
+            "Execute Quality Inspection",
+            javax.swing.JOptionPane.QUESTION_MESSAGE,
+            null,
+            labels,
+            labels[0]);
+    if (selected == null) {
+        return;
+    }
+    int selectedIndex = java.util.Arrays.asList(labels).indexOf(selected);
+    FinishedGoods fg = received.get(selectedIndex);
+
+    fg.setStatus("Inspected");
+
+    javax.swing.JOptionPane.showMessageDialog(this, "Quality inspection executed for " + fg.getProductName() + " x " + fg.getQty()
+            + " (Plan " + fg.getPlanId() + "). You can now enter the inspection result.");
     }//GEN-LAST:event_executeQualityInspectionButtonActionPerformed
 
     private void enterInspectionResultButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enterInspectionResultButtonActionPerformed
         // TODO add your handling code here:
-    String productName = javax.swing.JOptionPane.showInputDialog(this, "Enter product name:");
-    if (productName == null || productName.trim().isEmpty()) {
+    java.util.ArrayList<FinishedGoods> inspected = new java.util.ArrayList<>();
+    for (WorkRequest wr : organization.getWorkQueue().getWorkRequestList()) {
+        if (wr instanceof FinishedGoods && wr.getReceiver() == account && "Inspected".equals(wr.getStatus())) {
+            inspected.add((FinishedGoods) wr);
+        }
+    }
+    if (inspected.isEmpty()) {
+        javax.swing.JOptionPane.showMessageDialog(this, "No inspected finished goods to submit a result for. Please execute quality inspection first.");
         return;
     }
-    int response = javax.swing.JOptionPane.showConfirmDialog(this, "Did the product pass inspection?", "Quality Inspection Result", javax.swing.JOptionPane.YES_NO_OPTION);
+
+    String[] labels = new String[inspected.size()];
+    for (int i = 0; i < inspected.size(); i++) {
+        FinishedGoods fg = inspected.get(i);
+        labels[i] = fg.getProductName() + " x " + fg.getQty() + " (Plan " + fg.getPlanId() + ")";
+    }
+    String selected = (String) javax.swing.JOptionPane.showInputDialog(
+            this,
+            "Select inspected finished goods:",
+            "Enter Quality Inspection Result",
+            javax.swing.JOptionPane.QUESTION_MESSAGE,
+            null,
+            labels,
+            labels[0]);
+    if (selected == null) {
+        return;
+    }
+    int selectedIndex = java.util.Arrays.asList(labels).indexOf(selected);
+    FinishedGoods fg = inspected.get(selectedIndex);
+
+    int response = javax.swing.JOptionPane.showConfirmDialog(this, "Did " + fg.getProductName() + " pass inspection?", "Quality Inspection Result", javax.swing.JOptionPane.YES_NO_OPTION);
     boolean passed = (response == javax.swing.JOptionPane.YES_OPTION);
 
     ProductionOrganization productionOrg = null;
@@ -163,31 +257,74 @@ public QualityAssuranceWorkAreaJPanel(JPanel userProcessContainer,
         return;
     }
 
-    UserAccount adminAccount = null;
+    java.util.ArrayList<UserAccount> adminAccounts = new java.util.ArrayList<>();
     for (UserAccount ua : productionOrg.getUserAccountDirectory().getUserAccountList()) {
         if (ua.getRole() instanceof ProductionAdminRole) {
-            adminAccount = ua;
-            break;
+            adminAccounts.add(ua);
         }
     }
-    if (adminAccount == null) {
+    if (adminAccounts.isEmpty()) {
         javax.swing.JOptionPane.showMessageDialog(this, "No Production Admin account found.");
         return;
     }
+    UserAccount adminAccount;
+    if (adminAccounts.size() == 1) {
+        adminAccount = adminAccounts.get(0);
+    } else {
+        String[] adminNames = new String[adminAccounts.size()];
+        for (int i = 0; i < adminAccounts.size(); i++) {
+            adminNames[i] = adminAccounts.get(i).getUsername();
+        }
+        String selectedAdminName = (String) javax.swing.JOptionPane.showInputDialog(
+                this,
+                "Select Production Admin to notify:",
+                "Enter Quality Inspection Result",
+                javax.swing.JOptionPane.QUESTION_MESSAGE,
+                null,
+                adminNames,
+                adminNames[0]);
+        if (selectedAdminName == null) {
+            return;
+        }
+        adminAccount = null;
+        for (UserAccount ua : adminAccounts) {
+            if (ua.getUsername().equals(selectedAdminName)) {
+                adminAccount = ua;
+                break;
+            }
+        }
+    }
 
-    QualityInspectionResult result = new QualityInspectionResult(productName, passed);
-    result.setMessage("Inspection result for " + productName + ": " + (passed ? "Passed" : "Failed"));
+    QualityInspectionResult result = new QualityInspectionResult(fg.getProductName(), passed);
+    result.setPlanId(fg.getPlanId());
+    result.setMessage("Inspection result for " + fg.getProductName() + ": " + (passed ? "Passed" : "Failed"));
     result.setSender(account);
     result.setReceiver(adminAccount);
     productionOrg.getWorkQueue().getWorkRequestList().add(result);
+    // Also keep a reference in QA's own queue (same object) so this result
+    // shows up under QA's own "View Order Status" too.
+    organization.getWorkQueue().getWorkRequestList().add(result);
 
-    javax.swing.JOptionPane.showMessageDialog(this, "Inspection result submitted for " + productName);
+    fg.setStatus("Closed");
+    fg.setResolveDate(new java.util.Date());
+
+    javax.swing.JOptionPane.showMessageDialog(this, "Inspection result submitted for " + fg.getProductName()
+            + " (Plan " + fg.getPlanId() + "): " + (passed ? "Passed" : "Failed"));
 
     }//GEN-LAST:event_enterInspectionResultButtonActionPerformed
 
     private void viewOrderStatusButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewOrderStatusButtonActionPerformed
         // TODO add your handling code here:
-        javax.swing.JOptionPane.showMessageDialog(this, "TODO: View Order Status screen");
+    java.util.ArrayList<WorkRequest> requests = organization.getWorkQueue().getWorkRequestList();
+    if (requests.isEmpty()) {
+        javax.swing.JOptionPane.showMessageDialog(this, "No requests in the queue.");
+        return;
+    }
+    StringBuilder sb = new StringBuilder();
+    for (WorkRequest wr : requests) {
+        sb.append(wr.toString()).append(" - ").append(wr.getStatus()).append("\n");
+    }
+    javax.swing.JOptionPane.showMessageDialog(this, sb.toString(), "Order Status", javax.swing.JOptionPane.INFORMATION_MESSAGE);
 
     }//GEN-LAST:event_viewOrderStatusButtonActionPerformed
 
