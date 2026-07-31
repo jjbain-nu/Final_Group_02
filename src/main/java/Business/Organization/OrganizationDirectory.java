@@ -13,6 +13,8 @@ public class OrganizationDirectory {
         if (type == Type.Doctor) organization = new DoctorOrganization();
         else if (type == Type.Lab) organization = new LabOrganization();
         else if (type == Type.Supplier) organization = new SupplierOrganization();
+        else if (type == Type.Production) organization = new ProductionOrganization();
+        else if (type == Type.QualityAssurance) organization = new QualityAssuranceOrganization();
         else if (type == Type.Inventory) organization = new InventoryOrganization();
         else if (type == Type.Shipping) organization = new ShippingOrganization();
         else if (type == Type.Transport) organization = new TransportOrganization();
