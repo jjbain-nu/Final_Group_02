@@ -6,6 +6,7 @@ import Business.Role.SystemAdminRole;
 import Business.UserAccount.UserAccount;
 import Business.Enterprise.Enterprise;
 import Business.Enterprise.HospitalEnterprise;
+import Business.Enterprise.ManufacturerEnterprise;
 import Business.Enterprise.SupplierEnterprise;
 import Business.Enterprise.TransportEnterprise;
 import Business.Enterprise.WholesalerEnterprise;
@@ -16,6 +17,8 @@ import Business.Organization.Organization;
 import Business.Organization.PharmacyOrganization;
 import Business.Organization.ProcurementOrganization;
 import Business.Organization.InventoryOrganization;
+import Business.Organization.ProductionOrganization;
+import Business.Organization.QualityAssuranceOrganization;
 import Business.Organization.ShippingOrganization;
 import Business.Organization.SupplierOrganization;
 import Business.Organization.TransportOrganization;
@@ -25,6 +28,9 @@ import Business.Role.MaterialShippingRole;
 import Business.Role.InventoryAdminRole;
 import Business.Role.PharmacyRole;
 import Business.Role.ProcurementRole;
+import Business.Role.ProductionAdminRole;
+import Business.Role.ProductionRole;
+import Business.Role.QualityAssuranceRole;
 import Business.Role.ShippingOperatorRole;
 import Business.Role.ShippingOrderStaffRole;
 import Business.Role.SupplierAdminRole;
@@ -107,9 +113,29 @@ public class ConfigureASystem {
         
         //create user account
         UserAccount sa01 = supplierOrg.getUserAccountDirectory().createUserAccount("SA","1111",supplierAdminEmp01, new SupplierAdminRole());
-        UserAccount ms01 = supplierOrg.getUserAccountDirectory().createUserAccount("MS","1111",MaterialShipping01, new MaterialShippingRole());        
+        UserAccount ms01 = supplierOrg.getUserAccountDirectory().createUserAccount("MS","1111",MaterialShipping01, new MaterialShippingRole());
 
-                
+        //create a manufacturer enterprise (Production + Quality Assurance)
+        ManufacturerEnterprise manufacturerEnterprise = new ManufacturerEnterprise("Manufacturer");
+        network.getEnterpriseDirectory().getEnterpriseList().add(manufacturerEnterprise);
+
+        ProductionOrganization productionOrg = new ProductionOrganization();
+        manufacturerEnterprise.getOrganizationDirectory().getOrganizationList().add(productionOrg);
+
+        QualityAssuranceOrganization qaOrg = new QualityAssuranceOrganization();
+        manufacturerEnterprise.getOrganizationDirectory().getOrganizationList().add(qaOrg);
+
+        Employee manufacturerAdminEmp = manufacturerEnterprise.getEmployeeDirectory().createEmployee("manufacturerEnterpriseAdmin");
+        manufacturerEnterprise.getUserAccountDirectory().createUserAccount("MEA", "1111", manufacturerAdminEmp, new AdminRole());
+
+        Employee productionAdminEmp = productionOrg.getEmployeeDirectory().createEmployee("ProductionAdmin01");
+        Employee productionOperatorEmp = productionOrg.getEmployeeDirectory().createEmployee("ProductionOperator01");
+        Employee qaEmp = qaOrg.getEmployeeDirectory().createEmployee("QA01");
+
+        UserAccount pa01 = productionOrg.getUserAccountDirectory().createUserAccount("PA", "1111", productionAdminEmp, new ProductionAdminRole());
+        UserAccount po01 = productionOrg.getUserAccountDirectory().createUserAccount("PO", "1111", productionOperatorEmp, new ProductionRole());
+        UserAccount qa01 = qaOrg.getUserAccountDirectory().createUserAccount("QA", "1111", qaEmp, new QualityAssuranceRole());
+
         //Create 100 sample material and material inventory
         MaterialCatalog catalog = supplierEnterprise.getMaterialCatalog();
         Faker faker = new Faker();
@@ -149,8 +175,8 @@ public class ConfigureASystem {
             
             MaterialRequest mr = new MaterialRequest(randomMaterial,qty);
             mr.setMessage("Request: "+ randomMaterial.getMaterialName());
-            mr.setSender(ua);
-            mr.setReceiver(sa01);  
+            mr.setSender(pa01);
+            mr.setReceiver(sa01);
             mr.setStatus("Sent");
             mr.setRequestDate(requestDate);
             

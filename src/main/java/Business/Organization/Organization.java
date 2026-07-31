@@ -28,6 +28,8 @@ public abstract class Organization {
         Doctor("Doctor Organization"),
         Lab("Lab Organization"),
         Supplier("Supplier Organization"),
+        Production("Production Organization"),
+        QualityAssurance("QualityAssurance Organization"),
         Inventory("Wholesaler Inventory Organization"),
         Shipping("Wholesaler Shipping Organization"),
         Transport("Transport Organization"), 
