@@ -18,7 +18,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-/** Lets a Wholesaler Inventory Admin release hospital requests to Shipping. */
+/** Lets a Wholesaler Inventory Admin release incoming procurement requests to Shipping. */
 public class InventoryProcurementJPanel extends JPanel {
     private final JPanel container;
     private final UserAccount account;
@@ -33,7 +33,7 @@ public class InventoryProcurementJPanel extends JPanel {
         this.inventoryOrganization = inventoryOrganization;
         this.enterprise = enterprise;
         setLayout(new BorderLayout(8, 8));
-        add(new JLabel("Hospital Procurement Requests"), BorderLayout.NORTH);
+        add(new JLabel("Incoming Procurement Requests"), BorderLayout.NORTH);
         table = new JTable(new DefaultTableModel(
                 new Object[]{"Request", "Medicine", "Quantity", "Status"}, 0) {
             @Override public boolean isCellEditable(int row, int column) { return false; }
@@ -52,10 +52,8 @@ public class InventoryProcurementJPanel extends JPanel {
         DefaultTableModel model = (DefaultTableModel) table.getModel();
         model.setRowCount(0);
         for (WorkRequest request : inventoryOrganization.getWorkQueue().getWorkRequestList()) {
-            if (request instanceof ProcurementRequest procurement
-                    && "Procured".equals(procurement.getStatus())) {
-                model.addRow(new Object[]{procurement, procurement.getMedicine().getMedicineName(),
-                    procurement.getRequestQty(), procurement.getStatus()});
+            if (request instanceof ProcurementRequest procurement && "Procured".equals(procurement.getStatus())) {
+                model.addRow(new Object[]{procurement, procurement.getMedicine().getMedicineName(), procurement.getRequestQty(), procurement.getStatus()});
             }
         }
     }
@@ -66,14 +64,14 @@ public class InventoryProcurementJPanel extends JPanel {
             JOptionPane.showMessageDialog(this, "Select a procurement request first.", "No request selected", JOptionPane.WARNING_MESSAGE);
             return;
         }
-        ProcurementRequest request = (ProcurementRequest) table.getValueAt(row, 0);
+        WholesaleWorkRequest request = (WholesaleWorkRequest) table.getValueAt(row, 0);
         ShippingOrganization shipping = shippingOrganization();
         if (shipping == null) {
             JOptionPane.showMessageDialog(this, "This wholesaler needs a Shipping Organization before requests can be released.", "Shipping organization missing", JOptionPane.WARNING_MESSAGE);
             return;
         }
         if (JOptionPane.showConfirmDialog(this,
-                "Send " + request.getMedicine().getMedicineName() + " to Shipping?",
+                "Send " + request.getItemDescription() + " to Shipping?",
                 "Confirm shipping handoff", JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) return;
         request.setStatus(WholesaleWorkRequest.REQUESTED);
         request.setReceiver(account);

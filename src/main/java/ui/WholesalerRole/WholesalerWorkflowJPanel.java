@@ -1,5 +1,6 @@
 package ui.WholesalerRole;
 
+import Business.EcoSystem;
 import Business.Enterprise.Enterprise;
 import Business.Organization.Organization;
 import Business.Organization.ShippingOrganization;
@@ -46,13 +47,15 @@ public class WholesalerWorkflowJPanel extends JPanel {
     private final UserAccount account;
     private final Enterprise enterprise;
     private final Organization organization;
+    private final EcoSystem system;
 
-    public WholesalerWorkflowJPanel(JPanel userProcessContainer, View view, UserAccount account, Organization organization, Enterprise enterprise) {
+    public WholesalerWorkflowJPanel(JPanel userProcessContainer, View view, UserAccount account, Organization organization, Enterprise enterprise, EcoSystem system) {
         this.userProcessContainer = userProcessContainer;
         this.view = view;
         this.account = account;
         this.enterprise = enterprise;
         this.organization = organization;
+        this.system = system;
         setLayout(new BorderLayout());
         setBackground(PAGE_BACKGROUND);
         add(createHeader(), BorderLayout.NORTH);
@@ -106,11 +109,12 @@ public class WholesalerWorkflowJPanel extends JPanel {
         actions.setBackground(PAGE_BACKGROUND);
         actions.setBorder(BorderFactory.createEmptyBorder(16, 0, 0, 0));
         if (view == View.INVENTORY_ADMIN) {
-            addAction(actions, "Check Inventory", 0, 0, this::showInventoryTodo);
+            addAction(actions, "Check Inventory", 0, 0, () -> navigate(new WholesalerInventoryJPanel(userProcessContainer, (Business.Organization.InventoryOrganization) organization)));
             addAction(actions, "Review Procurement Requests", 1, 0, () -> navigate(new InventoryProcurementJPanel(userProcessContainer, account, organization, enterprise)));
-            addAction(actions, "Check Another Wholesaler Inventory", 0, 1, this::showOtherWholesalerTodo);
-            addAction(actions, "Transfer Order Request", 1, 1, () -> navigate(WholesaleWorkflowActionJPanel.request(userProcessContainer, account, enterprise, WholesaleWorkRequest.RequestType.TRANSFER)));
+            addAction(actions, "Create Replenishment Request", 0, 1, () -> navigate(new ManufacturerReplenishmentJPanel(userProcessContainer, account, (Business.Organization.InventoryOrganization) organization)));
+            addAction(actions, "Transfer Procurement Request", 1, 1, () -> navigate(new WholesaleTransferProcurementJPanel(userProcessContainer, account, (Business.Organization.InventoryOrganization) organization, enterprise, system)));
             addAction(actions, "View Replenishment / Order Status", 0, 2, () -> navigate(WholesaleWorkflowActionJPanel.status(userProcessContainer, account, enterprise, true)));
+            addAction(actions, "View Other Wholesaler Inventory", 1, 2, () -> navigate(new OtherWholesalerInventoryJPanel(userProcessContainer, enterprise, system)));
         } else if (view == View.SHIPPING_ORDER_STAFF) {
             addAction(actions, "Receive Purchase / Transfer Orders", 0, 0, () -> navigate(WholesaleWorkflowActionJPanel.stage(userProcessContainer, account, enterprise, WholesaleWorkRequest.REQUESTED, WholesaleWorkRequest.RECEIVED_BY_STAFF, "Receive orders")));
             addAction(actions, "Issue Picking Orders", 1, 0, () -> navigate(WholesaleWorkflowActionJPanel.stage(userProcessContainer, account, enterprise, WholesaleWorkRequest.RECEIVED_BY_STAFF, WholesaleWorkRequest.PICKING, "Issue picking order")));
@@ -211,11 +215,6 @@ public class WholesalerWorkflowJPanel extends JPanel {
         String text = requests.isEmpty() ? "No wholesale requests found." : requests.stream()
                 .map(WholesaleWorkRequest::toString).collect(Collectors.joining("\n"));
         JOptionPane.showMessageDialog(this, text, "Wholesaler order status", JOptionPane.INFORMATION_MESSAGE);
-    }
-
-    private void showInventoryTodo() {
-        // TODO: Implement wholesaler material catalog and inventory quantity management.
-        JOptionPane.showMessageDialog(this, "Inventory catalog and stock levels are not implemented yet.", "Inventory TODO", JOptionPane.INFORMATION_MESSAGE);
     }
 
     private void showOtherWholesalerTodo() {

@@ -15,7 +15,7 @@ public class InventoryAdminRole extends Role {
     @Override
     public JPanel createWorkArea(JPanel userProcessContainer, UserAccount account,
             Organization organization, Enterprise enterprise, EcoSystem business) {
-        return new WholesalerWorkflowJPanel(userProcessContainer, WholesalerWorkflowJPanel.View.INVENTORY_ADMIN, account, organization, enterprise);
+        return new WholesalerWorkflowJPanel(userProcessContainer, WholesalerWorkflowJPanel.View.INVENTORY_ADMIN, account, organization, enterprise, business);
     }
 
     @Override
