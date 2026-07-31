@@ -24,8 +24,13 @@ import Business.Role.ProductionRole;
 import Business.Role.QualityAssuranceRole;
 import Business.Role.Role;
 import Business.Organization.QualityAssuranceOrganization;
+import Business.Organization.TransportOrganization;
 import Business.Employee.Employee;
+import Business.Production.FinishedGoods;
+import Business.Production.QualityInspectionResult;
+import Business.Role.TransportAdminRole;
 import Business.Supplier.MaterialInventory;
+import Business.WorkQueue.DeliveryWorkRequest;
 import javax.swing.JPanel;
 
 /**
@@ -428,8 +433,144 @@ public ProductionAdminWorkAreaJPanel(JPanel userProcessContainer,
 
     private void issueDeliveryRequestButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_issueDeliveryRequestButtonActionPerformed
         // TODO add your handling code here:
-        javax.swing.JOptionPane.showMessageDialog(this, "TODO: Issue Delivery Request screen");
-        
+    java.util.ArrayList<QualityInspectionResult> passedResults = new java.util.ArrayList<>();
+    for (WorkRequest wr : organization.getWorkQueue().getWorkRequestList()) {
+        if (wr instanceof QualityInspectionResult) {
+            QualityInspectionResult qir = (QualityInspectionResult) wr;
+            if (qir.getReceiver() == account && "Sent".equals(qir.getStatus()) && qir.isPassed()) {
+                passedResults.add(qir);
+            }
+        }
+    }
+    if (passedResults.isEmpty()) {
+        javax.swing.JOptionPane.showMessageDialog(this, "No passed QA result available for delivery yet.");
+        return;
+    }
+
+    String[] labels = new String[passedResults.size()];
+    for (int i = 0; i < passedResults.size(); i++) {
+        QualityInspectionResult qir = passedResults.get(i);
+        labels[i] = qir.getProductName() + " (Plan " + qir.getPlanId() + ")";
+    }
+    String selected = (String) javax.swing.JOptionPane.showInputDialog(
+            this,
+            "Select passed batch to ship:",
+            "Issue Delivery Request",
+            javax.swing.JOptionPane.QUESTION_MESSAGE,
+            null,
+            labels,
+            labels[0]);
+    if (selected == null) {
+        return;
+    }
+    int selectedIndex = java.util.Arrays.asList(labels).indexOf(selected);
+    QualityInspectionResult qir = passedResults.get(selectedIndex);
+
+    // Look up the matching FinishedGoods record (same plan) to get the shipped quantity.
+    int qty = -1;
+    for (WorkRequest wr : organization.getWorkQueue().getWorkRequestList()) {
+        if (wr instanceof FinishedGoods) {
+            FinishedGoods fg = (FinishedGoods) wr;
+            if (fg.getPlanId() != null && fg.getPlanId().equals(qir.getPlanId())) {
+                qty = fg.getQty();
+                break;
+            }
+        }
+    }
+
+    String dropLocation = javax.swing.JOptionPane.showInputDialog(this, "Enter drop-off location (e.g. Wholesaler name/address):");
+    if (dropLocation == null || dropLocation.trim().isEmpty()) {
+        return;
+    }
+
+    EcoSystem system = EcoSystem.getInstance();
+    Enterprise transportEnterprise = null;
+    outer:
+    for (Network network : system.getNetworkList()) {
+        for (Enterprise ent : network.getEnterpriseDirectory().getEnterpriseList()) {
+            if (ent.getEnterpriseType() == Enterprise.EnterpriseType.Transport) {
+                transportEnterprise = ent;
+                break outer;
+            }
+        }
+    }
+    if (transportEnterprise == null) {
+        javax.swing.JOptionPane.showMessageDialog(this, "No Transport enterprise found.");
+        return;
+    }
+
+    TransportOrganization transportOrg = null;
+    for (Organization org : transportEnterprise.getOrganizationDirectory().getOrganizationList()) {
+        if (org instanceof TransportOrganization) {
+            transportOrg = (TransportOrganization) org;
+            break;
+        }
+    }
+    if (transportOrg == null) {
+        javax.swing.JOptionPane.showMessageDialog(this, "No Transport organization found.");
+        return;
+    }
+
+    java.util.ArrayList<UserAccount> transportAdmins = new java.util.ArrayList<>();
+    for (UserAccount ua : transportOrg.getUserAccountDirectory().getUserAccountList()) {
+        if (ua.getRole() instanceof TransportAdminRole) {
+            transportAdmins.add(ua);
+        }
+    }
+    if (transportAdmins.isEmpty()) {
+        javax.swing.JOptionPane.showMessageDialog(this, "No Transport Admin account found.");
+        return;
+    }
+    UserAccount transportAdminAccount;
+    if (transportAdmins.size() == 1) {
+        transportAdminAccount = transportAdmins.get(0);
+    } else {
+        String[] transportAdminNames = new String[transportAdmins.size()];
+        for (int i = 0; i < transportAdmins.size(); i++) {
+            transportAdminNames[i] = transportAdmins.get(i).getUsername();
+        }
+        String selectedTransportAdminName = (String) javax.swing.JOptionPane.showInputDialog(
+                this,
+                "Select Transport Admin to notify:",
+                "Issue Delivery Request",
+                javax.swing.JOptionPane.QUESTION_MESSAGE,
+                null,
+                transportAdminNames,
+                transportAdminNames[0]);
+        if (selectedTransportAdminName == null) {
+            return;
+        }
+        transportAdminAccount = null;
+        for (UserAccount ua : transportAdmins) {
+            if (ua.getUsername().equals(selectedTransportAdminName)) {
+                transportAdminAccount = ua;
+                break;
+            }
+        }
+    }
+
+    String cargoDescription = qty >= 0
+            ? qir.getProductName() + " x " + qty
+            : qir.getProductName();
+
+    DeliveryWorkRequest dwr = new DeliveryWorkRequest();
+    dwr.setPickupLocation(enterprise.getName());
+    dwr.setDropLocation(dropLocation.trim());
+    dwr.setCargoDescription(cargoDescription);
+    dwr.setMessage("Delivery request for " + cargoDescription + " (Plan " + qir.getPlanId() + ")");
+    dwr.setSender(account);
+    dwr.setReceiver(transportAdminAccount);
+    dwr.setStatus("Sent");
+    transportOrg.getWorkQueue().getWorkRequestList().add(dwr);
+    // Also keep a reference in Production's own queue (same object) so this
+    // delivery's status/report is visible under "View Order Status" as the
+    // Transporter updates it, without needing anything sent back to us.
+    organization.getWorkQueue().getWorkRequestList().add(dwr);
+
+    qir.setStatus("DeliveryIssued");
+
+    javax.swing.JOptionPane.showMessageDialog(this, "Delivery request sent to Transport for " + cargoDescription);
+
     }//GEN-LAST:event_issueDeliveryRequestButtonActionPerformed
 
     private void manageOperatorAccountButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manageOperatorAccountButtonActionPerformed
