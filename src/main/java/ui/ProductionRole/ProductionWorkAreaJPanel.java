@@ -15,6 +15,7 @@ import Business.Supplier.Material;
 import Business.Supplier.MaterialInventory;
 import Business.Supplier.MaterialRequest;
 import Business.Production.ProductionOrder;
+import Business.WorkQueue.DeliveryWorkRequest;
 import Business.WorkQueue.WorkRequest;
 import javax.swing.JPanel;
 
@@ -369,7 +370,32 @@ public ProductionWorkAreaJPanel(JPanel userProcessContainer,
 
     private void shippingButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_shippingButtonActionPerformed
         // TODO add your handling code here:
-        javax.swing.JOptionPane.showMessageDialog(this, "TODO: Shipping screen");
+    // Loading/delivery/proof-of-delivery are performed by the Transporter's
+    // Driver once Production Admin issues the delivery request (see
+    // Business.WorkQueue.DeliveryWorkRequest) - there is no separate physical
+    // handoff action left for the Operator to perform here. This screen just
+    // shows the live status of shipments for goods this org produced.
+    java.util.ArrayList<DeliveryWorkRequest> deliveries = new java.util.ArrayList<>();
+    for (WorkRequest wr : organization.getWorkQueue().getWorkRequestList()) {
+        if (wr instanceof DeliveryWorkRequest) {
+            deliveries.add((DeliveryWorkRequest) wr);
+        }
+    }
+    if (deliveries.isEmpty()) {
+        javax.swing.JOptionPane.showMessageDialog(this, "No delivery requests have been issued yet.");
+        return;
+    }
+    StringBuilder sb = new StringBuilder();
+    for (DeliveryWorkRequest dwr : deliveries) {
+        sb.append(dwr.getCargoDescription())
+          .append(" -> ").append(dwr.getDropLocation())
+          .append(" : ").append(dwr.getStatus());
+        if (dwr.getDeliveryReport() != null && !dwr.getDeliveryReport().isEmpty()) {
+            sb.append(" (").append(dwr.getDeliveryReport()).append(")");
+        }
+        sb.append("\n");
+    }
+    javax.swing.JOptionPane.showMessageDialog(this, sb.toString(), "Shipping Status", javax.swing.JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_shippingButtonActionPerformed
 
     private void myProfileButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_myProfileButtonActionPerformed
