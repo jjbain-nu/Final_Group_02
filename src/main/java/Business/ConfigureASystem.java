@@ -168,7 +168,7 @@ public class ConfigureASystem {
         //Create 10 sample material requests from manufacturer
         Random rand = new Random();
         
-        for (int i = 0; i<10 ; i++){
+        for (int i = 0; i<5 ; i++){
             Material randomMaterial = catalog.getMaterialList().get(rand.nextInt(catalog.getMaterialList().size()));
             int qty = faker.number().numberBetween(1,10);
             Date requestDate = faker.date().past(5, TimeUnit.DAYS);
