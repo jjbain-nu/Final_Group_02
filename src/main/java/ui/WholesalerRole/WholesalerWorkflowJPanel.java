@@ -111,7 +111,7 @@ public class WholesalerWorkflowJPanel extends JPanel {
         if (view == View.INVENTORY_ADMIN) {
             addAction(actions, "Check Inventory", 0, 0, () -> navigate(new WholesalerInventoryJPanel(userProcessContainer, (Business.Organization.InventoryOrganization) organization)));
             addAction(actions, "Review Procurement Requests", 1, 0, () -> navigate(new InventoryProcurementJPanel(userProcessContainer, account, organization, enterprise)));
-            addAction(actions, "Create Replenishment Request", 0, 1, () -> navigate(new ManufacturerReplenishmentJPanel(userProcessContainer, account, (Business.Organization.InventoryOrganization) organization)));
+            addAction(actions, "Create Replenishment Request", 0, 1, () -> navigate(new ManufacturerReplenishmentJPanel(userProcessContainer, account, (Business.Organization.InventoryOrganization) organization, enterprise, system)));
             addAction(actions, "Transfer Procurement Request", 1, 1, () -> navigate(new WholesaleTransferProcurementJPanel(userProcessContainer, account, (Business.Organization.InventoryOrganization) organization, enterprise, system)));
             addAction(actions, "View Replenishment / Order Status", 0, 2, () -> navigate(WholesaleWorkflowActionJPanel.status(userProcessContainer, account, enterprise, true)));
             addAction(actions, "View Other Wholesaler Inventory", 1, 2, () -> navigate(new OtherWholesalerInventoryJPanel(userProcessContainer, enterprise, system)));
@@ -125,7 +125,7 @@ public class WholesalerWorkflowJPanel extends JPanel {
             addAction(actions, "Picking", 0, 0, () -> navigate(WholesaleWorkflowActionJPanel.stage(userProcessContainer, account, enterprise, WholesaleWorkRequest.PICKING, WholesaleWorkRequest.PICKED, "Complete picking")));
             addAction(actions, "Packing", 1, 0, () -> navigate(WholesaleWorkflowActionJPanel.stage(userProcessContainer, account, enterprise, WholesaleWorkRequest.PICKED, WholesaleWorkRequest.PACKED, "Complete packing")));
             addAction(actions, "Shipping", 0, 1, () -> navigate(WholesaleWorkflowActionJPanel.stage(userProcessContainer, account, enterprise, WholesaleWorkRequest.PACKED, WholesaleWorkRequest.SHIPPED, "Confirm shipment")));
-            addAction(actions, "Receive Finished Goods", 1, 1, this::showReceiveFinishedGoodsTodo);
+            addAction(actions, "Receive Finished Goods", 1, 1, () -> navigate(new ReceiveFinishedGoodsJPanel(userProcessContainer, account, enterprise)));
             addAction(actions, "View Replenishment / Order Status", 0, 2, () -> navigate(WholesaleWorkflowActionJPanel.status(userProcessContainer, account, enterprise, false)));
             addAction(actions, "My Profile", 1, 2, () -> navigate(WholesaleWorkflowActionJPanel.profile(userProcessContainer, account, enterprise)));
         }

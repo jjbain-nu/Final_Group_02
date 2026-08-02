@@ -31,7 +31,7 @@ public class OtherWholesalerInventoryJPanel extends JPanel {
         this.currentEnterprise = currentEnterprise;
         setLayout(new BorderLayout(8, 8));
         add(heading, BorderLayout.NORTH);
-        table = new JTable(new DefaultTableModel(new Object[]{"Wholesaler", "Medicine ID", "Medicine", "Stock Qty", "Standard Qty", "Shortage Qty"}, 0) {
+        table = new JTable(new DefaultTableModel(new Object[]{"Wholesaler", "Medicine ID", "Medicine", "Stock Qty", "Standard Qty", "Shortage Qty", "Inventory Status"}, 0) {
             @Override public boolean isCellEditable(int row, int column) { return false; }
         });
         add(new JScrollPane(table), BorderLayout.CENTER);
@@ -63,7 +63,9 @@ public class OtherWholesalerInventoryJPanel extends JPanel {
         for (Organization organization : wholesaler.getOrganizationDirectory().getOrganizationList()) {
             if (organization instanceof InventoryOrganization inventoryOrganization) {
                 for (MedicineInventory inventory : inventoryOrganization.getMedicineInventoryDirectory().getInventoryList()) {
-                    model.addRow(new Object[]{wholesaler.getName(), inventory.getMedicine().getMedicineId(), inventory.getMedicine().getMedicineName(), inventory.getQuantity(), inventory.getStandardStock(), inventory.getShortageQty()});
+                    String status = inventory.isShortage() ? "Shortage"
+                            : inventory.isExcess() ? "Surplus" : "At Standard";
+                    model.addRow(new Object[]{wholesaler.getName(), inventory.getMedicine().getMedicineId(), inventory.getMedicine().getMedicineName(), inventory.getQuantity(), inventory.getStandardStock(), inventory.getShortageQty(), status});
                 }
                 return;
             }
