@@ -166,7 +166,7 @@ public class SupplyChainDashBoard extends javax.swing.JPanel {
                                     
                                     String status = po.getStatus();
                                     
-                                    if("Pending".equals(status)||"Sent".equals(status)){
+                                    if("Pending".equals(status)||"Sent".equals(status)|| "In Production".equals(status)){
                                         
                                         pendingProduction += po.getQty();
                                         
