@@ -134,7 +134,7 @@ public class TransportAdminWorkAreaJPanel extends javax.swing.JPanel {
                 viewDeliveryStatusJButtonActionPerformed(evt);
             }
         });
-        add(viewDeliveryStatusJButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(81, 361, 447, -1));
+        add(viewDeliveryStatusJButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 340, 200, 40));
     }// </editor-fold>//GEN-END:initComponents
 
     private void createDeliveryJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createDeliveryJButtonActionPerformed

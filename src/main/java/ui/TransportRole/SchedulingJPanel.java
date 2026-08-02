@@ -41,6 +41,19 @@ public class SchedulingJPanel extends javax.swing.JPanel {
                 d.getScheduledDate() == null ? "" : sdf.format(d.getScheduledDate()),
                 d.getAssignedTruck(), d.getStatus()});
         }
+        autoSizeColumns(requestJTable);
+    }
+    
+    private void autoSizeColumns(javax.swing.JTable t) {
+        t.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
+        for (int col = 0; col < t.getColumnCount(); col++) {
+            int w = 60;
+            for (int r = 0; r < t.getRowCount(); r++) {
+                w = Math.max(w, t.prepareRenderer(t.getCellRenderer(r, col), r, col)
+                               .getPreferredSize().width + 20);
+            }
+            t.getColumnModel().getColumn(col).setPreferredWidth(w);
+        }
     }
 
     private void populateTruckCombo() {
