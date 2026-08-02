@@ -9,6 +9,7 @@ import ui.DoctorRole.*;
 import Business.EcoSystem;
 import Business.Enterprise.Enterprise;
 import Business.Enterprise.HospitalEnterprise;
+import Business.Enterprise.ManufacturerEnterprise;
 import Business.Enterprise.WholesalerEnterprise;
 import Business.Hospital.Medicine;
 import Business.Hospital.MedicineInventory;
@@ -17,7 +18,9 @@ import Business.Organization.DoctorOrganization;
 import Business.Organization.InventoryOrganization;
 import Business.Organization.Organization;
 import Business.Organization.PharmacyOrganization;
+import Business.Organization.ProductionOrganization;
 import Business.Organization.SupplierOrganization;
+import Business.Production.ProductionOrder;
 import Business.Supplier.MaterialInventory;
 import Business.Supplier.MaterialRequest;
 import Business.Supplier.PickingOrder;
@@ -41,7 +44,6 @@ import javax.swing.table.DefaultTableModel;
 public class SupplyChainDashBoard extends javax.swing.JPanel {
 
     private JPanel userProcessContainer;
-    private SupplierOrganization organization;
     private Enterprise enterprise;
     private UserAccount userAccount;
     private EcoSystem ecosystem;
@@ -52,7 +54,6 @@ public class SupplyChainDashBoard extends javax.swing.JPanel {
         initComponents();
         
         this.userProcessContainer = userProcessContainer;
-        this.organization = organization;
         this.enterprise = enterprise;
         this.ecosystem = ecosystem;
         this.userAccount = account;
@@ -90,7 +91,7 @@ public class SupplyChainDashBoard extends javax.swing.JPanel {
             int totalShortage = 0;
             int totalSurplus = 0;
             int pendingProduction = 0;
-            int readyToship =0;
+            int readyToShip =0;
             
         
         for (Network network : ecosystem.getNetworkList()){
@@ -146,8 +147,38 @@ public class SupplyChainDashBoard extends javax.swing.JPanel {
                     }
                 
                 }
+                //Manufacturer Production Orders
+                if(ent instanceof ManufacturerEnterprise){
+                    
+                    for(Organization org : ent.getOrganizationDirectory().getOrganizationList()){
+                        
+                        if(org instanceof ProductionOrganization){
+                            
+                            for(WorkRequest wr : org.getWorkQueue().getWorkRequestList()){
+                                
+                                if(wr instanceof ProductionOrder){
+                                    
+                                    ProductionOrder po = (ProductionOrder)wr;
+                                    
+                                    if(po.getMedicine()==null|| !medicine.equals(po.getMedicine())){
+                                        continue;
+                                    }
+                                    
+                                    String status = po.getStatus();
+                                    
+                                    if("Pending".equals(status)||"Sent".equals(status)){
+                                        
+                                        pendingProduction += po.getQty();
+                                        
+                                    }else if("Ready to Ship".equals(status)){
+                                        readyToShip += po.getQty();
+                                    }
+                               }
+                            }
+                        }
+                    }
+                }
             }
-        }
                 
                 if(wsmiA != null){
                     totalInventory += wsmiA.getQuantity();
@@ -169,23 +200,23 @@ public class SupplyChainDashBoard extends javax.swing.JPanel {
                 
                 if(hospitalA != null){
                     totalInventory += hospitalA.getQuantity();
-                    totalInventory += hospitalA.getSurplus();
+                    totalSurplus += hospitalA.getSurplus();
                     totalShortage += hospitalA.getShortageQty();
                 }
                 
                 if(hospitalB != null){
                     totalInventory += hospitalB.getQuantity();
-                    totalInventory += hospitalB.getSurplus();
+                    totalSurplus += hospitalB.getSurplus();
                     totalShortage += hospitalB.getShortageQty();
                 }
                 
                 if(hospitalC != null){
                     totalInventory += hospitalC.getQuantity();
-                    totalInventory += hospitalC.getSurplus();
+                    totalSurplus += hospitalC.getSurplus();
                     totalShortage += hospitalC.getShortageQty();
                 }
         
-        
+             
         Object[]row = new Object[7];
                 
         row[0]=medicine;
@@ -194,14 +225,13 @@ public class SupplyChainDashBoard extends javax.swing.JPanel {
         row[3]=totalSurplus;
         row[4]=totalShortage;
         row[5]=pendingProduction;
-        row[6]=readyToship;
+        row[6]=readyToShip;
                 
         model.addRow(row);
         
-        
         }
     }
-            
+    }
        
     /**
      * This method is called from within the constructor to initialize the form.
