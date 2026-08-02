@@ -43,6 +43,8 @@ public class DeliveryWorkRequest extends WorkRequest {
     private String proofReference;      // e.g. photo URL, signature id
     private String inspectionResult;    // OK / Damaged / Rejected
     private String deliveryReport;      // final report text back to sender
+    
+    private WorkRequest sourceRequest;   // the request this delivery fulfils
 
     // Getters / setters
     public String getPickupLocation()          { return pickupLocation; }
@@ -65,6 +67,8 @@ public class DeliveryWorkRequest extends WorkRequest {
     public void   setInspectionResult(String v){ this.inspectionResult = v; }
     public String getDeliveryReport()          { return deliveryReport; }
     public void   setDeliveryReport(String v)  { this.deliveryReport = v; }
+    public WorkRequest getSourceRequest()       { return sourceRequest; }
+    public void setSourceRequest(WorkRequest r)  { this.sourceRequest = r; }
 
     @Override
     public String toString() {

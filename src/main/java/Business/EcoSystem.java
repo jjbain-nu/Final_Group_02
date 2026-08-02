@@ -5,6 +5,7 @@
  */
 package Business;
 
+import Business.Hospital.MedicineCatalog;
 import Business.Network.Network;
 import Business.Organization.Organization;
 import Business.Role.Role;
@@ -19,12 +20,40 @@ public class EcoSystem extends Organization{
     
     private static EcoSystem business;
     private ArrayList<Network> networkList;
+    private MedicineCatalog medicineCatalog;
+    
+    private EcoSystem(){
+        super(null);
+        networkList = new ArrayList<Network>();
+        medicineCatalog = new MedicineCatalog();
+        
+    }
+    
+    
     public static EcoSystem getInstance(){
         if(business==null){
             business=new EcoSystem();
         }
         return business;
     }
+
+    public static EcoSystem getBusiness() {
+        return business;
+    }
+
+    public static void setBusiness(EcoSystem business) {
+        EcoSystem.business = business;
+    }
+
+    public MedicineCatalog getMedicineCatalog() {
+        return medicineCatalog;
+    }
+
+    public void setMedicineCatalog(MedicineCatalog medicineCatalog) {
+        this.medicineCatalog = medicineCatalog;
+    }
+    
+    
     
     public Network createAndAddNetwork(){
         Network network=new Network();
@@ -37,10 +66,7 @@ public class EcoSystem extends Organization{
         roleList.add(new SystemAdminRole());
         return roleList;
     }
-    private EcoSystem(){
-        super(null);
-        networkList=new ArrayList<Network>();
-    }
+    
 
     public ArrayList<Network> getNetworkList() {
         return networkList;

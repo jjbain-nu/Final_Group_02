@@ -10,6 +10,7 @@ import Business.WorkQueue.WorkRequest;
 import java.awt.CardLayout;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.JOptionPane;
 
 public class ReceiveDeliveryRequestJPanel extends javax.swing.JPanel {
 
@@ -34,7 +35,22 @@ public class ReceiveDeliveryRequestJPanel extends javax.swing.JPanel {
                 d.getSender() != null ? d.getSender().getEmployee().getName() : "",
                 d.getMessage(), d.getRequestDate(), d.getStatus()});
         }
+        autoSizeColumns(requestJTable); 
     }
+    
+    private void autoSizeColumns(javax.swing.JTable t) {
+        t.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
+        for (int col = 0; col < t.getColumnCount(); col++) {
+            int w = 60;
+            for (int r = 0; r < t.getRowCount(); r++) {
+                w = Math.max(w, t.prepareRenderer(t.getCellRenderer(r, col), r, col)
+                               .getPreferredSize().width + 20);
+            }
+            t.getColumnModel().getColumn(col).setPreferredWidth(w);
+        }
+    }
+    
+  
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -79,7 +95,7 @@ public class ReceiveDeliveryRequestJPanel extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(requestJTable);
 
-        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(39, 71, 480, 206));
+        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 640, 206));
 
         receiveJButton.setText("Receive");
         receiveJButton.addActionListener(new java.awt.event.ActionListener() {
@@ -111,6 +127,11 @@ public class ReceiveDeliveryRequestJPanel extends javax.swing.JPanel {
         int row = requestJTable.getSelectedRow();
         if (row < 0) return;
         DeliveryWorkRequest d = (DeliveryWorkRequest) requestJTable.getValueAt(row, 0);
+        if (!"Sent".equals(d.getStatus())) {                                             
+            JOptionPane.showMessageDialog(this,                                          
+                "Only requests with status \"Sent\" can be received.");                  
+            return;
+        }       
         d.setStatus(DeliveryWorkRequest.STATUS_RECEIVED);
         populateTable();
     }//GEN-LAST:event_receiveJButtonActionPerformed

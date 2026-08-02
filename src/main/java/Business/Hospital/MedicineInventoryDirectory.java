@@ -37,4 +37,15 @@ public class MedicineInventoryDirectory {
         
     }
     
+    public MedicineInventory findInventoryByMedicine(Medicine medicine){
+        
+        for(MedicineInventory mi :inventoryList ){
+            if(medicine.equals(mi.getMedicine())){
+                return mi;
+                }
+        }
+        return null;
+    }
+    
+    
 }

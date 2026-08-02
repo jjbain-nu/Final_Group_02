@@ -34,6 +34,7 @@ import Business.Supplier.MaterialInventory;
 import Business.WorkQueue.DeliveryWorkRequest;
 import java.awt.CardLayout;
 import javax.swing.JPanel;
+import Business.WorkQueue.ManufacturerReplenishmentRequest;
 import ui.ManufacturerShared.ManageAccountJPanel;
 import ui.ManufacturerShared.OrderStatusJPanel;
 import ui.ManufacturerShared.RawMaterialStockJPanel;
@@ -617,6 +618,29 @@ public ProductionAdminWorkAreaJPanel(JPanel userProcessContainer,
             : qir.getProductName();
 
     DeliveryWorkRequest dwr = new DeliveryWorkRequest();
+    
+    //
+    // Link this delivery to the wholesaler replenishment request it fulfils.
+    java.util.ArrayList<ManufacturerReplenishmentRequest> pending = new java.util.ArrayList<>();
+    for (WorkRequest wr : organization.getWorkQueue().getWorkRequestList()) {
+        if (wr instanceof ManufacturerReplenishmentRequest
+                && ManufacturerReplenishmentRequest.REQUESTED_FROM_MANUFACTURER.equals(wr.getStatus())) {
+            pending.add((ManufacturerReplenishmentRequest) wr);
+        }
+    }
+    if (!pending.isEmpty()) {
+        ManufacturerReplenishmentRequest chosen = (ManufacturerReplenishmentRequest)
+            javax.swing.JOptionPane.showInputDialog(this,
+                "Which wholesaler replenishment does this delivery fulfil?",
+                "Link replenishment", javax.swing.JOptionPane.QUESTION_MESSAGE,
+                null, pending.toArray(), pending.get(0));
+        if (chosen != null) {
+            dwr.setSourceRequest(chosen);        // ← the link
+            chosen.setStatus("In Transit");      // so it isn't offered again
+        }
+    }
+    //
+    
     dwr.setPickupLocation(enterprise.getName());
     dwr.setDropLocation(dropLocation.trim());
     dwr.setCargoDescription(cargoDescription);
