@@ -253,7 +253,8 @@ public class ConfigureASystem {
         
         //Create sample medicines and hospital inventory
         MedicineCatalog sharedCatalog = new MedicineCatalog();
-               
+        system.setMedicineCatalog(sharedCatalog);
+        
         String[] medicines = {
         "Paracetamol Tablet",
         "Ibuprofen Tablet",
