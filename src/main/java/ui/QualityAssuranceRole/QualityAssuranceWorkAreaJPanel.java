@@ -13,7 +13,9 @@ import Business.Enterprise.Enterprise;
 import Business.Organization.QualityAssuranceOrganization;
 import Business.UserAccount.UserAccount;
 import Business.WorkQueue.WorkRequest;
+import java.awt.CardLayout;
 import javax.swing.JPanel;
+import ui.ManufacturerShared.OrderStatusJPanel;
 
 /**
  *
@@ -108,12 +110,11 @@ public QualityAssuranceWorkAreaJPanel(JPanel userProcessContainer,
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(viewOrderStatusButton, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
                             .addComponent(myProfileButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addComponent(enterInspectionResultButton))
+                    .addComponent(enterInspectionResultButton)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(162, 162, 162)
+                        .addComponent(titleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(34, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(titleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(180, 180, 180))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -245,6 +246,14 @@ public QualityAssuranceWorkAreaJPanel(JPanel userProcessContainer,
     int response = javax.swing.JOptionPane.showConfirmDialog(this, "Did " + fg.getProductName() + " pass inspection?", "Quality Inspection Result", javax.swing.JOptionPane.YES_NO_OPTION);
     boolean passed = (response == javax.swing.JOptionPane.YES_OPTION);
 
+    String failureReason = null;
+    if (!passed) {
+        failureReason = javax.swing.JOptionPane.showInputDialog(this, "Reason for failure:", "Quality Inspection Result", javax.swing.JOptionPane.QUESTION_MESSAGE);
+        if (failureReason == null || failureReason.trim().isEmpty()) {
+            failureReason = "No reason provided";
+        }
+    }
+
     ProductionOrganization productionOrg = null;
     for (Organization org : enterprise.getOrganizationDirectory().getOrganizationList()) {
         if (org instanceof ProductionOrganization) {
@@ -297,7 +306,8 @@ public QualityAssuranceWorkAreaJPanel(JPanel userProcessContainer,
 
     QualityInspectionResult result = new QualityInspectionResult(fg.getProductName(), passed);
     result.setPlanId(fg.getPlanId());
-    result.setMessage("Inspection result for " + fg.getProductName() + ": " + (passed ? "Passed" : "Failed"));
+    result.setMessage("Inspection result for " + fg.getProductName() + ": " + (passed ? "Passed" : "Failed"
+            + " - Reason: " + failureReason));
     result.setSender(account);
     result.setReceiver(adminAccount);
     productionOrg.getWorkQueue().getWorkRequestList().add(result);
@@ -315,23 +325,22 @@ public QualityAssuranceWorkAreaJPanel(JPanel userProcessContainer,
 
     private void viewOrderStatusButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewOrderStatusButtonActionPerformed
         // TODO add your handling code here:
-    java.util.ArrayList<WorkRequest> requests = organization.getWorkQueue().getWorkRequestList();
-    if (requests.isEmpty()) {
-        javax.swing.JOptionPane.showMessageDialog(this, "No requests in the queue.");
-        return;
-    }
-    StringBuilder sb = new StringBuilder();
-    for (WorkRequest wr : requests) {
-        sb.append(wr.toString()).append(" - ").append(wr.getStatus()).append("\n");
-    }
-    javax.swing.JOptionPane.showMessageDialog(this, sb.toString(), "Order Status", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+    OrderStatusJPanel p = new OrderStatusJPanel(userProcessContainer, organization);
+    userProcessContainer.add("OrderStatusJPanel", p);
+    CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+    layout.next(userProcessContainer);
 
     }//GEN-LAST:event_viewOrderStatusButtonActionPerformed
 
     private void myProfileButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_myProfileButtonActionPerformed
         // TODO add your handling code here:
-        javax.swing.JOptionPane.showMessageDialog(this, "TODO: My Profile screen");
-
+        String employeeName = account.getEmployee() == null ? "N/A" : account.getEmployee().getName();
+        String roleName = account.getRole() == null ? "N/A" : account.getRole().toString();
+        String profile = "Username: " + account.getUsername()
+                + "\nEmployee Name: " + employeeName
+                + "\nRole: " + roleName
+                + "\nOrganization: " + organization.getClass().getSimpleName();
+        javax.swing.JOptionPane.showMessageDialog(this, profile, "My Profile", javax.swing.JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_myProfileButtonActionPerformed
 
 
