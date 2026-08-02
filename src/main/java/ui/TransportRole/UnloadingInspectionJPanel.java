@@ -21,6 +21,10 @@ public class UnloadingInspectionJPanel extends javax.swing.JPanel {
         this.delivery = delivery;
         infoLabel.setText("Delivery to: " + delivery.getDropLocation()
                 + "  (current status: " + delivery.getStatus() + ")");
+        resultJComboBox.removeAllItems();                            
+        resultJComboBox.addItem("OK");                              
+        resultJComboBox.addItem("Damaged");                        
+        resultJComboBox.addItem("Rejected");
     }
 
 
@@ -78,6 +82,9 @@ public class UnloadingInspectionJPanel extends javax.swing.JPanel {
         }
         delivery.setInspectionResult((String) resultJComboBox.getSelectedItem());
         delivery.setStatus(DeliveryWorkRequest.STATUS_DELIVERED);
+        if (delivery.getSourceRequest() != null) {                   
+            delivery.getSourceRequest().setStatus("Delivered");
+        }
         JOptionPane.showMessageDialog(this, "Inspection recorded.");
     }//GEN-LAST:event_submitJButtonActionPerformed
 

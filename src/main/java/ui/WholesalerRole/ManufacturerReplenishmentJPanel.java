@@ -21,6 +21,11 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+import Business.EcoSystem;
+import Business.Network.Network;
+import Business.Enterprise.Enterprise;
+import Business.Organization.Organization;
+import Business.Organization.ProductionOrganization;
 
 /** Creates and tracks wholesaler requests awaiting manufacturer integration. */
 public class ManufacturerReplenishmentJPanel extends JPanel {
@@ -55,6 +60,9 @@ public class ManufacturerReplenishmentJPanel extends JPanel {
         JPanel controls = new JPanel(new FlowLayout(FlowLayout.LEFT));
         JButton back = new JButton("<< Back"); back.addActionListener(event -> back());
         JButton refresh = new JButton("Refresh"); refresh.addActionListener(event -> refresh());
+        JButton receive = new JButton("Receive Products");
+        receive.addActionListener(event -> receive());
+        controls.add(receive);
         controls.add(back); controls.add(refresh); add(controls, BorderLayout.SOUTH);
         populateMedicineCombo(); refresh();
     }
@@ -74,8 +82,12 @@ public class ManufacturerReplenishmentJPanel extends JPanel {
         request.setSender(account);
         organization.getWorkQueue().getWorkRequestList().add(request);
         if (!account.getWorkQueue().getWorkRequestList().contains(request)) account.getWorkQueue().getWorkRequestList().add(request);
+        
+        ProductionOrganization prod = findProductionOrganization();             
+        if (prod != null) prod.getWorkQueue().getWorkRequestList().add(request);
+        
         quantityField.setText("");
-        JOptionPane.showMessageDialog(this, "Replenishment request recorded. Manufacturer routing is not implemented yet.", "Request created", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(this, "Replenishment request recorded. Manufacturer routing in progress.", "Request created", JOptionPane.INFORMATION_MESSAGE);
         refresh();
     }
 
@@ -87,4 +99,33 @@ public class ManufacturerReplenishmentJPanel extends JPanel {
     }
 
     private void back() { container.remove(this); ((CardLayout) container.getLayout()).previous(container); }
+    
+    private void receive() {
+        int row = table.getSelectedRow();
+        if (row < 0) { JOptionPane.showMessageDialog(this, "Select a request."); return; }
+        ManufacturerReplenishmentRequest req =
+            (ManufacturerReplenishmentRequest) table.getValueAt(row, 0);   // col 0 holds the object
+        if (!"Delivered".equals(req.getStatus())) {
+            JOptionPane.showMessageDialog(this, "Only Delivered requests can be received.");
+            return;
+        }
+        for (MedicineInventory inv : organization.getMedicineInventoryDirectory().getInventoryList()) {
+            if (inv.getMedicine() == req.getMedicine()) {
+                inv.setQuantity(inv.getQuantity() + req.getQuantity());   // ← inventory updated
+                break;
+            }
+        }
+        req.setStatus("Received");
+        refresh();
+    }
+    
+    private ProductionOrganization findProductionOrganization() {
+    for (Network net : EcoSystem.getInstance().getNetworkList())
+        for (Enterprise ent : net.getEnterpriseDirectory().getEnterpriseList())
+            if (ent.getEnterpriseType() == Enterprise.EnterpriseType.Manufacturer)
+                for (Organization org : ent.getOrganizationDirectory().getOrganizationList())
+                    if (org instanceof ProductionOrganization)
+                        return (ProductionOrganization) org;
+    return null;
+}
 }

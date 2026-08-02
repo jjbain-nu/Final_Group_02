@@ -35,6 +35,19 @@ public class ViewDeliveryStatusJPanel extends javax.swing.JPanel {
                 d.getAssignedTruck(), d.getAssignedDriver(),
                 d.getStatus(), d.getInspectionResult(), d.getProofReference()});
         }
+        autoSizeColumns(statusJTable);
+    }
+    
+    private void autoSizeColumns(javax.swing.JTable t) {
+        t.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
+        for (int col = 0; col < t.getColumnCount(); col++) {
+            int w = 60;
+            for (int r = 0; r < t.getRowCount(); r++) {
+                w = Math.max(w, t.prepareRenderer(t.getCellRenderer(r, col), r, col)
+                               .getPreferredSize().width + 20);
+            }
+            t.getColumnModel().getColumn(col).setPreferredWidth(w);
+        }
     }
 
     /**
