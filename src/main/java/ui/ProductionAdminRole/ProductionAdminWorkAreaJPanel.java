@@ -22,16 +22,18 @@ import Business.Production.ProductionPlan;
 import Business.Role.ProductionAdminRole;
 import Business.Role.ProductionRole;
 import Business.Role.QualityAssuranceRole;
-import Business.Role.Role;
 import Business.Organization.QualityAssuranceOrganization;
 import Business.Organization.TransportOrganization;
-import Business.Employee.Employee;
 import Business.Production.FinishedGoods;
 import Business.Production.QualityInspectionResult;
 import Business.Role.TransportAdminRole;
 import Business.Supplier.MaterialInventory;
 import Business.WorkQueue.DeliveryWorkRequest;
+import java.awt.CardLayout;
 import javax.swing.JPanel;
+import ui.ManufacturerShared.ManageAccountJPanel;
+import ui.ManufacturerShared.OrderStatusJPanel;
+import ui.ManufacturerShared.RawMaterialStockJPanel;
 
 /**
  *
@@ -44,16 +46,19 @@ private JPanel userProcessContainer;
 private UserAccount account;
 private ProductionOrganization organization;
 private Enterprise enterprise;
+private EcoSystem business;
 
 public ProductionAdminWorkAreaJPanel(JPanel userProcessContainer,
                         UserAccount account,
                         ProductionOrganization organization,
-                        Enterprise enterprise) {
+                        Enterprise enterprise,
+                        EcoSystem business) {
     initComponents();
     this.userProcessContainer = userProcessContainer;
     this.account = account;
     this.organization = organization;
     this.enterprise = enterprise;
+    this.business = business;
 }
     
 
@@ -74,6 +79,7 @@ public ProductionAdminWorkAreaJPanel(JPanel userProcessContainer,
         manageOperatorAccountButton = new javax.swing.JButton();
         manageAdminAccountButton = new javax.swing.JButton();
         viewOrderStatusButton = new javax.swing.JButton();
+        myProfileButton = new javax.swing.JButton();
         titleLabel = new javax.swing.JLabel();
 
         createProductionPlanButton.setText("Create Production Plan");
@@ -132,6 +138,13 @@ public ProductionAdminWorkAreaJPanel(JPanel userProcessContainer,
             }
         });
 
+        myProfileButton.setText("My Profile");
+        myProfileButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                myProfileButtonActionPerformed(evt);
+            }
+        });
+
         titleLabel.setFont(new java.awt.Font("Helvetica Neue", 1, 18)); // NOI18N
         titleLabel.setText("Production Administrator Portal");
 
@@ -153,7 +166,8 @@ public ProductionAdminWorkAreaJPanel(JPanel userProcessContainer,
                             .addComponent(manageOperatorAccountButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(issueDeliveryRequestButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(manageAdminAccountButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(viewOrderStatusButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(viewOrderStatusButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(myProfileButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(151, 151, 151)
                         .addComponent(titleLabel)))
@@ -180,24 +194,18 @@ public ProductionAdminWorkAreaJPanel(JPanel userProcessContainer,
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(issueProductionOrderButton)
                     .addComponent(viewOrderStatusButton))
+                .addGap(30, 30, 30)
+                .addComponent(myProfileButton)
                 .addContainerGap(45, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void checkRawMaterialStockButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkRawMaterialStockButtonActionPerformed
         // TODO add your handling code here:
-    java.util.ArrayList<MaterialInventory> inventoryList = organization.getRawMaterialInventoryDirectory().getInventoryList();
-    if (inventoryList.isEmpty()) {
-        javax.swing.JOptionPane.showMessageDialog(this, "No raw material in stock yet.");
-        return;
-    }
-    StringBuilder sb = new StringBuilder();
-    for (MaterialInventory mi : inventoryList) {
-        sb.append(mi.getMaterial().getMaterialName())
-          .append(" - Available: ").append(mi.getAvailableQty())
-          .append("\n");
-    }
-    javax.swing.JOptionPane.showMessageDialog(this, sb.toString(), "Raw Material Stock", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+    RawMaterialStockJPanel p = new RawMaterialStockJPanel(userProcessContainer, organization);
+    userProcessContainer.add("RawMaterialStockJPanel", p);
+    CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+    layout.next(userProcessContainer);
     }//GEN-LAST:event_checkRawMaterialStockButtonActionPerformed
 
     private void createProductionPlanButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createProductionPlanButtonActionPerformed
@@ -230,7 +238,11 @@ public ProductionAdminWorkAreaJPanel(JPanel userProcessContainer,
 
     private void createMaterialRequestButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createMaterialRequestButtonActionPerformed
         // TODO add your handling code here:
-    EcoSystem system = EcoSystem.getInstance();
+    // Use the EcoSystem instance injected at login (loaded from db4o), not the
+    // static EcoSystem.getInstance() singleton — that singleton is a separate,
+    // usually-empty object since login never populates it, which was causing
+    // "No Supplier enterprise found." even when a Supplier enterprise exists.
+    EcoSystem system = business;
 
     Enterprise supplierEnterprise = null;
     outer:
@@ -483,7 +495,7 @@ public ProductionAdminWorkAreaJPanel(JPanel userProcessContainer,
         return;
     }
 
-    EcoSystem system = EcoSystem.getInstance();
+    EcoSystem system = business;
     Enterprise transportEnterprise = null;
     outer:
     for (Network network : system.getNetworkList()) {
@@ -589,7 +601,11 @@ public ProductionAdminWorkAreaJPanel(JPanel userProcessContainer,
     }
 
     if (roleOptions[0].equals(selectedRoleOption)) {
-        manageAccount(organization, new ProductionRole(), "Production Operator");
+        ManageAccountJPanel p = new ManageAccountJPanel(userProcessContainer, organization,
+                ProductionRole.class, ProductionRole::new, "Production Operator");
+        userProcessContainer.add("ManageAccountJPanel", p);
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        layout.next(userProcessContainer);
     } else {
         QualityAssuranceOrganization qaOrg = null;
         for (Organization org : enterprise.getOrganizationDirectory().getOrganizationList()) {
@@ -602,81 +618,41 @@ public ProductionAdminWorkAreaJPanel(JPanel userProcessContainer,
             javax.swing.JOptionPane.showMessageDialog(this, "No Quality Assurance organization found.");
             return;
         }
-        manageAccount(qaOrg, new QualityAssuranceRole(), "Quality Assurance");
+        ManageAccountJPanel p = new ManageAccountJPanel(userProcessContainer, qaOrg,
+                QualityAssuranceRole.class, QualityAssuranceRole::new, "Quality Assurance");
+        userProcessContainer.add("ManageAccountJPanel", p);
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        layout.next(userProcessContainer);
     }
     }//GEN-LAST:event_manageOperatorAccountButtonActionPerformed
 
     private void manageAdminAccountButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manageAdminAccountButtonActionPerformed
         // TODO add your handling code here:
-    manageAccount(organization, new ProductionAdminRole(), "Production Admin");
+    ManageAccountJPanel p = new ManageAccountJPanel(userProcessContainer, organization,
+            ProductionAdminRole.class, ProductionAdminRole::new, "Production Admin");
+    userProcessContainer.add("ManageAccountJPanel", p);
+    CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+    layout.next(userProcessContainer);
     }//GEN-LAST:event_manageAdminAccountButtonActionPerformed
-
-    /**
-     * Shared helper for Manage Admin Account / Manage Operator & QA Account:
-     * lists existing accounts of the given role type on the given
-     * organization, then optionally creates a new one.
-     */
-    private void manageAccount(Organization org, Role newRole, String roleLabel) {
-        java.util.ArrayList<UserAccount> accounts = new java.util.ArrayList<>();
-        for (UserAccount ua : org.getUserAccountDirectory().getUserAccountList()) {
-            if (ua.getRole().getClass() == newRole.getClass()) {
-                accounts.add(ua);
-            }
-        }
-        StringBuilder sb = new StringBuilder("Current " + roleLabel + " accounts:\n");
-        if (accounts.isEmpty()) {
-            sb.append("(none)\n");
-        } else {
-            for (UserAccount ua : accounts) {
-                sb.append("- ").append(ua.getUsername()).append("\n");
-            }
-        }
-
-        int choice = javax.swing.JOptionPane.showConfirmDialog(this,
-                sb.toString() + "\nCreate a new " + roleLabel + " account?",
-                "Manage Account",
-                javax.swing.JOptionPane.YES_NO_OPTION);
-        if (choice != javax.swing.JOptionPane.YES_OPTION) {
-            return;
-        }
-
-        String username = javax.swing.JOptionPane.showInputDialog(this, "Enter username:");
-        if (username == null || username.trim().isEmpty()) {
-            return;
-        }
-        if (!org.getUserAccountDirectory().checkIfUsernameIsUnique(username.trim())) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Username already exists.");
-            return;
-        }
-        String password = javax.swing.JOptionPane.showInputDialog(this, "Enter password:");
-        if (password == null || password.trim().isEmpty()) {
-            return;
-        }
-        String employeeName = javax.swing.JOptionPane.showInputDialog(this, "Enter employee full name:");
-        if (employeeName == null || employeeName.trim().isEmpty()) {
-            return;
-        }
-
-        Employee employee = org.getEmployeeDirectory().createEmployee(employeeName.trim());
-        org.getUserAccountDirectory().createUserAccount(username.trim(), password.trim(), employee, newRole);
-
-        javax.swing.JOptionPane.showMessageDialog(this, roleLabel + " account created: " + username.trim());
-    }
 
     private void viewOrderStatusButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewOrderStatusButtonActionPerformed
         // TODO add your handling code here
-    java.util.ArrayList<WorkRequest> requests = organization.getWorkQueue().getWorkRequestList();
-    if (requests.isEmpty()) {
-        javax.swing.JOptionPane.showMessageDialog(this, "No requests in the queue.");
-        return;
-    }
-    StringBuilder sb = new StringBuilder();
-    for (WorkRequest wr : requests) {
-        sb.append(wr.toString()).append(" - ").append(wr.getStatus()).append("\n");
-    }
-    javax.swing.JOptionPane.showMessageDialog(this, sb.toString(), "Order Status", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+    OrderStatusJPanel p = new OrderStatusJPanel(userProcessContainer, organization);
+    userProcessContainer.add("OrderStatusJPanel", p);
+    CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+    layout.next(userProcessContainer);
 
     }//GEN-LAST:event_viewOrderStatusButtonActionPerformed
+
+    private void myProfileButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_myProfileButtonActionPerformed
+        String employeeName = account.getEmployee() == null ? "N/A" : account.getEmployee().getName();
+        String roleName = account.getRole() == null ? "N/A" : account.getRole().toString();
+        String profile = "Username: " + account.getUsername()
+                + "\nEmployee Name: " + employeeName
+                + "\nRole: " + roleName
+                + "\nOrganization: " + organization.getClass().getSimpleName();
+        javax.swing.JOptionPane.showMessageDialog(this, profile, "My Profile", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+    }//GEN-LAST:event_myProfileButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -687,6 +663,7 @@ public ProductionAdminWorkAreaJPanel(JPanel userProcessContainer,
     private javax.swing.JButton issueProductionOrderButton;
     private javax.swing.JButton manageAdminAccountButton;
     private javax.swing.JButton manageOperatorAccountButton;
+    private javax.swing.JButton myProfileButton;
     private javax.swing.JLabel titleLabel;
     private javax.swing.JButton viewOrderStatusButton;
     // End of variables declaration//GEN-END:variables

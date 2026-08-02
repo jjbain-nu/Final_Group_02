@@ -35,6 +35,7 @@ import Business.Role.ShippingOperatorRole;
 import Business.Role.ShippingOrderStaffRole;
 import Business.Role.SupplierAdminRole;
 import Business.Role.TransportAdminRole;
+import Business.Production.ProductionOrder;
 import Business.Supplier.Material;
 import Business.Supplier.MaterialCatalog;
 import Business.Supplier.MaterialRequest;
@@ -183,8 +184,24 @@ public class ConfigureASystem {
                    
             supplierOrg.getWorkQueue().getWorkRequestList().add(mr);
         }
-        
-        
+
+        // Sample production orders with a range of dashboard-facing statuses,
+        // for the Supply Chain Control Tower to display Manufacturer production
+        // status alongside other enterprises. These are separate from the
+        // internal Sent/Completed/Registered workflow statuses used by the
+        // Production Operator screens above.
+        String[] sampleProducts = {"Paracetamol 500mg", "Ibuprofen 200mg", "Amoxicillin 250mg", "Metformin 500mg"};
+        String[] sampleStatuses = {"Pending", "In Production", "Ready to Ship", "Shipped"};
+        for (int i = 0; i < sampleStatuses.length; i++) {
+            ProductionOrder sampleOrder = new ProductionOrder(sampleProducts[i], faker.number().numberBetween(50, 500));
+            sampleOrder.setMessage("Production order: " + sampleProducts[i]);
+            sampleOrder.setSender(pa01);
+            sampleOrder.setReceiver(po01);
+            sampleOrder.setStatus(sampleStatuses[i]);
+            sampleOrder.setRequestDate(faker.date().past(5, TimeUnit.DAYS));
+            productionOrg.getWorkQueue().getWorkRequestList().add(sampleOrder);
+        }
+
           //create hospital enterprises
         HospitalEnterprise hospitalEnterpriseA = new HospitalEnterprise("Hospital A");
         HospitalEnterprise hospitalEnterpriseB = new HospitalEnterprise("Hospital B");
