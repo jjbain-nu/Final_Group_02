@@ -43,6 +43,12 @@ public class MedicineInventory {
         
     }
     
+    public int getSurplus(){
+        return Math.max(0,quantity-standardStock );
+        
+    }
+    
+    
     public boolean isShortage(){
         return quantity < standardStock;
     }

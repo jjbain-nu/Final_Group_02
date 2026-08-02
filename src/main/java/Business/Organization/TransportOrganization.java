@@ -27,6 +27,7 @@ public class TransportOrganization extends Organization {
         fleetDirectory = new FleetDirectory();
     }
 
+
     public FleetDirectory getFleetDirectory() {
         return fleetDirectory;
     }

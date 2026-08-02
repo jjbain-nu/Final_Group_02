@@ -51,6 +51,10 @@ public class ManageShippingRequest extends javax.swing.JPanel {
         tblShippingOrder.getColumnModel().getColumn(2).setCellRenderer(rightRenderer);
         tblShippingOrder.getColumnModel().getColumn(3).setCellRenderer(rightRenderer);
         
+        enterpriseValueLabel.setText(enterprise.getName());
+        organizationValueLabel.setText(organization.getName());
+        
+        userValueLabel.setText(account.getUsername());
         
         populateShippingOrderTable();
         populatePickingOrderTable();
@@ -66,11 +70,27 @@ public class ManageShippingRequest extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
+        enterpriseLabel = new javax.swing.JLabel();
+        lblEnterprise1 = new javax.swing.JLabel();
+        enterpriseValueLabel = new javax.swing.JLabel();
+        lblOrganization = new javax.swing.JLabel();
+        organizationValueLabel = new javax.swing.JLabel();
+        lblUser1 = new javax.swing.JLabel();
+        userValueLabel = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
+        jPanel4 = new javax.swing.JPanel();
+        enterpriseLabel1 = new javax.swing.JLabel();
+        lblEnterprise2 = new javax.swing.JLabel();
+        enterpriseValueLabel1 = new javax.swing.JLabel();
+        lblOrganization1 = new javax.swing.JLabel();
+        organizationValueLabel1 = new javax.swing.JLabel();
+        lblUser2 = new javax.swing.JLabel();
+        userValueLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblShippingOrder = new javax.swing.JTable();
         btnLoadingComplete = new javax.swing.JButton();
-        jPanel1 = new javax.swing.JPanel();
-        enterpriseLabel = new javax.swing.JLabel();
         btnBack = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblPickingOrder = new javax.swing.JTable();
@@ -78,8 +98,193 @@ public class ManageShippingRequest extends javax.swing.JPanel {
         lblPickingOrder = new javax.swing.JLabel();
         btnPrintPickingList = new javax.swing.JButton();
         btnCompletePicking = new javax.swing.JButton();
+        jPanel5 = new javax.swing.JPanel();
+        jPanel6 = new javax.swing.JPanel();
+        enterpriseLabel2 = new javax.swing.JLabel();
+        lblEnterprise3 = new javax.swing.JLabel();
+        enterpriseValueLabel2 = new javax.swing.JLabel();
+        lblOrganization2 = new javax.swing.JLabel();
+        organizationValueLabel2 = new javax.swing.JLabel();
+        lblUser3 = new javax.swing.JLabel();
+        userValueLabel2 = new javax.swing.JLabel();
 
-        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setMaximumSize(new java.awt.Dimension(32767, 80));
+        jPanel1.setMinimumSize(new java.awt.Dimension(0, 80));
+        jPanel1.setPreferredSize(new java.awt.Dimension(1400, 80));
+
+        jPanel2.setBackground(new java.awt.Color(0, 51, 102));
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 7, Short.MAX_VALUE)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 53, Short.MAX_VALUE)
+        );
+
+        enterpriseLabel.setFont(new java.awt.Font("Yu Gothic UI", 1, 22)); // NOI18N
+        enterpriseLabel.setText("Supplier Admin - Work Area");
+
+        lblEnterprise1.setForeground(new java.awt.Color(102, 102, 102));
+        lblEnterprise1.setText("Enterprise : ");
+
+        enterpriseValueLabel.setBackground(new java.awt.Color(255, 255, 255));
+        enterpriseValueLabel.setForeground(new java.awt.Color(102, 102, 102));
+
+        lblOrganization.setForeground(new java.awt.Color(102, 102, 102));
+        lblOrganization.setText("Organization : ");
+
+        organizationValueLabel.setBackground(new java.awt.Color(255, 255, 255));
+        organizationValueLabel.setForeground(new java.awt.Color(102, 102, 102));
+
+        lblUser1.setForeground(new java.awt.Color(102, 102, 102));
+        lblUser1.setText("User : ");
+
+        userValueLabel.setForeground(new java.awt.Color(102, 102, 102));
+
+        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel3.setMaximumSize(new java.awt.Dimension(32767, 80));
+        jPanel3.setMinimumSize(new java.awt.Dimension(0, 80));
+        jPanel3.setPreferredSize(new java.awt.Dimension(1400, 80));
+
+        jPanel4.setBackground(new java.awt.Color(0, 51, 102));
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 7, Short.MAX_VALUE)
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 53, Short.MAX_VALUE)
+        );
+
+        enterpriseLabel1.setFont(new java.awt.Font("Yu Gothic UI", 1, 22)); // NOI18N
+        enterpriseLabel1.setText("Supplier Admin - Work Area");
+
+        lblEnterprise2.setForeground(new java.awt.Color(102, 102, 102));
+        lblEnterprise2.setText("Enterprise : ");
+
+        enterpriseValueLabel1.setBackground(new java.awt.Color(255, 255, 255));
+        enterpriseValueLabel1.setForeground(new java.awt.Color(102, 102, 102));
+
+        lblOrganization1.setForeground(new java.awt.Color(102, 102, 102));
+        lblOrganization1.setText("Organization : ");
+
+        organizationValueLabel1.setBackground(new java.awt.Color(255, 255, 255));
+        organizationValueLabel1.setForeground(new java.awt.Color(102, 102, 102));
+
+        lblUser2.setForeground(new java.awt.Color(102, 102, 102));
+        lblUser2.setText("User : ");
+
+        userValueLabel1.setForeground(new java.awt.Color(102, 102, 102));
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(37, 37, 37)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(lblEnterprise2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(enterpriseValueLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(lblOrganization1))
+                    .addComponent(enterpriseLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(organizationValueLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblUser2, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(userValueLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(627, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(enterpriseLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(enterpriseValueLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblEnterprise2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(organizationValueLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(lblOrganization1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(lblUser2)))
+                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(userValueLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(4, 4, 4)))
+                .addContainerGap(10, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(37, 37, 37)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(lblEnterprise1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(enterpriseValueLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(lblOrganization))
+                    .addComponent(enterpriseLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(organizationValueLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblUser1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(userValueLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(627, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addContainerGap()))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(enterpriseLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(enterpriseValueLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblEnterprise1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(organizationValueLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(lblOrganization, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(lblUser1)))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(userValueLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(4, 4, 4)))
+                .addContainerGap(10, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+        );
 
         tblShippingOrder.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -117,40 +322,12 @@ public class ManageShippingRequest extends javax.swing.JPanel {
             tblShippingOrder.getColumnModel().getColumn(6).setResizable(false);
         }
 
-        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 300, 770, 160));
-
         btnLoadingComplete.setText("Loading Complete");
         btnLoadingComplete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnLoadingCompleteActionPerformed(evt);
             }
         });
-        add(btnLoadingComplete, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 470, 166, -1));
-
-        jPanel1.setBackground(new java.awt.Color(0, 51, 102));
-
-        enterpriseLabel.setFont(new java.awt.Font("Yu Gothic UI", 1, 24)); // NOI18N
-        enterpriseLabel.setForeground(new java.awt.Color(255, 255, 255));
-        enterpriseLabel.setText("Manage Material Request");
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(28, 28, 28)
-                .addComponent(enterpriseLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(enterpriseLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(14, Short.MAX_VALUE))
-        );
-
-        add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, -1));
 
         btnBack.setText("<< Back");
         btnBack.addActionListener(new java.awt.event.ActionListener() {
@@ -158,7 +335,6 @@ public class ManageShippingRequest extends javax.swing.JPanel {
                 btnBackActionPerformed(evt);
             }
         });
-        add(btnBack, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 530, -1, -1));
 
         tblPickingOrder.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -194,16 +370,12 @@ public class ManageShippingRequest extends javax.swing.JPanel {
             tblPickingOrder.getColumnModel().getColumn(6).setResizable(false);
         }
 
-        add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, 776, 130));
-
         lblMaterialRequest.setBackground(new java.awt.Color(153, 204, 255));
         lblMaterialRequest.setFont(new java.awt.Font("Yu Gothic UI", 1, 18)); // NOI18N
         lblMaterialRequest.setText("Shipping Order");
-        add(lblMaterialRequest, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 270, 150, -1));
 
         lblPickingOrder.setFont(new java.awt.Font("Yu Gothic UI", 1, 18)); // NOI18N
         lblPickingOrder.setText("Picking Order");
-        add(lblPickingOrder, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 170, -1));
 
         btnPrintPickingList.setText("Print Picking List");
         btnPrintPickingList.addActionListener(new java.awt.event.ActionListener() {
@@ -211,7 +383,6 @@ public class ManageShippingRequest extends javax.swing.JPanel {
                 btnPrintPickingListActionPerformed(evt);
             }
         });
-        add(btnPrintPickingList, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 230, 166, -1));
 
         btnCompletePicking.setText("Picking complete");
         btnCompletePicking.addActionListener(new java.awt.event.ActionListener() {
@@ -219,7 +390,134 @@ public class ManageShippingRequest extends javax.swing.JPanel {
                 btnCompletePickingActionPerformed(evt);
             }
         });
-        add(btnCompletePicking, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 230, 166, -1));
+
+        jPanel5.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel5.setMaximumSize(new java.awt.Dimension(32767, 80));
+        jPanel5.setMinimumSize(new java.awt.Dimension(0, 80));
+        jPanel5.setPreferredSize(new java.awt.Dimension(1400, 80));
+
+        jPanel6.setBackground(new java.awt.Color(0, 51, 102));
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 7, Short.MAX_VALUE)
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 53, Short.MAX_VALUE)
+        );
+
+        enterpriseLabel2.setFont(new java.awt.Font("Yu Gothic UI", 1, 22)); // NOI18N
+        enterpriseLabel2.setText("Manage Shipping Request");
+
+        lblEnterprise3.setForeground(new java.awt.Color(102, 102, 102));
+        lblEnterprise3.setText("Enterprise : ");
+
+        enterpriseValueLabel2.setBackground(new java.awt.Color(255, 255, 255));
+        enterpriseValueLabel2.setForeground(new java.awt.Color(102, 102, 102));
+
+        lblOrganization2.setForeground(new java.awt.Color(102, 102, 102));
+        lblOrganization2.setText("Organization : ");
+
+        organizationValueLabel2.setBackground(new java.awt.Color(255, 255, 255));
+        organizationValueLabel2.setForeground(new java.awt.Color(102, 102, 102));
+
+        lblUser3.setForeground(new java.awt.Color(102, 102, 102));
+        lblUser3.setText("User : ");
+
+        userValueLabel2.setForeground(new java.awt.Color(102, 102, 102));
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(37, 37, 37)
+                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(lblEnterprise3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(enterpriseValueLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(lblOrganization2))
+                    .addComponent(enterpriseLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(organizationValueLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblUser3, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(userValueLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(enterpriseLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(enterpriseValueLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblEnterprise3, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(organizationValueLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(lblOrganization2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(lblUser3)))
+                    .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(userValueLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(4, 4, 4)))
+                .addContainerGap(10, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblPickingOrder, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnPrintPickingList, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(34, 34, 34)
+                        .addComponent(btnCompletePicking, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblMaterialRequest, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnLoadingComplete, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBack)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1))
+                        .addContainerGap())))
+            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20)
+                .addComponent(lblPickingOrder)
+                .addGap(5, 5, 5)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnPrintPickingList)
+                    .addComponent(btnCompletePicking))
+                .addGap(25, 25, 25)
+                .addComponent(lblMaterialRequest)
+                .addGap(5, 5, 5)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
+                .addComponent(btnLoadingComplete)
+                .addGap(15, 15, 15)
+                .addComponent(btnBack))
+        );
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLoadingCompleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoadingCompleteActionPerformed
@@ -363,13 +661,38 @@ public class ManageShippingRequest extends javax.swing.JPanel {
     private javax.swing.JButton btnLoadingComplete;
     private javax.swing.JButton btnPrintPickingList;
     private javax.swing.JLabel enterpriseLabel;
+    private javax.swing.JLabel enterpriseLabel1;
+    private javax.swing.JLabel enterpriseLabel2;
+    private javax.swing.JLabel enterpriseValueLabel;
+    private javax.swing.JLabel enterpriseValueLabel1;
+    private javax.swing.JLabel enterpriseValueLabel2;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel lblEnterprise1;
+    private javax.swing.JLabel lblEnterprise2;
+    private javax.swing.JLabel lblEnterprise3;
     private javax.swing.JLabel lblMaterialRequest;
+    private javax.swing.JLabel lblOrganization;
+    private javax.swing.JLabel lblOrganization1;
+    private javax.swing.JLabel lblOrganization2;
     private javax.swing.JLabel lblPickingOrder;
+    private javax.swing.JLabel lblUser1;
+    private javax.swing.JLabel lblUser2;
+    private javax.swing.JLabel lblUser3;
+    private javax.swing.JLabel organizationValueLabel;
+    private javax.swing.JLabel organizationValueLabel1;
+    private javax.swing.JLabel organizationValueLabel2;
     private javax.swing.JTable tblPickingOrder;
     private javax.swing.JTable tblShippingOrder;
+    private javax.swing.JLabel userValueLabel;
+    private javax.swing.JLabel userValueLabel1;
+    private javax.swing.JLabel userValueLabel2;
     // End of variables declaration//GEN-END:variables
 
     private void populatePickingOrderTable() {

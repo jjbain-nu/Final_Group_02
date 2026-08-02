@@ -2,13 +2,25 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package ui.SupplierAdminRole;
+package ui.AdministrativeRole;
 
+import ui.SupplierAdminRole.*;
 import ui.DoctorRole.*;
 import Business.EcoSystem;
 import Business.Enterprise.Enterprise;
+import Business.Enterprise.HospitalEnterprise;
+import Business.Enterprise.ManufacturerEnterprise;
+import Business.Enterprise.WholesalerEnterprise;
+import Business.Hospital.Medicine;
+import Business.Hospital.MedicineInventory;
+import Business.Network.Network;
 import Business.Organization.DoctorOrganization;
+import Business.Organization.InventoryOrganization;
+import Business.Organization.Organization;
+import Business.Organization.PharmacyOrganization;
+import Business.Organization.ProductionOrganization;
 import Business.Organization.SupplierOrganization;
+import Business.Production.ProductionOrder;
 import Business.Supplier.MaterialInventory;
 import Business.Supplier.MaterialRequest;
 import Business.Supplier.PickingOrder;
@@ -17,6 +29,8 @@ import Business.WorkQueue.LabTestWorkRequest;
 import Business.WorkQueue.WorkRequest;
 import java.awt.CardLayout;
 import java.text.SimpleDateFormat;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
@@ -27,66 +41,198 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author raunak
  */
-public class ManageMaterialRequest extends javax.swing.JPanel {
+public class SupplyChainDashBoard extends javax.swing.JPanel {
 
     private JPanel userProcessContainer;
-    private SupplierOrganization organization;
     private Enterprise enterprise;
     private UserAccount userAccount;
+    private EcoSystem ecosystem;
     /**
      * Creates new form DoctorWorkAreaJPanel
      */
-    public ManageMaterialRequest(JPanel userProcessContainer, UserAccount account, SupplierOrganization organization, Enterprise enterprise) {
+    public SupplyChainDashBoard(JPanel userProcessContainer, UserAccount account,Enterprise enterprise, EcoSystem ecosystem) {
         initComponents();
         
         this.userProcessContainer = userProcessContainer;
-        this.organization = organization;
         this.enterprise = enterprise;
+        this.ecosystem = ecosystem;
         this.userAccount = account;
         
         DefaultTableCellRenderer rightRenderer = new DefaultTableCellRenderer();
         rightRenderer.setHorizontalAlignment(SwingConstants.RIGHT);
         
-        tblMaterialRequest.getColumnModel().getColumn(2).setCellRenderer(rightRenderer);
-        tblMaterialRequest.getColumnModel().getColumn(3).setCellRenderer(rightRenderer);
+        tblSCInventory.getColumnModel().getColumn(2).setCellRenderer(rightRenderer);
+        tblSCInventory.getColumnModel().getColumn(3).setCellRenderer(rightRenderer);
         
         enterpriseValueLabel1.setText(enterprise.getName());
-        organizationValueLabel1.setText(organization.getName());
         userValueLabel1.setText(account.getUsername());
         
         
-        populateMaterialRequestTable();
-        populatePickingOrderTable();
+        populateSCInventoryTable();
+   
     }
     
-    public void populateMaterialRequestTable(){
-        DefaultTableModel model = (DefaultTableModel) tblMaterialRequest.getModel();
+    public void populateSCInventoryTable(){
+        DefaultTableModel model = (DefaultTableModel) tblSCInventory.getModel();
         
         model.setRowCount(0);
-        for (WorkRequest wr : organization.getWorkQueue().getWorkRequestList()){
+        
+        
+        for(Medicine medicine : ecosystem.getMedicineCatalog().getMedicineList()){
             
-            if(wr instanceof MaterialRequest){
+            MedicineInventory wsmiA = null;
+            MedicineInventory wsmiB = null;
+            MedicineInventory wsmiC = null;
+            MedicineInventory hospitalA = null;
+            MedicineInventory hospitalB = null;
+            MedicineInventory hospitalC = null;
             
-            SimpleDateFormat sdf = new SimpleDateFormat("MMM dd, yyyy");
-            MaterialRequest mr = (MaterialRequest)wr;
-            MaterialInventory mi = organization.getMaterialInventoryDirectory()
-                    .findInventoryByMaterial(mr.getMaterial()); mi.getAvailableQty();
+            int totalInventory = 0;
+            int totalShortage = 0;
+            int totalSurplus = 0;
+            int pendingProduction = 0;
+            int readyToShip =0;
+            
+        
+        for (Network network : ecosystem.getNetworkList()){
+            
+            for (Enterprise ent : network.getEnterpriseDirectory().getEnterpriseList()){
+                
+                //Wholesaler Inventory
+                if(ent instanceof WholesalerEnterprise){
+                    for(Organization org : ent.getOrganizationDirectory().getOrganizationList()){
+                        if(org instanceof InventoryOrganization){
+                            
+                            InventoryOrganization inventoryOrg =(InventoryOrganization)org;
+                            
+                            MedicineInventory mi = inventoryOrg.getMedicineInventoryDirectory().findInventoryByMedicine(medicine);
+                            
+                            if(ent.getName().equals("Wholesaler A")){
+                                wsmiA =mi;
+                                
+                            }else if(ent.getName().equals("Wholesaler B")){
+                                wsmiB =mi;
+                            
+                            }else if(ent.getName().equals("Wholesaler C")){
+                                wsmiC =mi;
+                            
+                            }
+                        
+                        }                    
+                    }
+                
+                }
+            
+                //Hospital Inventory
+                if(ent instanceof HospitalEnterprise){
+                    for(Organization org : ent.getOrganizationDirectory().getOrganizationList()){
+                        if(org instanceof PharmacyOrganization){
+                            
+                            PharmacyOrganization pharmacyOrg =(PharmacyOrganization)org;
+                            
+                            MedicineInventory mi = pharmacyOrg.getMedicineInventoryDirectory().findInventoryByMedicine(medicine);
+                            
+                            if(ent.getName().equals("Hospital A")){
+                                hospitalA =mi;
+                                
+                            }else if(ent.getName().equals("Hospital B")){
+                                hospitalB =mi;
+                            
+                            }else if(ent.getName().equals("Hospital C")){
+                                hospitalC =mi;
+                            
+                            }
+                        
+                        }                    
+                    }
+                
+                }
+                //Manufacturer Production Orders
+                if(ent instanceof ManufacturerEnterprise){
                     
-            Object[] row = new Object[7];
-            row[0] = mr;
-            row[1] = mr.getMaterial().getMaterialName();
-            row[2] = mr.getQty();
-            row[3] = mi.getAvailableQty();
-            row[4] = mi.getPickingQty();
-            row[5] = sdf.format(mr.getRequestDate());
-            row[6] = mr.getStatus();
-            
-            model.addRow(row);
+                    for(Organization org : ent.getOrganizationDirectory().getOrganizationList()){
+                        
+                        if(org instanceof ProductionOrganization){
+                            
+                            for(WorkRequest wr : org.getWorkQueue().getWorkRequestList()){
+                                
+                                if(wr instanceof ProductionOrder){
+                                    
+                                    ProductionOrder po = (ProductionOrder)wr;
+                                    
+                                    if(po.getMedicine()==null|| !medicine.equals(po.getMedicine())){
+                                        continue;
+                                    }
+                                    
+                                    String status = po.getStatus();
+                                    
+                                    if("Pending".equals(status)||"Sent".equals(status)|| "In Production".equals(status)){
+                                        
+                                        pendingProduction += po.getQty();
+                                        
+                                    }else if("Ready to Ship".equals(status)){
+                                        readyToShip += po.getQty();
+                                    }
+                               }
+                            }
+                        }
+                    }
+                }
+            }
+                
+                if(wsmiA != null){
+                    totalInventory += wsmiA.getQuantity();
+                    totalSurplus += wsmiA.getSurplus();
+                    totalShortage += wsmiA.getShortageQty();
+                }
+                
+                if(wsmiB != null){
+                    totalInventory += wsmiB.getQuantity();
+                    totalSurplus += wsmiB.getSurplus();
+                    totalShortage += wsmiB.getShortageQty();
+                }
+                
+                if(wsmiC != null){
+                    totalInventory += wsmiC.getQuantity();
+                    totalSurplus += wsmiC.getSurplus();
+                    totalShortage += wsmiC.getShortageQty();
+                }
+                
+                if(hospitalA != null){
+                    totalInventory += hospitalA.getQuantity();
+                    totalSurplus += hospitalA.getSurplus();
+                    totalShortage += hospitalA.getShortageQty();
+                }
+                
+                if(hospitalB != null){
+                    totalInventory += hospitalB.getQuantity();
+                    totalSurplus += hospitalB.getSurplus();
+                    totalShortage += hospitalB.getShortageQty();
+                }
+                
+                if(hospitalC != null){
+                    totalInventory += hospitalC.getQuantity();
+                    totalSurplus += hospitalC.getSurplus();
+                    totalShortage += hospitalC.getShortageQty();
+                }
+        
+             
+        Object[]row = new Object[7];
+                
+        row[0]=medicine;
+        row[1]=medicine.getMedicineName();
+        row[2]=totalInventory;
+        row[3]=totalSurplus;
+        row[4]=totalShortage;
+        row[5]=pendingProduction;
+        row[6]=readyToShip;
+                
+        model.addRow(row);
+        
         }
     }
     }
-
-    
+       
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -106,11 +252,11 @@ public class ManageMaterialRequest extends javax.swing.JPanel {
         lblUser1 = new javax.swing.JLabel();
         userValueLabel = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblMaterialRequest = new javax.swing.JTable();
-        btnCreatePickOrder = new javax.swing.JButton();
+        tblSCInventory = new javax.swing.JTable();
+        btnSelectMedicine = new javax.swing.JButton();
         btnBack = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        tblPickingOrder = new javax.swing.JTable();
+        tblSelectedMedicineDetail = new javax.swing.JTable();
         lblMaterialRequest = new javax.swing.JLabel();
         lblPickingOrder = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
@@ -118,8 +264,6 @@ public class ManageMaterialRequest extends javax.swing.JPanel {
         enterpriseLabel1 = new javax.swing.JLabel();
         lblEnterprise = new javax.swing.JLabel();
         enterpriseValueLabel1 = new javax.swing.JLabel();
-        lblOrganization1 = new javax.swing.JLabel();
-        organizationValueLabel1 = new javax.swing.JLabel();
         lblUser2 = new javax.swing.JLabel();
         userValueLabel1 = new javax.swing.JLabel();
 
@@ -207,16 +351,16 @@ public class ManageMaterialRequest extends javax.swing.JPanel {
                 .addContainerGap(10, Short.MAX_VALUE))
         );
 
-        tblMaterialRequest.setModel(new javax.swing.table.DefaultTableModel(
+        tblSCInventory.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Material ID", "Material", "Request Qty", "Available Qty", "Picking Qty", "Request Date", "Status"
+                "Medicine ID", "Medicine", "Total Inventory", "Total Surplus", "Total Shortage", "Pending Production", "Ready To Ship"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, false, false, false
@@ -230,23 +374,21 @@ public class ManageMaterialRequest extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(tblMaterialRequest);
-        if (tblMaterialRequest.getColumnModel().getColumnCount() > 0) {
-            tblMaterialRequest.getColumnModel().getColumn(0).setResizable(false);
-            tblMaterialRequest.getColumnModel().getColumn(1).setResizable(false);
-            tblMaterialRequest.getColumnModel().getColumn(2).setResizable(false);
-            tblMaterialRequest.getColumnModel().getColumn(2).setHeaderValue("Request Qty");
-            tblMaterialRequest.getColumnModel().getColumn(3).setResizable(false);
-            tblMaterialRequest.getColumnModel().getColumn(3).setHeaderValue("Available Qty");
-            tblMaterialRequest.getColumnModel().getColumn(4).setResizable(false);
-            tblMaterialRequest.getColumnModel().getColumn(5).setResizable(false);
-            tblMaterialRequest.getColumnModel().getColumn(6).setResizable(false);
+        jScrollPane1.setViewportView(tblSCInventory);
+        if (tblSCInventory.getColumnModel().getColumnCount() > 0) {
+            tblSCInventory.getColumnModel().getColumn(0).setResizable(false);
+            tblSCInventory.getColumnModel().getColumn(1).setResizable(false);
+            tblSCInventory.getColumnModel().getColumn(2).setResizable(false);
+            tblSCInventory.getColumnModel().getColumn(3).setResizable(false);
+            tblSCInventory.getColumnModel().getColumn(4).setResizable(false);
+            tblSCInventory.getColumnModel().getColumn(5).setResizable(false);
+            tblSCInventory.getColumnModel().getColumn(6).setResizable(false);
         }
 
-        btnCreatePickOrder.setText("Create Picking Order");
-        btnCreatePickOrder.addActionListener(new java.awt.event.ActionListener() {
+        btnSelectMedicine.setText("Select Medicine");
+        btnSelectMedicine.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCreatePickOrderActionPerformed(evt);
+                btnSelectMedicineActionPerformed(evt);
             }
         });
 
@@ -257,16 +399,16 @@ public class ManageMaterialRequest extends javax.swing.JPanel {
             }
         });
 
-        tblPickingOrder.setModel(new javax.swing.table.DefaultTableModel(
+        tblSelectedMedicineDetail.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Picking Order ID", "Material ID", "Material", "Request Qty", "Picking Qty", "Request Date", "Status"
+                "Medicine ID", "Medicine", "Location", "Current Stock", "Standard Stock", "Difference", "Status"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, false, false, false
@@ -280,29 +422,29 @@ public class ManageMaterialRequest extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane2.setViewportView(tblPickingOrder);
-        if (tblPickingOrder.getColumnModel().getColumnCount() > 0) {
-            tblPickingOrder.getColumnModel().getColumn(0).setResizable(false);
-            tblPickingOrder.getColumnModel().getColumn(1).setResizable(false);
-            tblPickingOrder.getColumnModel().getColumn(2).setResizable(false);
-            tblPickingOrder.getColumnModel().getColumn(3).setResizable(false);
-            tblPickingOrder.getColumnModel().getColumn(4).setResizable(false);
-            tblPickingOrder.getColumnModel().getColumn(5).setResizable(false);
-            tblPickingOrder.getColumnModel().getColumn(6).setResizable(false);
+        jScrollPane2.setViewportView(tblSelectedMedicineDetail);
+        if (tblSelectedMedicineDetail.getColumnModel().getColumnCount() > 0) {
+            tblSelectedMedicineDetail.getColumnModel().getColumn(0).setResizable(false);
+            tblSelectedMedicineDetail.getColumnModel().getColumn(1).setResizable(false);
+            tblSelectedMedicineDetail.getColumnModel().getColumn(2).setResizable(false);
+            tblSelectedMedicineDetail.getColumnModel().getColumn(3).setResizable(false);
+            tblSelectedMedicineDetail.getColumnModel().getColumn(4).setResizable(false);
+            tblSelectedMedicineDetail.getColumnModel().getColumn(5).setResizable(false);
+            tblSelectedMedicineDetail.getColumnModel().getColumn(6).setResizable(false);
         }
 
         lblMaterialRequest.setFont(new java.awt.Font("Yu Gothic UI", 1, 18)); // NOI18N
-        lblMaterialRequest.setText("Material Request");
+        lblMaterialRequest.setText("Supply Chain Inventory Summary");
 
         lblPickingOrder.setFont(new java.awt.Font("Yu Gothic UI", 1, 18)); // NOI18N
-        lblPickingOrder.setText("Picking Order");
+        lblPickingOrder.setText("Selected Medicine Detail");
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setMaximumSize(new java.awt.Dimension(32767, 80));
         jPanel3.setMinimumSize(new java.awt.Dimension(0, 80));
         jPanel3.setPreferredSize(new java.awt.Dimension(1400, 80));
 
-        jPanel4.setBackground(new java.awt.Color(0, 51, 102));
+        jPanel4.setBackground(new java.awt.Color(0, 0, 153));
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -316,19 +458,14 @@ public class ManageMaterialRequest extends javax.swing.JPanel {
         );
 
         enterpriseLabel1.setFont(new java.awt.Font("Yu Gothic UI", 1, 22)); // NOI18N
-        enterpriseLabel1.setText("Manage Material Request");
+        enterpriseLabel1.setForeground(new java.awt.Color(0, 0, 153));
+        enterpriseLabel1.setText("Supply Chain Dashboard");
 
         lblEnterprise.setForeground(new java.awt.Color(102, 102, 102));
         lblEnterprise.setText("Enterprise : ");
 
         enterpriseValueLabel1.setBackground(new java.awt.Color(255, 255, 255));
         enterpriseValueLabel1.setForeground(new java.awt.Color(102, 102, 102));
-
-        lblOrganization1.setForeground(new java.awt.Color(102, 102, 102));
-        lblOrganization1.setText("Organization : ");
-
-        organizationValueLabel1.setBackground(new java.awt.Color(255, 255, 255));
-        organizationValueLabel1.setForeground(new java.awt.Color(102, 102, 102));
 
         lblUser2.setForeground(new java.awt.Color(102, 102, 102));
         lblUser2.setText("User : ");
@@ -343,21 +480,17 @@ public class ManageMaterialRequest extends javax.swing.JPanel {
                 .addGap(37, 37, 37)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(enterpriseLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(lblEnterprise)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(enterpriseValueLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(lblOrganization1))
-                    .addComponent(enterpriseLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(organizationValueLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblUser2, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(userValueLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(627, Short.MAX_VALUE))
+                        .addComponent(lblUser2, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(userValueLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -370,14 +503,9 @@ public class ManageMaterialRequest extends javax.swing.JPanel {
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(enterpriseValueLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblEnterprise, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(organizationValueLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(lblOrganization1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(lblUser2)))
-                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(userValueLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(4, 4, 4)))
+                            .addComponent(lblUser2)
+                            .addComponent(userValueLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(10, Short.MAX_VALUE))
         );
 
@@ -389,19 +517,15 @@ public class ManageMaterialRequest extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnCreatePickOrder, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(610, 610, 610))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnBack)
-                            .addComponent(lblPickingOrder, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblMaterialRequest, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(lblMaterialRequest, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane2))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1376, Short.MAX_VALUE)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(btnBack)
+                                .addComponent(lblPickingOrder, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnSelectMedicine, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addContainerGap())))
         );
         layout.setVerticalGroup(
@@ -411,22 +535,22 @@ public class ManageMaterialRequest extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblMaterialRequest)
                 .addGap(9, 9, 9)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(btnCreatePickOrder)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnSelectMedicine)
+                .addGap(36, 36, 36)
                 .addComponent(lblPickingOrder)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(33, 33, 33)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(btnBack)
-                .addContainerGap(216, Short.MAX_VALUE))
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnCreatePickOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreatePickOrderActionPerformed
+    private void btnSelectMedicineActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelectMedicineActionPerformed
         
-       int selectedRow = tblMaterialRequest.getSelectedRow();
+       int selectedRow = tblSCInventory.getSelectedRow();
         
         if(selectedRow <0){
             JOptionPane.showMessageDialog(null,"Please select a request","Warning",
@@ -434,70 +558,11 @@ public class ManageMaterialRequest extends javax.swing.JPanel {
             return;
         }
         
-        MaterialRequest mr = (MaterialRequest) tblMaterialRequest.getValueAt(selectedRow,0);
+        Medicine selectedMedicine = (Medicine)tblSCInventory.getValueAt(selectedRow, 0);
        
-        MaterialInventory mi = organization.getMaterialInventoryDirectory()
-                    .findInventoryByMaterial(mr.getMaterial()); 
-        if (mi == null) {
-            JOptionPane.showMessageDialog(this, "No inventory record was found for the selected material.", "Inventory unavailable", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
+        populateSelectedMedicineTable(selectedMedicine);
         
-        
-        if(mr.getQty() <= 0){
-             JOptionPane.showMessageDialog(this,"The selected request has an invalid quantity.","Invalid quantity",
-    JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-
-        if(!"Sent".equals(mr.getStatus())){
-             JOptionPane.showMessageDialog(this,"This request has been processed.","Invalid quantity",
-    JOptionPane.WARNING_MESSAGE);
-            return;
-        } 
-        if(mi.getAvailableQty()<=0){
-           JOptionPane.showMessageDialog(this,"No stock is available for the material.","Invalid quantity",
-    JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-        
-        if(mr.getQty()>mi.getAvailableQty()){
-         
-            int availableQty = mi.getAvailableQty();
-            
-            int option = JOptionPane.showConfirmDialog(
-            this,
-                    "Requested quantity: "+ mr.getQty() + " \nAvailable stock : " +availableQty
-                    + "\nAllocat the available stock?","Insufficient Stock",JOptionPane.YES_NO_OPTION,
-                    JOptionPane.WARNING_MESSAGE);
-            
-            if(option == JOptionPane.YES_OPTION){
-                mr.setQty(availableQty);
-            }else{
-                return;
-            }
-        }
-        
-        
-        int currentQty = mi.getAvailableQty();
-        mi.setAvailableQty(currentQty - mr.getQty());
-        mi.setPickingQty(mi.getPickingQty() + mr.getQty());
-        
-        PickingOrder po = this.organization.getPickingOrderDirectory().addPickingOrder(mr, organization);
-
-        mr.setStatus("Allocated");
-        
-        organization.getWorkQueue().getWorkRequestList().add(po);
-        
-        JOptionPane.showMessageDialog(null,"Create Picking Order successfully");
- 
-        populateMaterialRequestTable();
-        populatePickingOrderTable();
-        
-       
-        
-        
-    }//GEN-LAST:event_btnCreatePickOrderActionPerformed
+    }//GEN-LAST:event_btnSelectMedicineActionPerformed
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
@@ -509,7 +574,7 @@ public class ManageMaterialRequest extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBack;
-    private javax.swing.JButton btnCreatePickOrder;
+    private javax.swing.JButton btnSelectMedicine;
     private javax.swing.JLabel enterpriseLabel;
     private javax.swing.JLabel enterpriseLabel1;
     private javax.swing.JLabel enterpriseValueLabel;
@@ -524,41 +589,106 @@ public class ManageMaterialRequest extends javax.swing.JPanel {
     private javax.swing.JLabel lblEnterprise1;
     private javax.swing.JLabel lblMaterialRequest;
     private javax.swing.JLabel lblOrganization;
-    private javax.swing.JLabel lblOrganization1;
     private javax.swing.JLabel lblPickingOrder;
     private javax.swing.JLabel lblUser1;
     private javax.swing.JLabel lblUser2;
     private javax.swing.JLabel organizationValueLabel;
-    private javax.swing.JLabel organizationValueLabel1;
-    private javax.swing.JTable tblMaterialRequest;
-    private javax.swing.JTable tblPickingOrder;
+    private javax.swing.JTable tblSCInventory;
+    private javax.swing.JTable tblSelectedMedicineDetail;
     private javax.swing.JLabel userValueLabel;
     private javax.swing.JLabel userValueLabel1;
     // End of variables declaration//GEN-END:variables
 
-    private void populatePickingOrderTable() {
-       DefaultTableModel model = (DefaultTableModel) tblPickingOrder.getModel();
+    private void populateSelectedMedicineTable(Medicine medicine) {
+       DefaultTableModel model = (DefaultTableModel) tblSelectedMedicineDetail.getModel();
+       model.setRowCount(0);
         
-        model.setRowCount(0);
-        for (WorkRequest wr : organization.getWorkQueue().getWorkRequestList()){
+    
+       Map<String,MedicineInventory>inventoryMap = new LinkedHashMap<>();
+       
+       
+       for (Network network : ecosystem.getNetworkList()){
             
-            if(wr instanceof PickingOrder){
+            for (Enterprise ent : network.getEnterpriseDirectory().getEnterpriseList()){
+                
+                //Wholesaler Inventory
+                if(ent instanceof WholesalerEnterprise){
+                    for(Organization org : ent.getOrganizationDirectory().getOrganizationList()){
+                        if(org instanceof InventoryOrganization){
+                            
+                            InventoryOrganization inventoryOrg =(InventoryOrganization)org;
+                            
+                            MedicineInventory mi = inventoryOrg.getMedicineInventoryDirectory().findInventoryByMedicine(medicine);
+                            
+                            if(mi!=null){
+                                inventoryMap.put(ent.getName(),mi);
+                            }
+                        }                    
+                    }
+                }
             
-            SimpleDateFormat sdf = new SimpleDateFormat("MMM dd, yyyy");
-            PickingOrder po = (PickingOrder)wr;
-                     
-            Object[] row = new Object[7];
-            row[0] = po;
-            row[1] = po.getMaterialRequest().getMaterial();
-            row[2] = po.getMaterialRequest().getMaterial().getMaterialName();
-            row[3] = po.getMaterialRequest().getQty();
-            row[4] = po.getMaterialRequest().getQty();
-            row[5] = sdf.format(po.getRequestDate());
-            row[6] = po.getStatus();
+                //Hospital Inventory
+                if(ent instanceof HospitalEnterprise){
+                    for(Organization org : ent.getOrganizationDirectory().getOrganizationList()){
+                        if(org instanceof PharmacyOrganization){
+                            
+                            PharmacyOrganization pharmacyOrg =(PharmacyOrganization)org;
+                            
+                            MedicineInventory mi = pharmacyOrg.getMedicineInventoryDirectory().findInventoryByMedicine(medicine);
+                            
+                            if(mi!=null){
+                                inventoryMap.put(ent.getName(),mi);
+                            }
+                            
+                        }
+                        
+                    }                    
+                }
+            }
+       }
+    
+        String[] locations ={
+           "Wholesaler A",
+           "Wholesaler B",
+           "Wholesaler C",
+           "Hospital A",
+           "Hospital B",
+           "Hospital C"
+           
+       };
+               
+        for(String location : locations){
+            
+            MedicineInventory mi = inventoryMap.get(location);
+            
+            if(mi == null){
+                continue;
+            }
+            
+            int difference = mi.getQuantity()-mi.getStandardStock();
+            
+            String status;
+            
+            if(difference < 0){
+                status ="Shortage";
+            }else if(difference >0 ){
+                status ="Surplus";
+            }else {
+                status ="Balance";
+            
+            }
+                
+            Object[]row = new Object[7];
+            
+            row[0]= medicine;
+            row[1]= medicine.getMedicineName();
+            row[2]= location;
+            row[3]= mi.getQuantity();
+            row[4]= mi.getStandardStock();
+            row[5]= difference;
+            row[6]= status;
             
             model.addRow(row);
+            }
         }
     }
-    
-    }
-}
