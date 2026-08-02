@@ -5,7 +5,10 @@
 
 package ui.ProductionAdminRole;
 
+import Business.Enterprise.HospitalEnterprise;
 import Business.Enterprise.SupplierEnterprise;
+import Business.Hospital.Medicine;
+import Business.Hospital.MedicineCatalog;
 import Business.WorkQueue.WorkRequest;
 import Business.EcoSystem;
 import Business.Network.Network;
@@ -210,10 +213,35 @@ public ProductionAdminWorkAreaJPanel(JPanel userProcessContainer,
 
     private void createProductionPlanButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createProductionPlanButtonActionPerformed
         // TODO add your handling code here:
-        String productName = javax.swing.JOptionPane.showInputDialog(this, "Enter product name:");
-        if (productName == null || productName.trim().isEmpty()) {
+        MedicineCatalog catalog = getSharedMedicineCatalog();
+        if (catalog == null || catalog.getMedicineList().isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "No shared medicine catalog found.");
             return;
         }
+        java.util.ArrayList<Medicine> medicines = catalog.getMedicineList();
+        String[] medicineNames = new String[medicines.size()];
+        for (int i = 0; i < medicines.size(); i++) {
+            medicineNames[i] = medicines.get(i).getMedicineName();
+        }
+        String selectedName = (String) javax.swing.JOptionPane.showInputDialog(
+                this,
+                "Select medicine to produce:",
+                "Create Production Plan",
+                javax.swing.JOptionPane.QUESTION_MESSAGE,
+                null,
+                medicineNames,
+                medicineNames[0]);
+        if (selectedName == null) {
+            return;
+        }
+        Medicine selectedMedicine = null;
+        for (Medicine m : medicines) {
+            if (m.getMedicineName().equals(selectedName)) {
+                selectedMedicine = m;
+                break;
+            }
+        }
+
         String qtyStr = javax.swing.JOptionPane.showInputDialog(this, "Enter planned quantity:");
         if (qtyStr == null || qtyStr.trim().isEmpty()) {
             return;
@@ -230,11 +258,32 @@ public ProductionAdminWorkAreaJPanel(JPanel userProcessContainer,
             return;
         }
 
-        ProductionPlan plan = organization.getProductionPlanDirectory().addProductionPlan(productName, qty);
+        ProductionPlan plan = organization.getProductionPlanDirectory().addProductionPlan(selectedMedicine, qty);
 
-        javax.swing.JOptionPane.showMessageDialog(this, "Production plan created: " + plan.getPlanId() + " - " + productName + " (" + qty + ")");
+        javax.swing.JOptionPane.showMessageDialog(this, "Production plan created: " + plan.getPlanId() + " - " + selectedMedicine.getMedicineName() + " (" + qty + ")");
 
     }//GEN-LAST:event_createProductionPlanButtonActionPerformed
+
+    /**
+     * Looks up the MedicineCatalog shared across Hospital enterprises (same
+     * catalog instance used by Wholesalers/Pharmacies), so Production Plans
+     * and Production Orders reference the same Medicine objects instead of
+     * free-typed product names. Returns null if no Hospital enterprise is
+     * found in the current EcoSystem.
+     */
+    private MedicineCatalog getSharedMedicineCatalog() {
+        if (business == null) {
+            return null;
+        }
+        for (Network network : business.getNetworkList()) {
+            for (Enterprise ent : network.getEnterpriseDirectory().getEnterpriseList()) {
+                if (ent.getEnterpriseType() == Enterprise.EnterpriseType.Hospital) {
+                    return ((HospitalEnterprise) ent).getMedicineCatalog();
+                }
+            }
+        }
+        return null;
+    }
 
     private void createMaterialRequestButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createMaterialRequestButtonActionPerformed
         // TODO add your handling code here:
@@ -429,7 +478,9 @@ public ProductionAdminWorkAreaJPanel(JPanel userProcessContainer,
             }
         }
 
-        ProductionOrder po = new ProductionOrder(selectedPlan.getProductName(), selectedPlan.getQty());
+        ProductionOrder po = selectedPlan.getMedicine() != null
+                ? new ProductionOrder(selectedPlan.getMedicine(), selectedPlan.getQty())
+                : new ProductionOrder(selectedPlan.getProductName(), selectedPlan.getQty());
         po.setPlanId(selectedPlan.getPlanId());
         po.setMessage("Production order: " + selectedPlan.getProductName());
         po.setSender(account);

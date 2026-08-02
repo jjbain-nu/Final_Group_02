@@ -185,23 +185,6 @@ public class ConfigureASystem {
             supplierOrg.getWorkQueue().getWorkRequestList().add(mr);
         }
 
-        // Sample production orders with a range of dashboard-facing statuses,
-        // for the Supply Chain Control Tower to display Manufacturer production
-        // status alongside other enterprises. These are separate from the
-        // internal Sent/Completed/Registered workflow statuses used by the
-        // Production Operator screens above.
-        String[] sampleProducts = {"Paracetamol 500mg", "Ibuprofen 200mg", "Amoxicillin 250mg", "Metformin 500mg"};
-        String[] sampleStatuses = {"Pending", "In Production", "Ready to Ship", "Shipped"};
-        for (int i = 0; i < sampleStatuses.length; i++) {
-            ProductionOrder sampleOrder = new ProductionOrder(sampleProducts[i], faker.number().numberBetween(50, 500));
-            sampleOrder.setMessage("Production order: " + sampleProducts[i]);
-            sampleOrder.setSender(pa01);
-            sampleOrder.setReceiver(po01);
-            sampleOrder.setStatus(sampleStatuses[i]);
-            sampleOrder.setRequestDate(faker.date().past(5, TimeUnit.DAYS));
-            productionOrg.getWorkQueue().getWorkRequestList().add(sampleOrder);
-        }
-
           //create hospital enterprises
         HospitalEnterprise hospitalEnterpriseA = new HospitalEnterprise("Hospital A");
         HospitalEnterprise hospitalEnterpriseB = new HospitalEnterprise("Hospital B");
@@ -308,6 +291,27 @@ public class ConfigureASystem {
         hospitalEnterpriseA.setMedicineCatalog(sharedCatalog);
         hospitalEnterpriseB.setMedicineCatalog(sharedCatalog);
         hospitalEnterpriseC.setMedicineCatalog(sharedCatalog);
+
+        // Sample production orders with a range of dashboard-facing statuses,
+        // for the Supply Chain Control Tower to display Manufacturer production
+        // status alongside other enterprises. Reference real Medicine objects
+        // from the shared MedicineCatalog (same ones used by Wholesalers and
+        // Hospitals) instead of made-up product names, so the dashboard can
+        // match production orders to the corresponding medicine inventory
+        // records. These statuses are separate from the internal
+        // Sent/Completed/Registered workflow statuses used by the Production
+        // Operator screens above.
+        String[] sampleStatuses = {"Pending", "In Production", "Ready to Ship", "Shipped"};
+        for (int i = 0; i < sampleStatuses.length; i++) {
+            Medicine sampleMedicine = sharedCatalog.getMedicineList().get(i % sharedCatalog.getMedicineList().size());
+            ProductionOrder sampleOrder = new ProductionOrder(sampleMedicine, faker.number().numberBetween(50, 500));
+            sampleOrder.setMessage("Production order: " + sampleMedicine.getMedicineName());
+            sampleOrder.setSender(pa01);
+            sampleOrder.setReceiver(po01);
+            sampleOrder.setStatus(sampleStatuses[i]);
+            sampleOrder.setRequestDate(faker.date().past(5, TimeUnit.DAYS));
+            productionOrg.getWorkQueue().getWorkRequestList().add(sampleOrder);
+        }
 
         // Seed three independent wholesalers, each with the organizations and
         // role accounts required to exercise the internal wholesaler workflow.
