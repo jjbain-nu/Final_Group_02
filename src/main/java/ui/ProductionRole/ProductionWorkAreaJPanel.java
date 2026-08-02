@@ -16,6 +16,7 @@ import Business.Supplier.MaterialInventory;
 import Business.Supplier.MaterialRequest;
 import Business.Production.ProductionOrder;
 import Business.WorkQueue.DeliveryWorkRequest;
+import Business.WorkQueue.ManufacturerReplenishmentRequest;
 import Business.WorkQueue.WorkRequest;
 import java.awt.CardLayout;
 import javax.swing.JPanel;
@@ -377,6 +378,33 @@ public ProductionWorkAreaJPanel(JPanel userProcessContainer,
 
     private void shippingButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_shippingButtonActionPerformed
         // TODO add your handling code here:
+    java.util.ArrayList<ManufacturerReplenishmentRequest> replenishments = new java.util.ArrayList<>();
+    for (WorkRequest wr : organization.getWorkQueue().getWorkRequestList()) {
+        if (wr instanceof ManufacturerReplenishmentRequest
+                && ManufacturerReplenishmentRequest.REQUESTED_FROM_MANUFACTURER.equals(wr.getStatus())) {
+            replenishments.add((ManufacturerReplenishmentRequest) wr);
+        }
+    }
+    if (!replenishments.isEmpty()) {
+        String[] labels = new String[replenishments.size()];
+        for (int i = 0; i < replenishments.size(); i++) {
+            ManufacturerReplenishmentRequest request = replenishments.get(i);
+            labels[i] = request.getMedicine().getMedicineName() + " x " + request.getQuantity()
+                    + " -> " + request.getRequestingWholesaler();
+        }
+        String selected = (String) javax.swing.JOptionPane.showInputDialog(this,
+                "Select wholesaler replenishment to mark delivered:", "Ship Replenishment",
+                javax.swing.JOptionPane.QUESTION_MESSAGE, null, labels, labels[0]);
+        if (selected == null) return;
+        ManufacturerReplenishmentRequest request = replenishments.get(java.util.Arrays.asList(labels).indexOf(selected));
+        if (javax.swing.JOptionPane.showConfirmDialog(this,
+                "Mark this replenishment as Delivered?", "Confirm shipment",
+                javax.swing.JOptionPane.YES_NO_OPTION) != javax.swing.JOptionPane.YES_OPTION) return;
+        request.setStatus(ManufacturerReplenishmentRequest.DELIVERED);
+        request.setReceiver(account);
+        javax.swing.JOptionPane.showMessageDialog(this, "Replenishment marked Delivered for " + request.getRequestingWholesaler() + ".");
+        return;
+    }
     // Loading/delivery/proof-of-delivery are performed by the Transporter's
     // Driver once Production Admin issues the delivery request (see
     // Business.WorkQueue.DeliveryWorkRequest) - there is no separate physical
