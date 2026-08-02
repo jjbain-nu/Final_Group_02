@@ -17,7 +17,9 @@ import Business.Supplier.MaterialRequest;
 import Business.Production.ProductionOrder;
 import Business.WorkQueue.DeliveryWorkRequest;
 import Business.WorkQueue.WorkRequest;
+import java.awt.CardLayout;
 import javax.swing.JPanel;
+import ui.ManufacturerShared.OrderStatusJPanel;
 
 /**
  *
@@ -110,21 +112,22 @@ public ProductionWorkAreaJPanel(JPanel userProcessContainer,
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(44, 44, 44)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(receiveRawMaterialsButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(registerFinishedGoodsButton, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
-                    .addComponent(myProfileButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(shippingButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(executeProductionButton, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
-                    .addComponent(viewOrderStatusButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(223, Short.MAX_VALUE)
-                .addComponent(titleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(197, 197, 197))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(44, 44, 44)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(receiveRawMaterialsButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(registerFinishedGoodsButton, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+                            .addComponent(myProfileButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(107, 107, 107)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(shippingButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(executeProductionButton, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+                            .addComponent(viewOrderStatusButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(151, 151, 151)
+                        .addComponent(titleLabel)))
+                .addContainerGap(50, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -154,7 +157,11 @@ public ProductionWorkAreaJPanel(JPanel userProcessContainer,
         // TODO add your handling code here:
     java.util.ArrayList<MaterialRequest> pending = new java.util.ArrayList<>();
     for (WorkRequest wr : organization.getWorkQueue().getWorkRequestList()) {
-        if (wr instanceof MaterialRequest && !"Received".equals(wr.getStatus())) {
+        // Only allow receiving requests the Supplier has actually processed
+        // (status becomes "Allocated" once Supplier creates a Picking Order for it -
+        // see Supplier's ManageMaterialRequest.java). A request still sitting at
+        // "Sent" hasn't been picked/shipped yet, so it can't be received.
+        if (wr instanceof MaterialRequest && "Allocated".equals(wr.getStatus())) {
             pending.add((MaterialRequest) wr);
         }
     }
@@ -375,46 +382,29 @@ public ProductionWorkAreaJPanel(JPanel userProcessContainer,
     // Business.WorkQueue.DeliveryWorkRequest) - there is no separate physical
     // handoff action left for the Operator to perform here. This screen just
     // shows the live status of shipments for goods this org produced.
-    java.util.ArrayList<DeliveryWorkRequest> deliveries = new java.util.ArrayList<>();
-    for (WorkRequest wr : organization.getWorkQueue().getWorkRequestList()) {
-        if (wr instanceof DeliveryWorkRequest) {
-            deliveries.add((DeliveryWorkRequest) wr);
-        }
-    }
-    if (deliveries.isEmpty()) {
-        javax.swing.JOptionPane.showMessageDialog(this, "No delivery requests have been issued yet.");
-        return;
-    }
-    StringBuilder sb = new StringBuilder();
-    for (DeliveryWorkRequest dwr : deliveries) {
-        sb.append(dwr.getCargoDescription())
-          .append(" -> ").append(dwr.getDropLocation())
-          .append(" : ").append(dwr.getStatus());
-        if (dwr.getDeliveryReport() != null && !dwr.getDeliveryReport().isEmpty()) {
-            sb.append(" (").append(dwr.getDeliveryReport()).append(")");
-        }
-        sb.append("\n");
-    }
-    javax.swing.JOptionPane.showMessageDialog(this, sb.toString(), "Shipping Status", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+    ui.ManufacturerShared.ShippingStatusJPanel p = new ui.ManufacturerShared.ShippingStatusJPanel(userProcessContainer, organization);
+    userProcessContainer.add("ShippingStatusJPanel", p);
+    CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+    layout.next(userProcessContainer);
     }//GEN-LAST:event_shippingButtonActionPerformed
 
     private void myProfileButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_myProfileButtonActionPerformed
         // TODO add your handling code here:
-         javax.swing.JOptionPane.showMessageDialog(this, "TODO: My Profile screen");
+        String employeeName = account.getEmployee() == null ? "N/A" : account.getEmployee().getName();
+        String roleName = account.getRole() == null ? "N/A" : account.getRole().toString();
+        String profile = "Username: " + account.getUsername()
+                + "\nEmployee Name: " + employeeName
+                + "\nRole: " + roleName
+                + "\nOrganization: " + organization.getClass().getSimpleName();
+        javax.swing.JOptionPane.showMessageDialog(this, profile, "My Profile", javax.swing.JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_myProfileButtonActionPerformed
 
     private void viewOrderStatusButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewOrderStatusButtonActionPerformed
         // TODO add your handling code here:
-    java.util.ArrayList<WorkRequest> requests = organization.getWorkQueue().getWorkRequestList();
-    if (requests.isEmpty()) {
-        javax.swing.JOptionPane.showMessageDialog(this, "No requests in the queue.");
-        return;
-    }
-    StringBuilder sb = new StringBuilder();
-    for (WorkRequest wr : requests) {
-        sb.append(wr.toString()).append(" - ").append(wr.getStatus()).append("\n");
-    }
-    javax.swing.JOptionPane.showMessageDialog(this, sb.toString(), "Order Status", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+    OrderStatusJPanel p = new OrderStatusJPanel(userProcessContainer, organization);
+    userProcessContainer.add("OrderStatusJPanel", p);
+    CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+    layout.next(userProcessContainer);
     }//GEN-LAST:event_viewOrderStatusButtonActionPerformed
 
 

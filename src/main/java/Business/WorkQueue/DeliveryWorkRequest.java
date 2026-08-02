@@ -65,4 +65,10 @@ public class DeliveryWorkRequest extends WorkRequest {
     public void   setInspectionResult(String v){ this.inspectionResult = v; }
     public String getDeliveryReport()          { return deliveryReport; }
     public void   setDeliveryReport(String v)  { this.deliveryReport = v; }
+
+    @Override
+    public String toString() {
+        String label = cargoDescription != null ? cargoDescription : "Delivery Request";
+        return getStatus() != null ? label + " (" + getStatus() + ")" : label;
+    }
 }

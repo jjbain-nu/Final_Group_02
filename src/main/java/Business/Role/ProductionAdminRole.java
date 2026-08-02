@@ -24,6 +24,7 @@ public class ProductionAdminRole extends Role {
                 userProcessContainer,
                 account,
                 (ProductionOrganization) organization,
-                enterprise);
+                enterprise,
+                business);
     }
 }
