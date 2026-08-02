@@ -5,6 +5,7 @@
 package Business.Production;
 
 import Business.Hospital.Medicine;
+import Business.WorkQueue.ManufacturerReplenishmentRequest;
 import java.util.ArrayList;
 
 /**
@@ -45,6 +46,17 @@ public class ProductionPlanDirectory {
     public ProductionPlan addProductionPlan(Medicine medicine, int qty) {
         String id = generatePlanId();
         ProductionPlan plan = new ProductionPlan(id, medicine, qty);
+        this.productionPlanList.add(plan);
+        return plan;
+    }
+
+    /**
+     * Preferred overload: creates the plan directly from a Wholesaler's
+     * ManufacturerReplenishmentRequest instead of manual input.
+     */
+    public ProductionPlan addProductionPlan(ManufacturerReplenishmentRequest sourceReplenishment) {
+        String id = generatePlanId();
+        ProductionPlan plan = new ProductionPlan(id, sourceReplenishment);
         this.productionPlanList.add(plan);
         return plan;
     }

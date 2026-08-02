@@ -4,6 +4,7 @@
  */
 package Business.Production;
 
+import Business.WorkQueue.ManufacturerReplenishmentRequest;
 import Business.WorkQueue.WorkRequest;
 import java.util.Date;
 
@@ -16,6 +17,7 @@ public class QualityInspectionResult extends WorkRequest {
     private String productName;
     private boolean passed;
     private String planId;
+    private ManufacturerReplenishmentRequest sourceReplenishment;
 
     public QualityInspectionResult(String productName, boolean passed) {
         this.productName = productName;
@@ -46,6 +48,14 @@ public class QualityInspectionResult extends WorkRequest {
 
     public void setPassed(boolean passed) {
         this.passed = passed;
+    }
+
+    public ManufacturerReplenishmentRequest getSourceReplenishment() {
+        return sourceReplenishment;
+    }
+
+    public void setSourceReplenishment(ManufacturerReplenishmentRequest sourceReplenishment) {
+        this.sourceReplenishment = sourceReplenishment;
     }
 
     @Override

@@ -306,6 +306,7 @@ public QualityAssuranceWorkAreaJPanel(JPanel userProcessContainer,
 
     QualityInspectionResult result = new QualityInspectionResult(fg.getProductName(), passed);
     result.setPlanId(fg.getPlanId());
+    result.setSourceReplenishment(fg.getSourceReplenishment());
     result.setMessage("Inspection result for " + fg.getProductName() + ": " + (passed ? "Passed" : "Failed"
             + " - Reason: " + failureReason));
     result.setSender(account);

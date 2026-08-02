@@ -5,10 +5,7 @@
 
 package ui.ProductionAdminRole;
 
-import Business.Enterprise.HospitalEnterprise;
 import Business.Enterprise.SupplierEnterprise;
-import Business.Hospital.Medicine;
-import Business.Hospital.MedicineCatalog;
 import Business.WorkQueue.WorkRequest;
 import Business.EcoSystem;
 import Business.Network.Network;
@@ -214,77 +211,49 @@ public ProductionAdminWorkAreaJPanel(JPanel userProcessContainer,
 
     private void createProductionPlanButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createProductionPlanButtonActionPerformed
         // TODO add your handling code here:
-        MedicineCatalog catalog = getSharedMedicineCatalog();
-        if (catalog == null || catalog.getMedicineList().isEmpty()) {
-            javax.swing.JOptionPane.showMessageDialog(this, "No shared medicine catalog found.");
+        // Production Plans are driven by Wholesaler replenishment requests:
+        // pick a pending ManufacturerReplenishmentRequest (medicine + qty +
+        // requesting wholesaler already known) instead of typing/selecting
+        // those by hand. The chosen request's medicine/qty/wholesaler are
+        // carried through Production Order -> Finished Goods -> QA -> the
+        // eventual Delivery Request automatically.
+        java.util.ArrayList<ManufacturerReplenishmentRequest> pending = new java.util.ArrayList<>();
+        for (WorkRequest wr : organization.getWorkQueue().getWorkRequestList()) {
+            if (wr instanceof ManufacturerReplenishmentRequest
+                    && ManufacturerReplenishmentRequest.REQUESTED_FROM_MANUFACTURER.equals(wr.getStatus())) {
+                pending.add((ManufacturerReplenishmentRequest) wr);
+            }
+        }
+        if (pending.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "No pending replenishment requests from Wholesalers.");
             return;
         }
-        java.util.ArrayList<Medicine> medicines = catalog.getMedicineList();
-        String[] medicineNames = new String[medicines.size()];
-        for (int i = 0; i < medicines.size(); i++) {
-            medicineNames[i] = medicines.get(i).getMedicineName();
+        String[] labels = new String[pending.size()];
+        for (int i = 0; i < pending.size(); i++) {
+            ManufacturerReplenishmentRequest r = pending.get(i);
+            labels[i] = r.getMedicine().getMedicineName() + " x " + r.getQuantity() + " -> " + r.getRequestingWholesaler();
         }
-        String selectedName = (String) javax.swing.JOptionPane.showInputDialog(
+        String selected = (String) javax.swing.JOptionPane.showInputDialog(
                 this,
-                "Select medicine to produce:",
+                "Select a wholesaler replenishment request to plan production for:",
                 "Create Production Plan",
                 javax.swing.JOptionPane.QUESTION_MESSAGE,
                 null,
-                medicineNames,
-                medicineNames[0]);
-        if (selectedName == null) {
+                labels,
+                labels[0]);
+        if (selected == null) {
             return;
         }
-        Medicine selectedMedicine = null;
-        for (Medicine m : medicines) {
-            if (m.getMedicineName().equals(selectedName)) {
-                selectedMedicine = m;
-                break;
-            }
-        }
+        ManufacturerReplenishmentRequest chosen = pending.get(java.util.Arrays.asList(labels).indexOf(selected));
 
-        String qtyStr = javax.swing.JOptionPane.showInputDialog(this, "Enter planned quantity:");
-        if (qtyStr == null || qtyStr.trim().isEmpty()) {
-            return;
-        }
-        int qty;
-        try {
-            qty = Integer.parseInt(qtyStr.trim());
-        } catch (NumberFormatException e) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Quantity must be a number.");
-            return;
-        }
-        if (qty <= 0) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Quantity must be greater than 0.");
-            return;
-        }
+        ProductionPlan plan = organization.getProductionPlanDirectory().addProductionPlan(chosen);
+        // Consumed - no longer offered as pending so it can't be planned twice.
+        chosen.setStatus("In Production");
 
-        ProductionPlan plan = organization.getProductionPlanDirectory().addProductionPlan(selectedMedicine, qty);
-
-        javax.swing.JOptionPane.showMessageDialog(this, "Production plan created: " + plan.getPlanId() + " - " + selectedMedicine.getMedicineName() + " (" + qty + ")");
+        javax.swing.JOptionPane.showMessageDialog(this, "Production plan created: " + plan.getPlanId() + " - "
+                + chosen.getMedicine().getMedicineName() + " (" + chosen.getQuantity() + ") for " + chosen.getRequestingWholesaler());
 
     }//GEN-LAST:event_createProductionPlanButtonActionPerformed
-
-    /**
-     * Looks up the MedicineCatalog shared across Hospital enterprises (same
-     * catalog instance used by Wholesalers/Pharmacies), so Production Plans
-     * and Production Orders reference the same Medicine objects instead of
-     * free-typed product names. Returns null if no Hospital enterprise is
-     * found in the current EcoSystem.
-     */
-    private MedicineCatalog getSharedMedicineCatalog() {
-        if (business == null) {
-            return null;
-        }
-        for (Network network : business.getNetworkList()) {
-            for (Enterprise ent : network.getEnterpriseDirectory().getEnterpriseList()) {
-                if (ent.getEnterpriseType() == Enterprise.EnterpriseType.Hospital) {
-                    return ((HospitalEnterprise) ent).getMedicineCatalog();
-                }
-            }
-        }
-        return null;
-    }
 
     private void createMaterialRequestButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createMaterialRequestButtonActionPerformed
         // TODO add your handling code here:
@@ -483,6 +452,7 @@ public ProductionAdminWorkAreaJPanel(JPanel userProcessContainer,
                 ? new ProductionOrder(selectedPlan.getMedicine(), selectedPlan.getQty())
                 : new ProductionOrder(selectedPlan.getProductName(), selectedPlan.getQty());
         po.setPlanId(selectedPlan.getPlanId());
+        po.setSourceReplenishment(selectedPlan.getSourceReplenishment());
         po.setMessage("Production order: " + selectedPlan.getProductName());
         po.setSender(account);
         po.setReceiver(operatorAccount);
@@ -542,9 +512,18 @@ public ProductionAdminWorkAreaJPanel(JPanel userProcessContainer,
         }
     }
 
-    String dropLocation = javax.swing.JOptionPane.showInputDialog(this, "Enter drop-off location (e.g. Wholesaler name/address):");
-    if (dropLocation == null || dropLocation.trim().isEmpty()) {
-        return;
+    // If this batch traces back to a specific wholesaler replenishment
+    // request, the destination is already known - no need to ask.
+    ManufacturerReplenishmentRequest linkedReplenishment = qir.getSourceReplenishment();
+    String dropLocation;
+    if (linkedReplenishment != null) {
+        dropLocation = linkedReplenishment.getRequestingWholesaler();
+    } else {
+        dropLocation = javax.swing.JOptionPane.showInputDialog(this, "Enter drop-off location (e.g. Wholesaler name/address):");
+        if (dropLocation == null || dropLocation.trim().isEmpty()) {
+            return;
+        }
+        dropLocation = dropLocation.trim();
     }
 
     EcoSystem system = business;
@@ -618,31 +597,37 @@ public ProductionAdminWorkAreaJPanel(JPanel userProcessContainer,
             : qir.getProductName();
 
     DeliveryWorkRequest dwr = new DeliveryWorkRequest();
-    
-    //
+
     // Link this delivery to the wholesaler replenishment request it fulfils.
-    java.util.ArrayList<ManufacturerReplenishmentRequest> pending = new java.util.ArrayList<>();
-    for (WorkRequest wr : organization.getWorkQueue().getWorkRequestList()) {
-        if (wr instanceof ManufacturerReplenishmentRequest
-                && ManufacturerReplenishmentRequest.REQUESTED_FROM_MANUFACTURER.equals(wr.getStatus())) {
-            pending.add((ManufacturerReplenishmentRequest) wr);
+    // Already known if this batch was planned from a specific request
+    // (see above); otherwise fall back to asking, for plans/batches that
+    // weren't created from a replenishment request.
+    if (linkedReplenishment != null) {
+        dwr.setSourceRequest(linkedReplenishment);
+        linkedReplenishment.setStatus("In Transit");
+    } else {
+        java.util.ArrayList<ManufacturerReplenishmentRequest> pending = new java.util.ArrayList<>();
+        for (WorkRequest wr : organization.getWorkQueue().getWorkRequestList()) {
+            if (wr instanceof ManufacturerReplenishmentRequest
+                    && ManufacturerReplenishmentRequest.REQUESTED_FROM_MANUFACTURER.equals(wr.getStatus())) {
+                pending.add((ManufacturerReplenishmentRequest) wr);
+            }
+        }
+        if (!pending.isEmpty()) {
+            ManufacturerReplenishmentRequest chosen = (ManufacturerReplenishmentRequest)
+                javax.swing.JOptionPane.showInputDialog(this,
+                    "Which wholesaler replenishment does this delivery fulfil?",
+                    "Link replenishment", javax.swing.JOptionPane.QUESTION_MESSAGE,
+                    null, pending.toArray(), pending.get(0));
+            if (chosen != null) {
+                dwr.setSourceRequest(chosen);
+                chosen.setStatus("In Transit");
+            }
         }
     }
-    if (!pending.isEmpty()) {
-        ManufacturerReplenishmentRequest chosen = (ManufacturerReplenishmentRequest)
-            javax.swing.JOptionPane.showInputDialog(this,
-                "Which wholesaler replenishment does this delivery fulfil?",
-                "Link replenishment", javax.swing.JOptionPane.QUESTION_MESSAGE,
-                null, pending.toArray(), pending.get(0));
-        if (chosen != null) {
-            dwr.setSourceRequest(chosen);        // ← the link
-            chosen.setStatus("In Transit");      // so it isn't offered again
-        }
-    }
-    //
-    
+
     dwr.setPickupLocation(enterprise.getName());
-    dwr.setDropLocation(dropLocation.trim());
+    dwr.setDropLocation(dropLocation);
     dwr.setCargoDescription(cargoDescription);
     dwr.setMessage("Delivery request for " + cargoDescription + " (Plan " + qir.getPlanId() + ")");
     dwr.setSender(account);

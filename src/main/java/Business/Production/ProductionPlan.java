@@ -5,6 +5,7 @@
 package Business.Production;
 
 import Business.Hospital.Medicine;
+import Business.WorkQueue.ManufacturerReplenishmentRequest;
 import java.util.Date;
 
 /**
@@ -19,6 +20,7 @@ public class ProductionPlan {
     private int qty;
     private Date planDate;
     private String status;
+    private ManufacturerReplenishmentRequest sourceReplenishment;
 
     public ProductionPlan(String planId, String productName, int qty) {
         this.planId = planId;
@@ -41,6 +43,31 @@ public class ProductionPlan {
         this.qty = qty;
         this.planDate = new Date();
         this.status = "Created";
+    }
+
+    /**
+     * Preferred constructor: creates the plan directly from a Wholesaler's
+     * ManufacturerReplenishmentRequest, carrying the medicine, quantity and
+     * requesting wholesaler through so downstream steps (Production Order,
+     * Finished Goods, QA, Delivery Request) can trace back to it without
+     * asking the user to re-select anything.
+     */
+    public ProductionPlan(String planId, ManufacturerReplenishmentRequest sourceReplenishment) {
+        this.planId = planId;
+        this.sourceReplenishment = sourceReplenishment;
+        this.medicine = sourceReplenishment == null ? null : sourceReplenishment.getMedicine();
+        this.productName = this.medicine == null ? null : this.medicine.getMedicineName();
+        this.qty = sourceReplenishment == null ? 0 : sourceReplenishment.getQuantity();
+        this.planDate = new Date();
+        this.status = "Created";
+    }
+
+    public ManufacturerReplenishmentRequest getSourceReplenishment() {
+        return sourceReplenishment;
+    }
+
+    public void setSourceReplenishment(ManufacturerReplenishmentRequest sourceReplenishment) {
+        this.sourceReplenishment = sourceReplenishment;
     }
 
     public String getPlanId() {

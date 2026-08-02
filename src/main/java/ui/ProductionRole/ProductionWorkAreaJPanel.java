@@ -361,6 +361,7 @@ public ProductionWorkAreaJPanel(JPanel userProcessContainer,
 
     FinishedGoods fg = new FinishedGoods(po.getProductName(), qty);
     fg.setPlanId(po.getPlanId());
+    fg.setSourceReplenishment(po.getSourceReplenishment());
     fg.setMessage("Finished goods ready for inspection: " + po.getProductName());
     fg.setSender(account);
     fg.setReceiver(qaAccount);

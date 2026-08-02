@@ -4,6 +4,7 @@
  */
 package Business.Production;
 
+import Business.WorkQueue.ManufacturerReplenishmentRequest;
 import Business.WorkQueue.WorkRequest;
 import java.util.Date;
 
@@ -16,6 +17,7 @@ public class FinishedGoods extends WorkRequest {
     private String productName;
     private int qty;
     private String planId;
+    private ManufacturerReplenishmentRequest sourceReplenishment;
 
     public FinishedGoods(String productName, int qty) {
         this.productName = productName;
@@ -46,6 +48,14 @@ public class FinishedGoods extends WorkRequest {
 
     public void setQty(int qty) {
         this.qty = qty;
+    }
+
+    public ManufacturerReplenishmentRequest getSourceReplenishment() {
+        return sourceReplenishment;
+    }
+
+    public void setSourceReplenishment(ManufacturerReplenishmentRequest sourceReplenishment) {
+        this.sourceReplenishment = sourceReplenishment;
     }
 
     @Override
