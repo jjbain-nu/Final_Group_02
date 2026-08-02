@@ -4,6 +4,7 @@
  */
 package Business.Production;
 
+import Business.Hospital.Medicine;
 import java.util.Date;
 
 /**
@@ -14,6 +15,7 @@ public class ProductionPlan {
 
     private String planId;
     private String productName;
+    private Medicine medicine;
     private int qty;
     private Date planDate;
     private String status;
@@ -21,6 +23,21 @@ public class ProductionPlan {
     public ProductionPlan(String planId, String productName, int qty) {
         this.planId = planId;
         this.productName = productName;
+        this.qty = qty;
+        this.planDate = new Date();
+        this.status = "Created";
+    }
+
+    /**
+     * Preferred constructor: ties the plan to a real Medicine from the
+     * shared MedicineCatalog instead of a free-typed product name, so
+     * downstream ProductionOrder/dashboard code can match against the same
+     * medicine records used by Wholesalers and Hospitals.
+     */
+    public ProductionPlan(String planId, Medicine medicine, int qty) {
+        this.planId = planId;
+        this.medicine = medicine;
+        this.productName = medicine == null ? null : medicine.getMedicineName();
         this.qty = qty;
         this.planDate = new Date();
         this.status = "Created";
@@ -35,11 +52,22 @@ public class ProductionPlan {
     }
 
     public String getProductName() {
-        return productName;
+        return medicine != null ? medicine.getMedicineName() : productName;
     }
 
     public void setProductName(String productName) {
         this.productName = productName;
+    }
+
+    public Medicine getMedicine() {
+        return medicine;
+    }
+
+    public void setMedicine(Medicine medicine) {
+        this.medicine = medicine;
+        if (medicine != null) {
+            this.productName = medicine.getMedicineName();
+        }
     }
 
     public int getQty() {

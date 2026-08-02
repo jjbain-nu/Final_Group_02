@@ -4,6 +4,7 @@
  */
 package Business.Production;
 
+import Business.Hospital.Medicine;
 import java.util.ArrayList;
 
 /**
@@ -33,6 +34,17 @@ public class ProductionPlanDirectory {
     public ProductionPlan addProductionPlan(String productName, int qty) {
         String id = generatePlanId();
         ProductionPlan plan = new ProductionPlan(id, productName, qty);
+        this.productionPlanList.add(plan);
+        return plan;
+    }
+
+    /**
+     * Preferred overload: creates the plan from a real Medicine in the
+     * shared MedicineCatalog instead of a free-typed product name.
+     */
+    public ProductionPlan addProductionPlan(Medicine medicine, int qty) {
+        String id = generatePlanId();
+        ProductionPlan plan = new ProductionPlan(id, medicine, qty);
         this.productionPlanList.add(plan);
         return plan;
     }
