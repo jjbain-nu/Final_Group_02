@@ -12,6 +12,7 @@ import Business.Production.ProductionOrder;
 import Business.Production.QualityInspectionResult;
 import Business.Supplier.MaterialRequest;
 import Business.WorkQueue.DeliveryWorkRequest;
+import Business.WorkQueue.ManufacturerReplenishmentRequest;
 import Business.WorkQueue.WorkRequest;
 import java.awt.CardLayout;
 import java.util.Collections;
@@ -77,6 +78,8 @@ public class OrderStatusJPanel extends javax.swing.JPanel {
             return "Quality Inspection Result";
         } else if (wr instanceof DeliveryWorkRequest) {
             return "Delivery Request";
+        } else if (wr instanceof ManufacturerReplenishmentRequest) {
+            return "Wholesaler Replenishment";
         }
         return wr.getClass().getSimpleName();
     }
